@@ -1,0 +1,94 @@
+<?php
+/*
+ * Copyright 2014 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+namespace Google\Service\BigQueryConnectionService;
+
+class AwsProperties extends \Google\Model
+{
+  protected $accessRoleType = AwsAccessRole::class;
+  protected $accessRoleDataType = '';
+  protected $crossCloudCacheOptionsType = CrossCloudCacheOptions::class;
+  protected $crossCloudCacheOptionsDataType = '';
+  /**
+   * Optional. The Service Directory resource name for routing traffic to AWS
+   * over a private network connection through Cross-Cloud Interconnect, in the
+   * format `projects/{project_id}/locations/{location}/namespaces/{namespace_id
+   * }/services/{service_id}`. If both this field and
+   * `s3_service_directory_service` are set, this field takes precedence.
+   *
+   * @var string
+   */
+  public $serviceDirectoryService;
+
+  /**
+   * Authentication using Google owned service account to assume into customer's
+   * AWS IAM Role.
+   *
+   * @param AwsAccessRole $accessRole
+   */
+  public function setAccessRole(AwsAccessRole $accessRole)
+  {
+    $this->accessRole = $accessRole;
+  }
+  /**
+   * @return AwsAccessRole
+   */
+  public function getAccessRole()
+  {
+    return $this->accessRole;
+  }
+  /**
+   * Optional. Configuration options for cross-cloud caching of data and
+   * metadata files.
+   *
+   * @param CrossCloudCacheOptions $crossCloudCacheOptions
+   */
+  public function setCrossCloudCacheOptions(CrossCloudCacheOptions $crossCloudCacheOptions)
+  {
+    $this->crossCloudCacheOptions = $crossCloudCacheOptions;
+  }
+  /**
+   * @return CrossCloudCacheOptions
+   */
+  public function getCrossCloudCacheOptions()
+  {
+    return $this->crossCloudCacheOptions;
+  }
+  /**
+   * Optional. The Service Directory resource name for routing traffic to AWS
+   * over a private network connection through Cross-Cloud Interconnect, in the
+   * format `projects/{project_id}/locations/{location}/namespaces/{namespace_id
+   * }/services/{service_id}`. If both this field and
+   * `s3_service_directory_service` are set, this field takes precedence.
+   *
+   * @param string $serviceDirectoryService
+   */
+  public function setServiceDirectoryService($serviceDirectoryService)
+  {
+    $this->serviceDirectoryService = $serviceDirectoryService;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceDirectoryService()
+  {
+    return $this->serviceDirectoryService;
+  }
+}
+
+// Adding a class alias for backwards compatibility with the previous class name.
+class_alias(AwsProperties::class, 'Google_Service_BigQueryConnectionService_AwsProperties');
