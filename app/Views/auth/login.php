@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Facility Care MIMHa</title>
+    <title>Login - Guru Pendamping Khusus</title>
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="<?= base_url('manifest.json') ?>">
-    <meta name="theme-color" content="#0d6efd">
+    <meta name="theme-color" content="#e11d48">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Facility Care">
-    <!-- Sesuaikan path icon iOS ini dengan nama file logo Anda -->
+    <meta name="apple-mobile-web-app-title" content="GPK MIMHa">
     <link rel="apple-touch-icon" href="<?= base_url('assets/images/logo.png') ?>">
 
     <!-- Bootstrap 5 CSS -->
@@ -21,7 +20,7 @@
     
     <style>
         body {
-            background-color: #f4f7f6; 
+            background-color: #fff1f2; /* Latar belakang rose sangat lembut */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -33,15 +32,29 @@
             width: 100%;
             max-width: 400px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.12); /* Shadow dengan tone rose */
             border: none;
             overflow: hidden;
         }
         .login-header {
-            background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+            background: linear-gradient(135deg, #e11d48, #fb7185); /* Gradasi tema rose */
             color: white;
             padding: 35px 20px;
             text-align: center;
+        }
+        .text-theme {
+            color: #e11d48 !important;
+        }
+        .btn-theme {
+            background-color: #e11d48;
+            border-color: #e11d48;
+            color: white;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-theme:hover, .btn-theme:focus {
+            background-color: #be123c; /* Warna rose lebih gelap saat hover */
+            border-color: #be123c;
+            color: white;
         }
         .input-group-text {
             border-right: none;
@@ -55,12 +68,12 @@
             border-color: #dee2e6;
         }
         .input-group:focus-within {
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(225, 29, 72, 0.25);
             border-radius: 0.375rem;
         }
         .input-group:focus-within .input-group-text,
         .input-group:focus-within .form-control {
-            border-color: #86b7fe;
+            border-color: #fda4af; /* Border focus warna rose muda */
         }
     </style>
 </head>
@@ -70,8 +83,8 @@
         <div class="card login-card">
             
             <div class="login-header">
-                <i class="fas fa-tools fa-3x mb-3 shadow-sm rounded-circle p-3 bg-white text-primary"></i>
-                <h4 class="mb-0 fw-bold">Facility Care MIMHa</h4>
+                <i class="fas fa-chalkboard-teacher fa-3x mb-3 shadow-sm rounded-circle p-3 bg-white text-theme"></i>
+                <h4 class="mb-0 fw-bold">Guru Pendamping Khusus</h4>
             </div>
             
             <div class="card-body p-4 bg-white">
@@ -106,7 +119,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold text-uppercase shadow-sm">
+                    <button type="submit" class="btn btn-theme w-100 py-2 fw-bold text-uppercase shadow-sm">
                         Masuk <i class="fas fa-sign-in-alt ms-2"></i>
                     </button>
                     
@@ -114,23 +127,22 @@
             </div>
             
             <div class="card-footer bg-light border-0 text-center py-3">
-                <small class="text-muted fw-semibold">&copy; <?= date('Y') ?> Facility Care MIMHa</small>
+                <small class="text-muted fw-semibold">© <?= date('Y') ?> MIMHa APP</small>
             </div>
             
         </div>
     </div>
 
     <!-- PWA Install Banner -->
-    <!-- PERUBAHAN: bottom: 20px diganti menjadi top: 20px agar banner muncul di atas -->
-    <div id="install-banner" class="alert alert-primary alert-dismissible fade show d-none shadow" role="alert" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; z-index: 9999;">
+    <div id="install-banner" class="alert alert-light border-0 alert-dismissible fade show d-none shadow" role="alert" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; z-index: 9999;">
         <div class="d-flex align-items-center">
-            <img src="<?= base_url('assets/images/logo.png') ?>" alt="Logo" class="me-3 rounded" style="width: 40px; height: 40px; object-fit: cover;" onerror="this.outerHTML='<i class=\'fas fa-mobile-alt fa-2x me-3 text-primary\'></i>'">
+            <img src="<?= base_url('assets/images/logo.png') ?>" alt="Logo" class="me-3 rounded" style="width: 40px; height: 40px; object-fit: cover;" onerror="this.outerHTML='<i class=\'fas fa-mobile-alt fa-2x me-3 text-theme\'></i>'">
             <div>
-                <strong class="text-primary">Instal Aplikasi!</strong><br>
+                <strong class="text-theme">Instal Aplikasi!</strong><br>
                 <span class="small text-muted">Tambahkan ke layar utama HP untuk akses cepat.</span>
             </div>
         </div>
-        <button type="button" id="btn-install" class="btn btn-sm btn-primary mt-3 w-100 fw-bold rounded-pill shadow-sm">Instal Sekarang</button>
+        <button type="button" id="btn-install" class="btn btn-sm btn-theme mt-3 w-100 fw-bold rounded-pill shadow-sm">Instal Sekarang</button>
         <button type="button" class="btn-close" id="btn-close-banner" aria-label="Close"></button>
     </div>
 

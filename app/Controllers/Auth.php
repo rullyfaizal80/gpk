@@ -9,47 +9,44 @@ class Auth extends BaseController
 {
     public function index()
     {
-        // Jika sudah login, tendang ke dashboard masing-masing
+        // Jika user sudah login, redirect otomatis sesuai role
         if (session()->get('isLoggedIn')) {
             return $this->redirectBasedOnRole(session()->get('role'));
         }
         
-        // Tampilkan halaman login (nanti kita buat view-nya)
+        // Menampilkan view login yang berada di folder app/Views/auth/login.php
         return view('auth/login');
     }
 
     public function process()
     {
-        $session = session();
+        $session   = session();
         $userModel = new UserModel();
 
-        $username = $this->request->getPost('username');
-        $password = $this->request->getPost('password');
+        $username = trim($this->request->getPost('username'));
+        $password = trim($this->request->getPost('password'));
 
-        // Cari user berdasarkan username
+        // 1. Cari user di database berdasarkan username
         $user = $userModel->where('username', $username)->first();
 
         if ($user) {
-            // Jika user ketemu, cek apakah statusnya aktif
+            // 2. Cek status aktif akun
             if ($user['is_active'] != 1) {
-                $session->setFlashdata('error', 'Akun Anda dinonaktifkan.');
+                $session->setFlashdata('error', 'Akun Anda telah dinonaktifkan.');
                 return redirect()->to('/login');
             }
 
-            // Verifikasi password hash
+            // 3. Verifikasi Hash Password Standar
             if (password_verify($password, $user['password'])) {
-                // Set data session
                 $sessData = [
                     'id'           => $user['id'],
                     'username'     => $user['username'],
                     'nama_lengkap' => $user['nama_lengkap'],
                     'role'         => $user['role'],
-                    'unit_id'      => $user['unit_id'],
                     'isLoggedIn'   => true
                 ];
                 $session->set($sessData);
 
-                // Arahkan ke dashboard sesuai role
                 return $this->redirectBasedOnRole($user['role']);
             } else {
                 $session->setFlashdata('error', 'Password salah.');
@@ -63,8 +60,7 @@ class Auth extends BaseController
 
     public function logout()
     {
-        $session = session();
-        $session->destroy();
+        session()->destroy();
         return redirect()->to('/login');
     }
 
@@ -73,18 +69,16 @@ class Auth extends BaseController
         return "Akses Ditolak. Anda tidak memiliki izin untuk membuka halaman ini.";
     }
 
-    // Private function untuk routing otomatis berdasarkan role
+    // Routing otomatis berdasarkan role pengguna
     private function redirectBasedOnRole($role)
     {
         switch ($role) {
             case 'admin':
-                return redirect()->to('/admin/dashboard');
+            case 'gpk':
             case 'pimpinan':
-                return redirect()->to('/pimpinan/dashboard');
-            case 'pelapor':
-                return redirect()->to('/pelapor/dashboard');
-            case 'caraka':
-                return redirect()->to('/caraka/dashboard');
+            case 'ortu':
+                // Sementara semua role diarahkan ke /admin/dashboard agar tidak error 404
+                return redirect()->to('/admin/dashboard');
             default:
                 return redirect()->to('/login');
         }
