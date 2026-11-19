@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Guru Pendamping Khusus</title>
+    <title>Login - Jurnal Harian GPK</title>
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="<?= base_url('manifest.json') ?>">
     <meta name="theme-color" content="#e11d48">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="GPK MIMHa">
+    <meta name="apple-mobile-web-app-title" content="Jurnal GPK">
     <link rel="apple-touch-icon" href="<?= base_url('assets/images/logo.png') ?>">
 
     <!-- Bootstrap 5 CSS -->
@@ -20,24 +20,25 @@
     
     <style>
         body {
-            background-color: #fff1f2; /* Latar belakang rose sangat lembut */
+            background-color: #fff1f2; /* Latar belakang rose lembut */
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .login-card {
             width: 100%;
             max-width: 400px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.12); /* Shadow dengan tone rose */
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.12);
             border: none;
             overflow: hidden;
         }
         .login-header {
-            background: linear-gradient(135deg, #e11d48, #fb7185); /* Gradasi tema rose */
+            background: linear-gradient(135deg, #e11d48, #fb7185);
             color: white;
             padding: 35px 20px;
             text-align: center;
@@ -52,7 +53,7 @@
             transition: all 0.2s ease-in-out;
         }
         .btn-theme:hover, .btn-theme:focus {
-            background-color: #be123c; /* Warna rose lebih gelap saat hover */
+            background-color: #be123c;
             border-color: #be123c;
             color: white;
         }
@@ -73,7 +74,17 @@
         }
         .input-group:focus-within .input-group-text,
         .input-group:focus-within .form-control {
-            border-color: #fda4af; /* Border focus warna rose muda */
+            border-color: #fda4af;
+        }
+
+        /* Banner Install PWA In-Card (Tepat di bawah tombol login) */
+        .pwa-install-box {
+            background-color: #fff1f2;
+            border: 1px dashed #fecdd3;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -82,9 +93,11 @@
     <div class="container px-3 d-flex justify-content-center">
         <div class="card login-card">
             
+            <!-- Judul Aplikasi Baru: Jurnal Harian GPK -->
             <div class="login-header">
-                <i class="fas fa-chalkboard-teacher fa-3x mb-3 shadow-sm rounded-circle p-3 bg-white text-theme"></i>
-                <h4 class="mb-0 fw-bold">Guru Pendamping Khusus</h4>
+                <i class="fas fa-book-reader fa-3x mb-3 shadow-sm rounded-circle p-3 bg-white text-theme"></i>
+                <h4 class="mb-0 fw-bold">Jurnal Harian GPK</h4>
+                <small class="opacity-75">Sistem Pelaporan Inklusi MIMHa</small>
             </div>
             
             <div class="card-body p-4 bg-white">
@@ -119,31 +132,33 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-theme w-100 py-2 fw-bold text-uppercase shadow-sm">
+                    <button type="submit" class="btn btn-theme w-100 py-2 fw-bold text-uppercase shadow-sm rounded-3">
                         Masuk <i class="fas fa-sign-in-alt ms-2"></i>
                     </button>
                     
                 </form>
+
+                <!-- BANNER INSTALL PWA (DI BAWAH TOMBOL LOGIN, TIDAK POP-UP MELAYANG) -->
+                <div id="install-banner" class="pwa-install-box d-none">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-mobile-alt fa-2x text-theme me-3"></i>
+                        <div class="text-start">
+                            <strong class="text-dark small d-block">Instal Aplikasi Mobile</strong>
+                            <span class="text-muted" style="font-size: 0.75rem;">Tambahkan ke Layar Utama HP untuk akses cepat.</span>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-install" class="btn btn-sm btn-outline-danger w-100 fw-bold rounded-pill shadow-sm">
+                        <i class="fas fa-download me-1"></i> Instal Sekarang
+                    </button>
+                </div>
+
             </div>
             
             <div class="card-footer bg-light border-0 text-center py-3">
-                <small class="text-muted fw-semibold">© <?= date('Y') ?> MIMHa APP</small>
+                <small class="text-muted fw-semibold">© <?= date('Y') ?> MIMHa Apps</small>
             </div>
             
         </div>
-    </div>
-
-    <!-- PWA Install Banner -->
-    <div id="install-banner" class="alert alert-light border-0 alert-dismissible fade show d-none shadow" role="alert" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; z-index: 9999;">
-        <div class="d-flex align-items-center">
-            <img src="<?= base_url('assets/images/logo.png') ?>" alt="Logo" class="me-3 rounded" style="width: 40px; height: 40px; object-fit: cover;" onerror="this.outerHTML='<i class=\'fas fa-mobile-alt fa-2x me-3 text-theme\'></i>'">
-            <div>
-                <strong class="text-theme">Instal Aplikasi!</strong><br>
-                <span class="small text-muted">Tambahkan ke layar utama HP untuk akses cepat.</span>
-            </div>
-        </div>
-        <button type="button" id="btn-install" class="btn btn-sm btn-theme mt-3 w-100 fw-bold rounded-pill shadow-sm">Instal Sekarang</button>
-        <button type="button" class="btn-close" id="btn-close-banner" aria-label="Close"></button>
     </div>
 
     <!-- Bootstrap 5 JS -->
@@ -151,12 +166,13 @@
 
     <!-- Script PWA -->
     <script>
+        // Registrasi Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then((registration) => {
-                    console.log('ServiceWorker terdaftar dengan scope: ', registration.scope);
+                    console.log('ServiceWorker terdaftar:', registration.scope);
                 }).catch((err) => {
-                    console.log('ServiceWorker pendaftaran gagal: ', err);
+                    console.log('ServiceWorker gagal:', err);
                 });
             });
         }
@@ -164,33 +180,33 @@
         let deferredPrompt;
         const installBanner = document.getElementById('install-banner');
         const btnInstall = document.getElementById('btn-install');
-        const btnClose = document.getElementById('btn-close-banner');
+
+        // Cek apakah aplikasi sudah dalam mode PWA/Installed (Standalone)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBanner.classList.remove('d-none');
+            // Jika belum di-install, tampilkan tombol di bawah form login
+            if (!isStandalone) {
+                e.preventDefault();
+                deferredPrompt = e;
+                installBanner.classList.remove('d-none');
+            }
         });
 
         btnInstall.addEventListener('click', async () => {
             if (deferredPrompt) {
-                installBanner.classList.add('d-none');
                 deferredPrompt.prompt();
-                
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`Pilihan user: ${outcome}`);
+                if (outcome === 'accepted') {
+                    installBanner.classList.add('d-none');
+                }
                 deferredPrompt = null;
             }
-        });
-
-        btnClose.addEventListener('click', () => {
-            installBanner.classList.add('d-none');
         });
 
         window.addEventListener('appinstalled', () => {
             installBanner.classList.add('d-none');
             deferredPrompt = null;
-            console.log('Aplikasi sukses diinstal');
         });
     </script>
 </body>
