@@ -12,15 +12,6 @@ class Session extends BaseConfig
      * --------------------------------------------------------------------------
      * Session Driver
      * --------------------------------------------------------------------------
-     *
-     * The session storage driver to use:
-     * - `CodeIgniter\Session\Handlers\ArrayHandler` (for testing)
-     * - `CodeIgniter\Session\Handlers\FileHandler`
-     * - `CodeIgniter\Session\Handlers\DatabaseHandler`
-     * - `CodeIgniter\Session\Handlers\MemcachedHandler`
-     * - `CodeIgniter\Session\Handlers\RedisHandler`
-     *
-     * @var class-string<BaseHandler>
      */
     public string $driver = FileHandler::class;
 
@@ -28,8 +19,6 @@ class Session extends BaseConfig
      * --------------------------------------------------------------------------
      * Session Cookie Name
      * --------------------------------------------------------------------------
-     *
-     * The session cookie name, must contain only [0-9a-z_-] characters
      */
     public string $cookieName = 'ci_session';
 
@@ -38,25 +27,15 @@ class Session extends BaseConfig
      * Session Expiration
      * --------------------------------------------------------------------------
      *
-     * The number of SECONDS you want the session to last.
-     * Setting to 0 (zero) means expire when the browser is closed.
+     * Diubah ke 31536000 detik (365 hari / 1 tahun) agar sesi login PWA 
+     * di HP GPK dan Orang Tua tetap bertahan awet tanpa perlu re-login.
      */
-    public int $expiration = 7200;
+    public int $expiration = 31536000;
 
     /**
      * --------------------------------------------------------------------------
      * Session Save Path
      * --------------------------------------------------------------------------
-     *
-     * The location to save sessions to and is driver dependent.
-     *
-     * For the 'files' driver, it's a path to a writable directory.
-     * WARNING: Only absolute paths are supported!
-     *
-     * For the 'database' driver, it's a table name.
-     * Please read up the manual for the format with other session drivers.
-     *
-     * IMPORTANT: You are REQUIRED to set a valid save path!
      */
     public string $savePath = WRITEPATH . 'session';
 
@@ -64,11 +43,6 @@ class Session extends BaseConfig
      * --------------------------------------------------------------------------
      * Session Match IP
      * --------------------------------------------------------------------------
-     *
-     * Whether to match the user's IP address when reading the session data.
-     *
-     * WARNING: If you're using the database driver, don't forget to update
-     *          your session table's PRIMARY KEY when changing this setting.
      */
     public bool $matchIP = false;
 
@@ -77,7 +51,7 @@ class Session extends BaseConfig
      * Session Time to Update
      * --------------------------------------------------------------------------
      *
-     * How many seconds between CI regenerating the session ID.
+     * Diperbarui setiap 300 detik saat aplikasi aktif
      */
     public int $timeToUpdate = 300;
 
@@ -86,9 +60,7 @@ class Session extends BaseConfig
      * Session Regenerate Destroy
      * --------------------------------------------------------------------------
      *
-     * Whether to destroy session data associated with the old session ID
-     * when auto-regenerating the session ID. When set to FALSE, the data
-     * will be later deleted by the garbage collector.
+     * Di-set FALSE agar data sesi lama tidak langsung hancur saat regenerate
      */
     public bool $regenerateDestroy = false;
 
@@ -96,33 +68,14 @@ class Session extends BaseConfig
      * --------------------------------------------------------------------------
      * Session Database Group
      * --------------------------------------------------------------------------
-     *
-     * DB Group for the database session.
      */
     public ?string $DBGroup = null;
 
     /**
      * --------------------------------------------------------------------------
-     * Lock Retry Interval (microseconds)
+     * Lock Settings (For Redis)
      * --------------------------------------------------------------------------
-     *
-     * This is used for RedisHandler.
-     *
-     * Time (microseconds) to wait if lock cannot be acquired.
-     * The default is 100,000 microseconds (= 0.1 seconds).
      */
     public int $lockRetryInterval = 100_000;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Lock Max Retries
-     * --------------------------------------------------------------------------
-     *
-     * This is used for RedisHandler.
-     *
-     * Maximum number of lock acquisition attempts.
-     * The default is 300 times. That is lock timeout is about 30 (0.1 * 300)
-     * seconds.
-     */
     public int $lockMaxRetries = 300;
 }

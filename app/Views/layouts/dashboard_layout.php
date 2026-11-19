@@ -64,7 +64,7 @@
     <!-- Top Navbar -->
     <header class="navbar navbar-dark sticky-top navbar-theme flex-md-nowrap p-0 shadow-sm">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 ps-4 fs-6 fw-bold text-white d-flex align-items-center" href="#">
-            <i class="fas fa-book-reader me-2"></i> GPK MIMHa
+            <i class="fas fa-book-reader me-2"></i> Jurnal Harian GPK MIMHa
         </a>
         <button class="navbar-toggler position-absolute d-md-none collapsed mt-2 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
