@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title><?= $title ?? 'App' ?> - Guru Pendamping Khusus</title>
+    <title><?= $title ?? 'App' ?> - Jurnal Harian GPK</title>
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="<?= base_url('manifest.json') ?>">
@@ -14,7 +14,7 @@
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- FontAwesome (Ikon) -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
     <style>
@@ -27,12 +27,11 @@
 
         body.mobile-body {
             background-color: #f8fafc;
-            padding-bottom: 75px; /* Ruang agar konten tidak tertutup Bottom Nav */
+            padding-bottom: 75px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Top Header Navbar */
         .navbar-mobile {
             background: linear-gradient(135deg, #e11d48, #fb7185);
             color: white;
@@ -40,7 +39,6 @@
             border-bottom-right-radius: 15px;
         }
 
-        /* Bottom Navigation Bar */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -63,11 +61,7 @@
             transition: all 0.2s ease-in-out;
         }
 
-        .bottom-nav-link:hover {
-            color: var(--rose-primary);
-        }
-
-        .bottom-nav-link.active {
+        .bottom-nav-link:hover, .bottom-nav-link.active {
             color: var(--rose-primary);
             font-weight: 700;
         }
@@ -77,7 +71,6 @@
             margin-top: 2px;
         }
 
-        /* Card & UI Mobile Elements */
         .card-mobile {
             border: none;
             border-radius: 16px;
@@ -91,20 +84,28 @@
             padding: 3px 8px;
             border-radius: 12px;
         }
+
+        .btn-rose {
+            background-color: var(--rose-primary);
+            color: white;
+            border-color: var(--rose-primary);
+        }
+        .btn-rose:hover {
+            background-color: var(--rose-hover);
+            color: white;
+        }
     </style>
 </head>
 <body class="mobile-body">
 
-    <!-- Header Atas (Warna Rose Soft Gradient) -->
+    <!-- Header Atas -->
     <nav class="navbar navbar-mobile sticky-top shadow-sm py-2 px-3">
         <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
-            <!-- Brand / Judul -->
             <div class="d-flex align-items-center">
-                <i class="fas fa-chalkboard-teacher me-2 fs-5"></i>
+                <i class="fas fa-book-reader me-2 fs-5"></i>
                 <span class="fw-bold fs-6">GPK MIMHa</span>
             </div>
 
-            <!-- Profile User Ringkas -->
             <div class="d-flex align-items-center gap-2">
                 <div class="text-end" style="max-width: 140px">
                     <span class="small fw-bold text-truncate d-block" title="<?= esc(session()->get('nama_lengkap')) ?>">
@@ -114,9 +115,10 @@
                         <?= esc(session()->get('role') ?? 'User') ?>
                     </span>
                 </div>
-                <a href="/logout" onclick="return confirm('Keluar dari aplikasi?')" class="text-white opacity-75 ms-1">
+                <!-- Tombol Logout Pemicu Modal -->
+                <button type="button" class="btn p-0 text-white opacity-90 ms-1 border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#modalLogoutMobile">
                     <i class="fas fa-sign-out-alt fs-5"></i>
-                </a>
+                </button>
             </div>
         </div>
     </nav>
@@ -126,20 +128,27 @@
         <?= $this->renderSection('content') ?>
     </div>
 
-    <!-- Bottom Navigation Bar (Otomatis Mengikuti Role) -->
+    <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
         <?= $this->include('layouts/bottom_nav') ?>
     </nav>
 
-    <!-- Universal Image Preview Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <!-- MODAL KONFIRMASI LOGOUT MOBILE -->
+    <div class="modal fade" id="modalLogoutMobile" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered px-3">
-            <div class="modal-content border-0 bg-transparent">
-                <div class="modal-header border-0 p-2 justify-content-end">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0 text-center">
-                    <img loading="lazy" id="modalImageSource" src="" class="img-fluid rounded-4 shadow-lg" alt="Preview Gambar" />
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-body p-4 text-center">
+                    <div class="mb-3">
+                        <span class="d-inline-block rounded-circle p-3 bg-light text-rose">
+                            <i class="fas fa-sign-out-alt fa-2x"></i>
+                        </span>
+                    </div>
+                    <h5 class="fw-bold mb-1">Keluar Aplikasi?</h5>
+                    <p class="small text-muted mb-4">Sesi Anda akan diakhiri dan harus login kembali untuk mengakses data.</p>
+                    <div class="d-grid gap-2">
+                        <a href="/logout" class="btn btn-rose rounded-pill fw-bold py-2 shadow-sm">Ya, Keluar Sekarang</a>
+                        <button type="button" class="btn btn-light rounded-pill fw-bold py-2 text-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,13 +156,6 @@
 
     <!-- Script Global -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function showImage(imageSrc) {
-            document.getElementById("modalImageSource").src = imageSrc;
-            var imageModal = new bootstrap.Modal(document.getElementById("imageModal"));
-            imageModal.show();
-        }
-    </script>
     <?= $this->renderSection('scripts') ?>
 </body>
 </html>
