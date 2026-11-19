@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Jurnal Harian GPK</title>
+
+    <!-- Favicon Browser & Apple Touch Icon -->
+    <link rel="icon" type="image/x-icon" href="<?= base_url('favicon.ico') ?>">
+    <link rel="apple-touch-icon" href="<?= base_url('assets/images/logo.png') ?>">
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="<?= base_url('manifest.json') ?>">
