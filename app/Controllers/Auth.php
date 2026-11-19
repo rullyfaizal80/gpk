@@ -69,18 +69,19 @@ class Auth extends BaseController
         return "Akses Ditolak. Anda tidak memiliki izin untuk membuka halaman ini.";
     }
 
-    // Routing otomatis berdasarkan role pengguna
     private function redirectBasedOnRole($role)
-    {
-        switch ($role) {
-            case 'admin':
-            case 'gpk':
-            case 'pimpinan':
-            case 'ortu':
-                // Sementara semua role diarahkan ke /admin/dashboard agar tidak error 404
-                return redirect()->to('/admin/dashboard');
-            default:
-                return redirect()->to('/login');
-        }
+{
+    switch ($role) {
+        case 'admin':
+            return redirect()->to('/admin/dashboard');
+        case 'gpk':
+            return redirect()->to('/gpk/dashboard');
+        case 'pimpinan':
+            return redirect()->to('/pimpinan/dashboard');
+        case 'ortu':
+            return redirect()->to('/ortu/dashboard');
+        default:
+            return redirect()->to('/login');
     }
+}
 }
