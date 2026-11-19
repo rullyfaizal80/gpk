@@ -18,27 +18,53 @@ class GpkController extends BaseController
         $this->db               = \Config\Database::connect();
     }
 
-    // 1. DASHBOARD GPK
+    // 1. DASHBOARD GPK (BERANDA - HANYA RIWAYAT JURNAL HARIAN)
     public function index()
     {
         $gpkId = session()->get('id');
 
-        // Ambil data anak yang didampingi oleh GPK ini
-        $anakDampingan = $this->db->table('peserta_didik')
-                                  ->where('gpk_id', $gpkId)
-                                  ->get()->getResultArray();
+        $bulanAktif = $this->request->getGet('bulan') ?? date('m');
+        $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
+
+        $jurnalList = $this->db->table('jurnal')
+                               ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
+                               ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
+                               ->where('jurnal.gpk_id', $gpkId)
+                               ->where('MONTH(jurnal.tanggal)', $bulanAktif)
+                               ->where('YEAR(jurnal.tanggal)', $tahunAktif)
+                               ->orderBy('jurnal.tanggal', 'DESC')
+                               ->orderBy('jurnal.id', 'DESC')
+                               ->get()->getResultArray();
 
         $data = [
-            'title'         => 'Dashboard GPK',
-            'nama_gpk'      => session()->get('nama_lengkap'),
-            'total_anak'    => count($anakDampingan),
-            'anakDampingan' => $anakDampingan,
+            'title'      => 'Dashboard GPK',
+            'nama_gpk'   => session()->get('nama_lengkap'),
+            'jurnalList' => $jurnalList,
+            'bulanAktif' => sprintf('%02d', $bulanAktif),
+            'tahunAktif' => $tahunAktif,
         ];
 
         return view('gpk/dashboard', $data);
     }
 
-    // 2. DAFTAR PESERTA DIDIK (ANAK DAMPINGAN)
+    // 2. MENU ISI JURNAL (KHUSUS MEMILIH ANAK UNTUK ISI JURNAL BARU)
+    public function isiJurnal()
+    {
+        $gpkId = session()->get('id');
+
+        $anakDampingan = $this->db->table('peserta_didik')
+                                  ->where('gpk_id', $gpkId)
+                                  ->get()->getResultArray();
+
+        $data = [
+            'title'         => 'Isi Jurnal Harian',
+            'anakDampingan' => $anakDampingan,
+        ];
+
+        return view('gpk/jurnal_pilih_anak', $data);
+    }
+
+    // 3. DAFTAR ANAK DAMPINGAN & LIHAT JURNAL PER ANAK
     public function pesertaDidik()
     {
         $gpkId = session()->get('id');
@@ -55,22 +81,48 @@ class GpkController extends BaseController
         return view('gpk/peserta_didik', $data);
     }
 
-    // 3. DAFTAR JURNAL HARIAN
+   // 3. DAFTAR JURNAL KHUSUS TIAP ANAK DAMPINGAN
     public function jurnal()
     {
-        $gpkId = session()->get('id');
+        $gpkId  = session()->get('id');
+        $pdbkId = $this->request->getGet('pdbk_id');
 
-        $jurnal = $this->db->table('jurnal')
-                           ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas')
-                           ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
-                           ->where('jurnal.gpk_id', $gpkId)
-                           ->orderBy('jurnal.tanggal', 'DESC')
-                           ->orderBy('jurnal.id', 'DESC')
-                           ->get()->getResultArray();
+        // Jika tidak ada parameter pdbk_id, kembalikan ke menu peserta didik
+        if (!$pdbkId) {
+            return redirect()->to('/gpk/peserta-didik');
+        }
+
+        // Ambil data detail anak
+        $anak = $this->pesertaDidikModel->where('id', $pdbkId)
+                                        ->where('gpk_id', $gpkId)
+                                        ->first();
+
+        if (!$anak) {
+            session()->setFlashdata('error', 'Data anak tidak ditemukan atau bukan dampingan Anda.');
+            return redirect()->to('/gpk/peserta-didik');
+        }
+
+        // Filter bulan & tahun (default ke bulan & tahun sekarang)
+        $bulanAktif = $this->request->getGet('bulan') ?? date('m');
+        $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
+
+        // Ambil riwayat jurnal khusus anak ini saja
+        $jurnalList = $this->db->table('jurnal')
+                               ->select('jurnal.*, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
+                               ->where('jurnal.gpk_id', $gpkId)
+                               ->where('jurnal.pdbk_id', $pdbkId)
+                               ->where('MONTH(jurnal.tanggal)', $bulanAktif)
+                               ->where('YEAR(jurnal.tanggal)', $tahunAktif)
+                               ->orderBy('jurnal.tanggal', 'DESC')
+                               ->orderBy('jurnal.id', 'DESC')
+                               ->get()->getResultArray();
 
         $data = [
-            'title'  => 'Jurnal Harian GPK',
-            'jurnal' => $jurnal
+            'title'      => 'Jurnal ' . $anak['nama_pdbk'],
+            'anak'       => $anak,
+            'jurnalList' => $jurnalList,
+            'bulanAktif' => sprintf('%02d', $bulanAktif),
+            'tahunAktif' => $tahunAktif,
         ];
 
         return view('gpk/jurnal_index', $data);
@@ -88,7 +140,8 @@ class GpkController extends BaseController
 
         if (!$anak) {
             session()->setFlashdata('error', 'Data anak tidak ditemukan atau bukan dampingan Anda.');
-            return redirect()->to('/gpk/peserta-didik');
+            // Diubah redirect-nya ke /gpk/isi-jurnal
+            return redirect()->to('/gpk/isi-jurnal');
         }
 
         $data = [
@@ -245,19 +298,24 @@ class GpkController extends BaseController
         return view('gpk/profil', $data);
     }
 
-    // 8. RENDER FOTO DARI GOOGLE DRIVE DENGAN CACHE
-    public function renderFoto($fileId)
+    // RENDER FOTO DARI GOOGLE DRIVE
+    public function renderFoto($fileId = null)
     {
+        if (empty($fileId)) {
+            return $this->response->setStatusCode(404)->setBody('File ID Kosong');
+        }
+
         try {
             $driveService = new \App\Libraries\GoogleDriveService();
             $gambarData   = $driveService->getMedia($fileId);
             
             return $this->response
-                        ->setContentType('image/jpeg') 
-                        ->setHeader('Cache-Control', 'max-age=86400')
+                        ->setContentType('image/jpeg')
+                        ->setHeader('Cache-Control', 'max-age=86400, public')
                         ->setBody($gambarData);
         } catch (\Exception $e) {
-            return $this->response->setStatusCode(404)->setBody('Gambar tidak ditemukan');
+            // Jika gagal ambil dari Drive, kembalikan response 404
+            return $this->response->setStatusCode(404)->setBody('Gambar tidak ditemukan: ' . $e->getMessage());
         }
     }
 }

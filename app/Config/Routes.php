@@ -38,21 +38,18 @@ $routes->group('admin', ['filter' => 'roleFilter:admin'], static function ($rout
     $routes->get('renderFoto/(:any)', 'AdminController::renderFoto/$1');
 });
 
-// ==========================================
-// 3. ROUTE GPK (GURU PENDAMPING KHUSUS)
-// ==========================================
 $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($routes) {
     $routes->get('dashboard', 'GpkController::index');
-    
-    // Data Anak Dampingan & Profil
     $routes->get('peserta-didik', 'GpkController::pesertaDidik');
-    $routes->get('profil', 'GpkController::profil');
-
-    // Input & Kelola Jurnal Harian
+    $routes->get('isi-jurnal', 'GpkController::isiJurnal');
     $routes->get('jurnal', 'GpkController::jurnal');
     $routes->get('jurnal/tambah/(:num)', 'GpkController::tambahJurnal/$1');
     $routes->post('jurnal/simpan', 'GpkController::simpanJurnal');
     $routes->get('jurnal/detail/(:num)', 'GpkController::detailJurnal/$1');
+    $routes->get('profil', 'GpkController::profil');
+    
+    // ROUTE RENDER FOTO GOOGLE DRIVE
+    $routes->get('renderFoto/(:any)', 'GpkController::renderFoto/$1');
 });
 
 // ==========================================

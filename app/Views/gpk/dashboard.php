@@ -1,62 +1,127 @@
 <?= $this->extend('layouts/mobile_layout') ?>
 
 <?= $this->section('content') ?>
-    <style>
-        .card-stat { background: linear-gradient(135deg, #e11d48, #fb7185); color: white; }
-        .text-rose { color: #e11d48 !important; }
-        .btn-rose { background-color: #e11d48; color: white; border-radius: 12px; }
-        .btn-rose:hover { background-color: #be123c; color: white; }
-    </style>
+<style>
+    .text-rose { color: #e11d48 !important; }
+    .bg-rose { background-color: #e11d48 !important; color: white; }
+    .bg-rose-light { background-color: #fff1f2 !important; }
+    .border-rose-subtle { border-color: #fecdd3 !important; }
+    
+    .card-jurnal {
+        border: 1px solid #f1f5f9;
+        border-radius: 16px;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    .card-jurnal:active {
+        transform: scale(0.98);
+    }
+    
+    /* Wadah Ukuran Tetap untuk Gambar Thumbnail */
+    .thumb-box {
+        width: 70px;
+        height: 70px;
+        min-width: 70px;
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+    }
+    .thumb-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
 
-    <!-- Greeting & Banner Stats -->
-    <div class="card card-mobile card-stat p-3 mb-3 shadow-sm">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <span class="badge bg-white text-dark mb-1">Guru Pendamping Khusus</span>
-                <h5 class="fw-bold mb-0">Halo, <?= esc($nama_gpk) ?>!</h5>
-                <small class="opacity-75">Siap mendampingi Ananda hari ini?</small>
-            </div>
-            <div class="text-end">
-                <h2 class="fw-bold mb-0"><?= $total_anak ?></h2>
-                <small class="opacity-75">Anak Dampingan</small>
-            </div>
-        </div>
-    </div>
-
-    <!-- Alert Batas Waktu Pengisian -->
-    <div class="alert alert-warning border-0 shadow-sm rounded-4 d-flex align-items-center p-3 mb-3" role="alert">
-        <i class="fas fa-clock fa-2x text-warning me-3"></i>
+<!-- Banner Header -->
+<div class="card card-mobile bg-rose text-white p-3 mb-3 shadow-sm border-0" style="background: linear-gradient(135deg, #e11d48, #fb7185);">
+    <div class="d-flex justify-content-between align-items-center">
         <div>
-            <strong class="small d-block">Pengisian Jurnal Harian</strong>
-            <span class="small text-muted">Batas waktu pengisian setelah PBM (14:30 WIB)[cite: 11].</span>
+            <span class="small opacity-75">Selamat bertugas,</span>
+            <h6 class="fw-bold mb-0 text-white"><?= esc($nama_gpk) ?></h6>
+        </div>
+        <i class="fas fa-book-reader fa-2x opacity-50"></i>
+    </div>
+</div>
+
+<!-- Header Judul Riwayat -->
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h6 class="fw-bold text-dark mb-0"><i class="fas fa-history me-1 text-rose"></i> Riwayat Jurnal Harian</h6>
+</div>
+
+<!-- Form Filter Bulan & Tahun -->
+<form method="get" action="/gpk/dashboard" class="card card-mobile p-2 bg-white shadow-sm border-0 mb-3">
+    <div class="row g-2">
+        <div class="col-6">
+            <select name="bulan" class="form-select form-select-sm border-0 bg-light fw-bold text-secondary" onchange="this.form.submit()">
+                <?php 
+                $namaBulan = [
+                    '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
+                    '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
+                    '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+                ];
+                foreach($namaBulan as $k => $v): 
+                ?>
+                    <option value="<?= $k ?>" <?= ($bulanAktif == $k) ? 'selected' : '' ?>><?= $v ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-6">
+            <select name="tahun" class="form-select form-select-sm border-0 bg-light fw-bold text-secondary" onchange="this.form.submit()">
+                <?php for($y = date('Y'); $y >= date('Y')-2; $y--): ?>
+                    <option value="<?= $y ?>" <?= ($tahunAktif == $y) ? 'selected' : '' ?>><?= $y ?></option>
+                <?php endfor; ?>
+            </select>
         </div>
     </div>
+</form>
 
-    <!-- Daftar Anak Dampingan -->
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h6 class="fw-bold text-dark mb-0"><i class="fas fa-user-graduate text-rose me-1"></i> Anak Dampingan</h6>
-    </div>
-
-    <?php if(!empty($anakDampingan)): ?>
-        <?php foreach($anakDampingan as $a): ?>
-            <div class="card card-mobile p-3 bg-white mb-2 shadow-sm border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h6 class="fw-bold mb-1 text-dark"><?= esc($a['nama_pdbk']) ?></h6>
-                        <span class="badge bg-rose-light text-rose border border-rose-subtle me-1">Kelas <?= esc($a['kelas']) ?></span>
-                        <span class="badge bg-light text-dark border"><?= esc($a['unit']) ?></span>
-                        <p class="small text-muted mt-1 mb-0"><i class="fas fa-brain me-1"></i> <?= esc($a['keterangan_iq']) ?></p>
+<!-- Daftar Kartu Jurnal -->
+<?php if(!empty($jurnalList)): ?>
+    <div class="d-flex flex-column gap-2 mb-4">
+        <?php foreach($jurnalList as $j): ?>
+            <a href="/gpk/jurnal/detail/<?= $j['id'] ?>" class="card card-jurnal bg-white p-3 shadow-sm">
+                <div class="d-flex align-items-center gap-3">
+                    
+                    <!-- Box Thumbnail Gambar -->
+                    <div class="thumb-box d-flex align-items-center justify-content-center">
+                        <?php if(!empty($j['foto_sampul'])): ?>
+                            <img loading="lazy" src="<?= base_url('gpk/renderFoto/' . esc($j['foto_sampul'])) ?>" alt="Dokumentasi">
+                        <?php else: ?>
+                            <div class="text-rose text-center">
+                                <i class="fas fa-file-alt fa-lg"></i>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                    <a href="/gpk/jurnal/tambah/<?= $a['id'] ?>" class="btn btn-rose btn-sm shadow-sm px-3 py-2">
-                        <i class="fas fa-pen me-1"></i> Jurnal
-                    </a>
+
+                    <!-- Informasi Jurnal -->
+                    <div class="flex-grow-1 overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge bg-rose-light text-rose border border-rose-subtle" style="font-size: 0.65rem;"><?= esc($j['unit']) ?> - Kelas <?= esc($j['kelas']) ?></span>
+                            <small class="text-muted fw-semibold" style="font-size: 0.72rem;"><i class="far fa-calendar-alt me-1"></i> <?= date('d M Y', strtotime($j['tanggal'])) ?></small>
+                        </div>
+                        <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 0.9rem;"><?= esc($j['nama_pdbk']) ?></h6>
+                        <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">
+                            <?php if($j['jenis_form'] == 'peril'): ?>
+                                <i class="fas fa-tasks text-warning me-1"></i> <?= esc($j['peril_kegiatan'] ?? 'Jurnal PERIL') ?>
+                            <?php else: ?>
+                                <i class="fas fa-book text-primary me-1"></i> Mapel: <?= esc($j['akademik_mapel'] ?? 'Akademik') ?>
+                            <?php endif; ?>
+                        </small>
+                    </div>
+
                 </div>
-            </div>
+            </a>
         <?php endforeach; ?>
-    <?php else: ?>
-        <div class="text-center py-4 bg-white rounded-4 border">
-            <i class="fas fa-info-circle fa-2x text-muted mb-2"></i>
-            <p class="small text-muted mb-0">Belum ada anak dampingan yang ditugaskan.</p>
-        </div>
-    <?php endif; ?>
+    </div>
+<?php else: ?>
+    <div class="text-center py-5 bg-white rounded-4 border border-dashed mb-4">
+        <i class="fas fa-folder-open fa-3x text-muted mb-2"></i>
+        <p class="small text-muted mb-0">Belum ada riwayat jurnal pada bulan <?= $namaBulan[$bulanAktif] ?> <?= $tahunAktif ?>.</p>
+    </div>
+<?php endif; ?>
+
 <?= $this->endSection() ?>

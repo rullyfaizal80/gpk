@@ -29,7 +29,8 @@
 </style>
 
 <div class="d-flex align-items-center mb-3">
-    <a href="/gpk/dashboard" class="text-secondary me-3">
+    <!-- Diubah ke /gpk/isi-jurnal agar kembali ke daftar pilih anak -->
+    <a href="/gpk/isi-jurnal" class="text-secondary me-3">
         <i class="fas fa-arrow-left fs-5"></i>
     </a>
     <div>
