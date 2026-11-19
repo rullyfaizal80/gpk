@@ -3,8 +3,6 @@
 <?= $this->section('content') ?>
 <style>
     .text-rose { color: #e11d48 !important; }
-    .bg-rose-light { background-color: #fff1f2 !important; }
-    .border-rose-subtle { border-color: #fecdd3 !important; }
     
     .card-jurnal {
         border: 1px solid #f1f5f9;
@@ -36,7 +34,7 @@
 
 <!-- Header Ringkas: Tombol Back + Nama Anak -->
 <div class="d-flex align-items-center mb-3">
-    <a href="/gpk/peserta-didik" class="text-secondary me-3">
+    <a href="/gpk/jurnal-anak" class="text-secondary me-3">
         <i class="fas fa-arrow-left fs-5"></i>
     </a>
     <div>
@@ -77,7 +75,7 @@
 <?php if(!empty($jurnalList)): ?>
     <div class="d-flex flex-column gap-2 mb-4">
         <?php foreach($jurnalList as $j): ?>
-            <a href="/gpk/jurnal/detail/<?= $j['id'] ?>" class="card card-jurnal bg-white p-3 shadow-sm">
+            <a href="/gpk/jurnal/detail/<?= $j['id'] ?>?from=jurnal_anak" class="card card-jurnal bg-white p-3 shadow-sm">
                 <div class="d-flex align-items-center gap-3">
                     
                     <!-- Thumbnail Foto Google Drive -->
@@ -91,21 +89,25 @@
                         <?php endif; ?>
                     </div>
 
-                    <!-- Detail Ringkas Jurnal -->
+                    <!-- Ringkasan Isi Jurnal (Tanpa Badge PERIL/STANDARD) -->
                     <div class="flex-grow-1 overflow-hidden">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="badge bg-rose-light text-rose border border-rose-subtle" style="font-size: 0.65rem;"><?= strtoupper($j['jenis_form']) ?></span>
-                            <small class="text-muted fw-semibold" style="font-size: 0.72rem;"><i class="far fa-calendar-alt me-1"></i> <?= date('d M Y', strtotime($j['tanggal'])) ?></small>
-                        </div>
-                        <small class="text-dark d-block fw-bold text-truncate mb-0" style="font-size: 0.88rem;">
-                            <?php if($j['jenis_form'] == 'peril'): ?>
-                                <i class="fas fa-tasks text-warning me-1"></i> <?= esc($j['peril_kegiatan'] ?? 'Jurnal PERIL') ?>
-                            <?php else: ?>
-                                <i class="fas fa-book text-primary me-1"></i> Mapel: <?= esc($j['akademik_mapel'] ?? 'Akademik') ?>
-                            <?php endif; ?>
+                        <!-- Baris 1: Tanggal Jurnal -->
+                        <small class="text-muted fw-bold d-block mb-1" style="font-size: 0.75rem;">
+                            <i class="far fa-calendar-alt me-1 text-rose"></i> <?= date('d F Y', strtotime($j['tanggal'])) ?>
                         </small>
+
+                        <!-- Baris 2: Judul Kegiatan / Mata Pelajaran (Mewakili Isi) -->
+                        <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 0.9rem;">
+                            <?php if($j['jenis_form'] == 'peril'): ?>
+                                <i class="fas fa-child text-warning me-1"></i> <?= esc($j['peril_kegiatan'] ?? 'Kegiatan Harian') ?>
+                            <?php else: ?>
+                                <i class="fas fa-book text-primary me-1"></i> <?= esc($j['akademik_mapel'] ?? 'Akademik') ?>
+                            <?php endif; ?>
+                        </h6>
+
+                        <!-- Baris 3: Ringkasan Singkat Respons Anak -->
                         <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">
-                            <?= esc($j['peril_partisipasi'] ?? $j['akademik_materi'] ?? '-') ?>
+                            <?= esc($j['peril_catatan_kegiatan'] ?? $j['akademik_materi'] ?? '-') ?>
                         </small>
                     </div>
 

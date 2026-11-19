@@ -7,17 +7,16 @@ $navItems = [];
 
 if ($role === 'gpk') {
     $navItems = [
-        ['title' => 'Beranda',    'url' => '/gpk/dashboard',     'icon' => 'fas fa-home',          'slug' => 'dashboard'],
-        ['title' => 'Anak',       'url' => '/gpk/peserta-didik', 'icon' => 'fas fa-user-graduate', 'slug' => 'peserta-didik'],
-        ['title' => 'Isi Jurnal', 'url' => '/gpk/isi-jurnal',    'icon' => 'fas fa-pen-square',    'slug' => 'isi-jurnal'],
-        ['title' => 'Akun',       'url' => '/gpk/profil',        'icon' => 'fas fa-user-circle',   'slug' => 'profil'],
+        ['title' => 'Beranda',     'url' => '/gpk/dashboard',  'icon' => 'fas fa-home',          'slug' => 'dashboard'],
+        ['title' => 'Jurnal Anak', 'url' => '/gpk/jurnal-anak', 'icon' => 'fas fa-user-graduate', 'slug' => 'jurnal-anak'],
+        ['title' => 'Akun',        'url' => '/gpk/profil',     'icon' => 'fas fa-user-circle',   'slug' => 'profil'],
     ];
 } elseif ($role === 'pimpinan') {
     $navItems = [
-        ['title' => 'Beranda',    'url' => '/pimpinan/dashboard', 'icon' => 'fas fa-home',        'slug' => 'dashboard'],
-        ['title' => 'Jurnal',     'url' => '/pimpinan/jurnal',    'icon' => 'fas fa-book-open',   'slug' => 'jurnal'],
-        ['title' => 'Laporan',    'url' => '/pimpinan/laporan',   'icon' => 'fas fa-chart-bar',   'slug' => 'laporan'],
-        ['title' => 'Akun',       'url' => '/pimpinan/profil',    'icon' => 'fas fa-user-circle', 'slug' => 'profil'],
+        ['title' => 'Beranda', 'url' => '/pimpinan/dashboard', 'icon' => 'fas fa-home',      'slug' => 'dashboard'],
+        ['title' => 'Jurnal',  'url' => '/pimpinan/jurnal',    'icon' => 'fas fa-book-open', 'slug' => 'jurnal'],
+        ['title' => 'Laporan', 'url' => '/pimpinan/laporan',   'icon' => 'fas fa-chart-bar', 'slug' => 'laporan'],
+        ['title' => 'Akun',    'url' => '/pimpinan/profil',    'icon' => 'fas fa-user-circle','slug' => 'profil'],
     ];
 } elseif ($role === 'ortu') {
     $navItems = [
@@ -26,7 +25,6 @@ if ($role === 'gpk') {
         ['title' => 'Akun',          'url' => '/ortu/profil',    'icon' => 'fas fa-user-circle', 'slug' => 'profil'],
     ];
 } else {
-    // Default fallback (Admin/Lainnya)
     $navItems = [
         ['title' => 'Beranda', 'url' => '/admin/dashboard', 'icon' => 'fas fa-home',      'slug' => 'dashboard'],
         ['title' => 'Kelola',  'url' => '/admin/user',      'icon' => 'fas fa-users-cog', 'slug' => 'user'],
@@ -38,9 +36,9 @@ if ($role === 'gpk') {
 <div class="d-flex justify-content-around align-items-center w-100 py-2">
     <?php foreach ($navItems as $item): ?>
         <?php 
-            // Cek keaktifan berdasarkan segment URI atau penanganan khusus sub-route jurnal
             $isActive = ($segment === $item['slug']);
-            if ($role === 'gpk' && $item['slug'] === 'isi-jurnal' && ($segment === 'isi-jurnal' || uri_string() === 'gpk/isi-jurnal')) {
+            // Aktifkan tab jika sedang membuka sub-halaman terkait jurnal anak
+            if ($role === 'gpk' && $item['slug'] === 'jurnal-anak' && in_array($segment, ['jurnal-anak', 'peserta-didik', 'isi-jurnal', 'jurnal'])) {
                 $isActive = true;
             }
         ?>

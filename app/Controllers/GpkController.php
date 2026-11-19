@@ -152,17 +152,23 @@ class GpkController extends BaseController
         return view('gpk/jurnal_tambah', $data);
     }
 
-    // 5. PROSES SIMPAN JURNAL HARIAN & UPLOAD MULTI FOTO KE GOOGLE DRIVE
+    // PROSES SIMPAN JURNAL HARIAN
     public function simpanJurnal()
     {
         $gpkId  = session()->get('id');
         $pdbkId = $this->request->getPost('pdbk_id');
 
+        // 1. Ambil nilai tanggal dari form POST
+        $inputTanggal = $this->request->getPost('tanggal');
+
+        // Jika inputTanggal terisi (tidak kosong/null), gunakan inputTanggal. Jika kosong, baru fallback ke date('Y-m-d')
+        $tanggalJurnal = (!empty($inputTanggal)) ? $inputTanggal : date('Y-m-d');
+
         $this->db->transStart();
 
-        // 1. Data Jurnal Utama (Support Form PERIL & Form Standard MI/MTs)
+        // 2. Data Jurnal Utama
         $dataJurnal = [
-            'tanggal'                 => date('Y-m-d'),
+            'tanggal'                 => $tanggalJurnal, // Menggunakan tanggal dari form input
             'pdbk_id'                 => $pdbkId,
             'gpk_id'                  => $gpkId,
             'unit'                    => $this->request->getPost('unit'),
@@ -198,6 +204,8 @@ class GpkController extends BaseController
         ];
 
         $this->db->table('jurnal')->insert($dataJurnal);
+        // ... (proses upload foto ke drive dst tetap sama)
+        
         $jurnalId = $this->db->insertID();
 
         // 2. Unggah Multi-Foto ke Google Drive (Struktur: Root -> GPK -> Tahun -> Bulan)
@@ -317,5 +325,22 @@ class GpkController extends BaseController
             // Jika gagal ambil dari Drive, kembalikan response 404
             return $this->response->setStatusCode(404)->setBody('Gambar tidak ditemukan: ' . $e->getMessage());
         }
+    }
+
+    // MENU JURNAL ANAK (GABUNGAN DAFTAR ANAK & PILIH AKSI)
+    public function jurnalAnak()
+    {
+        $gpkId = session()->get('id');
+
+        $anakDampingan = $this->db->table('peserta_didik')
+                                  ->where('gpk_id', $gpkId)
+                                  ->get()->getResultArray();
+
+        $data = [
+            'title'         => 'Jurnal Anak Dampingan',
+            'anakDampingan' => $anakDampingan,
+        ];
+
+        return view('gpk/jurnal_anak', $data);
     }
 }

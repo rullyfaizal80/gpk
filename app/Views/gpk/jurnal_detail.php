@@ -6,80 +6,74 @@
     .bg-rose { background-color: #e11d48 !important; color: white; }
     .bg-rose-light { background-color: #fff1f2 !important; }
     .border-rose-subtle { border-color: #fecdd3 !important; }
-    
-    .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-    }
-    .gallery-item {
-        aspect-ratio: 1;
-        border-radius: 10px;
-        overflow: hidden;
-        border: 1px solid #e2e8f0;
-    }
-    .gallery-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        cursor: pointer;
-    }
 </style>
 
+<?php 
+    // SOLUSI 2: Pengecekan parameter 'from' dari URL
+    $from = $_GET['from'] ?? '';
+    if ($from === 'jurnal_anak') {
+        // Kembali ke daftar riwayat jurnal anak terkait
+        $backUrl = base_url('gpk/jurnal?pdbk_id=' . $jurnal['pdbk_id']);
+    } else {
+        // Fallback kembali ke Beranda / Dashboard GPK
+        $backUrl = base_url('gpk/dashboard');
+    }
+?>
+
+<!-- Header Navigasi Kembali -->
 <div class="d-flex align-items-center mb-3">
-    <a href="/gpk/dashboard" class="text-secondary me-3">
+    <a href="<?= $backUrl ?>" class="text-secondary me-3">
         <i class="fas fa-arrow-left fs-5"></i>
     </a>
     <div>
         <h5 class="fw-bold mb-0 text-rose">Detail Jurnal Harian</h5>
-        <small class="text-muted"><?= date('d F Y', strtotime($jurnal['tanggal'])) ?></small>
+        <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> <?= date('d F Y', strtotime($jurnal['tanggal'])) ?></small>
     </div>
 </div>
 
-<!-- Header Identitas PDBK -->
-<div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
+<!-- Header Identitas PDBK (Tanpa Badge PERIL/STANDARD) -->
+<div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
     <div class="d-flex justify-content-between align-items-center">
         <div>
             <span class="badge bg-rose-light text-rose border border-rose-subtle mb-1"><?= esc($jurnal['unit']) ?> - Kelas <?= esc($jurnal['kelas']) ?></span>
             <h6 class="fw-bold text-dark mb-0"><?= esc($jurnal['nama_pdbk']) ?></h6>
             <small class="text-muted"><i class="fas fa-brain me-1"></i> IQ: <?= esc($jurnal['keterangan_iq'] ?? '-') ?></small>
         </div>
-        <span class="badge bg-light text-dark border"><?= strtoupper($jurnal['jenis_form']) ?></span>
     </div>
 </div>
 
 <?php if($jurnal['jenis_form'] == 'peril'): ?>
-    <!-- ================= RINCUN JURNAL PERIL ================= -->
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-child me-2"></i>Kegiatan Pembelajaran</h6>
+    <!-- ================= RINCIAN JURNAL PERIL ================= -->
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-child me-2"></i>1. Kegiatan Pembelajaran</h6>
         <p class="small mb-1"><strong>Kegiatan:</strong> <?= esc($jurnal['peril_kegiatan']) ?></p>
         <p class="small mb-1"><strong>Partisipasi:</strong> <span class="badge bg-warning text-dark"><?= esc($jurnal['peril_partisipasi']) ?></span></p>
         <p class="small mb-0"><strong>Catatan Respons:</strong> <?= esc($jurnal['peril_catatan_kegiatan']) ?></p>
     </div>
 
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-utensils me-2"></i>Kemandirian & Aktivitas Harian</h6>
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-utensils me-2"></i>2. Kemandirian & Aktivitas Harian</h6>
         <p class="small mb-1"><strong>Makan/Minum:</strong> <?= esc($jurnal['peril_makan_minum'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Toilet Training:</strong> <?= esc($jurnal['peril_kebersihan_toilet'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Merapikan Barang:</strong> <?= esc($jurnal['peril_merapikan_barang'] ?? '-') ?></p>
         <p class="small mb-0"><strong>Bantuan Diperlukan:</strong> <?= esc($jurnal['peril_bantuan_harian'] ?? '-') ?></p>
     </div>
 
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-comments me-2"></i>Komunikasi & Interaksi Sosial</h6>
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-comments me-2"></i>3. Komunikasi & Interaksi Sosial</h6>
         <p class="small mb-1"><strong>Komunikasi:</strong> <?= esc($jurnal['peril_komunikasi'] ?? '-') ?></p>
         <p class="small mb-0"><strong>Interaksi:</strong> <?= esc($jurnal['peril_interaksi'] ?? '-') ?></p>
     </div>
 
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-smile me-2"></i>Regulasi Emosi</h6>
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-smile me-2"></i>4. Regulasi Emosi</h6>
         <p class="small mb-1"><strong>Kondisi Emosi:</strong> <?= esc($jurnal['peril_emosi'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Respons Transisi:</strong> <?= esc($jurnal['peril_respon_arahan'] ?? '-') ?></p>
         <p class="small mb-0"><strong>Strategi Membantu:</strong> <?= esc($jurnal['peril_strategi_dukungan'] ?? '-') ?></p>
     </div>
 
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-star me-2"></i>Apresiasi & Catatan Rumah</h6>
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-star me-2"></i>5. Apresiasi & Catatan Rumah</h6>
         <p class="small mb-1"><strong>Pencapaian Positif:</strong> <?= esc($jurnal['peril_pencapaian_positif'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Perlu Distimulasi:</strong> <?= esc($jurnal['peril_perlu_stimulasi'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Info Ortu:</strong> <?= esc($jurnal['peril_info_ortu'] ?? '-') ?></p>
@@ -88,22 +82,22 @@
 
 <?php else: ?>
     <!-- ================= RINCIAN JURNAL MI & MTS ================= -->
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-book me-2"></i>Bidang Akademik</h6>
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-book me-2"></i>1. Bidang Akademik</h6>
         <p class="small mb-1"><strong>Mata Pelajaran:</strong> <?= esc($jurnal['akademik_mapel']) ?></p>
         <p class="small mb-1"><strong>Uraian Materi:</strong> <?= esc($jurnal['akademik_materi']) ?></p>
         <p class="small mb-0"><strong>Catatan Respons:</strong> <?= esc($jurnal['akademik_catatan']) ?></p>
     </div>
 
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-user-check me-2"></i>Daily Life Skill</h6>
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-user-check me-2"></i>2. Daily Life Skill</h6>
         <p class="small mb-1"><strong>Toilet Training:</strong> <?= esc($jurnal['daily_toilet'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Kemandirian:</strong> <?= esc($jurnal['daily_kemandirian'] ?? '-') ?></p>
         <p class="small mb-0"><strong>Keterlibatan Kelas:</strong> <?= esc($jurnal['daily_keterlibatan'] ?? '-') ?></p>
     </div>
 
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-seedling me-2"></i>Aspek Perkembangan</h6>
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-seedling me-2"></i>3. Aspek Perkembangan</h6>
         <p class="small mb-1"><strong>Aspek Distimulasi:</strong> <?= esc($jurnal['perkembangan_aspek'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Uraian Kegiatan:</strong> <?= esc($jurnal['perkembangan_kegiatan'] ?? '-') ?></p>
         <p class="small mb-0"><strong>Catatan Respons:</strong> <?= esc($jurnal['perkembangan_catatan'] ?? '-') ?></p>

@@ -79,14 +79,14 @@
     </div>
 </form>
 
-<!-- Daftar Kartu Jurnal -->
+<!-- Daftar Kartu Jurnal (Tanggal di Baris Pertama) -->
 <?php if(!empty($jurnalList)): ?>
     <div class="d-flex flex-column gap-2 mb-4">
         <?php foreach($jurnalList as $j): ?>
             <a href="/gpk/jurnal/detail/<?= $j['id'] ?>" class="card card-jurnal bg-white p-3 shadow-sm">
                 <div class="d-flex align-items-center gap-3">
                     
-                    <!-- Box Thumbnail Gambar -->
+                    <!-- Foto Thumb Drive -->
                     <div class="thumb-box d-flex align-items-center justify-content-center">
                         <?php if(!empty($j['foto_sampul'])): ?>
                             <img loading="lazy" src="<?= base_url('gpk/renderFoto/' . esc($j['foto_sampul'])) ?>" alt="Dokumentasi">
@@ -97,16 +97,22 @@
                         <?php endif; ?>
                     </div>
 
-                    <!-- Informasi Jurnal -->
+                    <!-- Informasi Jurnal (Tanggal di Baris Pertama) -->
                     <div class="flex-grow-1 overflow-hidden">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="badge bg-rose-light text-rose border border-rose-subtle" style="font-size: 0.65rem;"><?= esc($j['unit']) ?> - Kelas <?= esc($j['kelas']) ?></span>
-                            <small class="text-muted fw-semibold" style="font-size: 0.72rem;"><i class="far fa-calendar-alt me-1"></i> <?= date('d M Y', strtotime($j['tanggal'])) ?></small>
-                        </div>
-                        <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 0.9rem;"><?= esc($j['nama_pdbk']) ?></h6>
-                        <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">
+                        <!-- Baris 1: Tanggal Jurnal -->
+                        <small class="text-muted fw-bold d-block mb-1" style="font-size: 0.75rem;">
+                            <i class="far fa-calendar-alt me-1 text-rose"></i> <?= date('d F Y', strtotime($j['tanggal'])) ?>
+                        </small>
+
+                        <!-- Baris 2: Nama Anak -->
+                        <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 0.9rem;">
+                            <?= esc($j['nama_pdbk']) ?>
+                        </h6>
+                        
+                        <!-- Baris 3: Isi Kegiatan / Mapel -->
+                        <small class="text-secondary d-block text-truncate fw-semibold" style="font-size: 0.78rem;">
                             <?php if($j['jenis_form'] == 'peril'): ?>
-                                <i class="fas fa-tasks text-warning me-1"></i> <?= esc($j['peril_kegiatan'] ?? 'Jurnal PERIL') ?>
+                                <i class="fas fa-child text-warning me-1"></i> <?= esc($j['peril_kegiatan'] ?? 'Kegiatan Harian') ?>
                             <?php else: ?>
                                 <i class="fas fa-book text-primary me-1"></i> Mapel: <?= esc($j['akademik_mapel'] ?? 'Akademik') ?>
                             <?php endif; ?>
@@ -118,6 +124,7 @@
         <?php endforeach; ?>
     </div>
 <?php else: ?>
+    <!-- Tampilan Jika Jurnal Belum Ada -->
     <div class="text-center py-5 bg-white rounded-4 border border-dashed mb-4">
         <i class="fas fa-folder-open fa-3x text-muted mb-2"></i>
         <p class="small text-muted mb-0">Belum ada riwayat jurnal pada bulan <?= $namaBulan[$bulanAktif] ?> <?= $tahunAktif ?>.</p>

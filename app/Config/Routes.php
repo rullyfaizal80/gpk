@@ -40,15 +40,12 @@ $routes->group('admin', ['filter' => 'roleFilter:admin'], static function ($rout
 
 $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($routes) {
     $routes->get('dashboard', 'GpkController::index');
-    $routes->get('peserta-didik', 'GpkController::pesertaDidik');
-    $routes->get('isi-jurnal', 'GpkController::isiJurnal');
+    $routes->get('jurnal-anak', 'GpkController::jurnalAnak'); // ROUTE BARU JURNAL ANAK
     $routes->get('jurnal', 'GpkController::jurnal');
     $routes->get('jurnal/tambah/(:num)', 'GpkController::tambahJurnal/$1');
     $routes->post('jurnal/simpan', 'GpkController::simpanJurnal');
     $routes->get('jurnal/detail/(:num)', 'GpkController::detailJurnal/$1');
     $routes->get('profil', 'GpkController::profil');
-    
-    // ROUTE RENDER FOTO GOOGLE DRIVE
     $routes->get('renderFoto/(:any)', 'GpkController::renderFoto/$1');
 });
 

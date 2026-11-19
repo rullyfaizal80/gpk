@@ -28,9 +28,9 @@
     }
 </style>
 
+<!-- Header Navigasi -->
 <div class="d-flex align-items-center mb-3">
-    <!-- Diubah ke /gpk/isi-jurnal agar kembali ke daftar pilih anak -->
-    <a href="/gpk/isi-jurnal" class="text-secondary me-3">
+    <a href="/gpk/jurnal-anak" class="text-secondary me-3">
         <i class="fas fa-arrow-left fs-5"></i>
     </a>
     <div>
@@ -39,25 +39,31 @@
     </div>
 </div>
 
-<!-- Card Ringkasan PDBK -->
-<div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-    <div class="d-flex align-items-center justify-content-between">
-        <div>
-            <span class="badge bg-rose-light text-rose border border-rose-subtle mb-1"><?= esc($anak['unit']) ?></span>
-            <h6 class="fw-bold text-dark mb-0"><?= esc($anak['nama_pdbk']) ?></h6>
-            <small class="text-muted"><i class="fas fa-brain me-1"></i> <?= esc($anak['keterangan_iq'] ?? '-') ?></small>
-        </div>
-        <div class="text-end">
-            <span class="small text-muted d-block">Tanggal</span>
-            <strong class="small text-dark"><?= date('d M Y') ?></strong>
-        </div>
-    </div>
-</div>
-
+<!-- FORM PEMBUNKA (PEMBUNGKUS UTAMA SELURUH INPUT) -->
 <form action="/gpk/jurnal/simpan" method="post" enctype="multipart/form-data" onsubmit="return validasiDanLoading(event)">
     <input type="hidden" name="pdbk_id" value="<?= $anak['id'] ?>">
     <input type="hidden" name="unit" value="<?= $anak['unit'] ?>">
     <input type="hidden" name="jenis_form" value="<?= ($anak['unit'] === 'PERIL') ? 'peril' : 'standard' ?>">
+
+    <!-- Card Ringkasan PDBK & Input Tanggal (SEKARANG SUDAH DI DALAM FORM) -->
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <div>
+                <span class="badge bg-rose-light text-rose border border-rose-subtle mb-1"><?= esc($anak['unit']) ?> - Kelas <?= esc($anak['kelas']) ?></span>
+                <h6 class="fw-bold text-dark mb-0"><?= esc($anak['nama_pdbk']) ?></h6>
+                <small class="text-muted"><i class="fas fa-brain me-1"></i> IQ: <?= esc($anak['keterangan_iq'] ?? '-') ?></small>
+            </div>
+        </div>
+        <hr class="my-2 opacity-25">
+        
+        <!-- Field Input Tanggal Jurnal (Dapat Diubah, Default Hari Ini) -->
+        <div>
+            <label for="tanggal_jurnal" class="form-label small fw-bold text-secondary mb-1">
+                <i class="far fa-calendar-alt me-1 text-rose"></i> Tanggal Kegiatan *
+            </label>
+            <input type="date" id="tanggal_jurnal" name="tanggal" class="form-control form-control-sm fw-bold border-light bg-light" value="<?= date('Y-m-d') ?>" required>
+        </div>
+    </div>
 
     <?php if($anak['unit'] === 'PERIL'): ?>
         <!-- ========================================== -->
@@ -263,14 +269,12 @@
         const files = input.files;
         if (!files.length) return;
 
-        // Cek jika melebihi batas 10 foto
         if (containerFile.files.length + files.length > 10) {
             alert('Maksimal foto yang dapat dilampirkan adalah 10 foto.');
             return;
         }
 
         for (let i = 0; i < files.length; i++) {
-            // Validasi ukuran max 5MB per foto
             if (files[i].size > 5 * 1024 * 1024) {
                 alert('File ' + files[i].name + ' melebihi ukuran maksimal 5 MB.');
                 continue;
@@ -315,7 +319,6 @@
     }
 
     function validasiDanLoading(event) {
-        // Tempelkan file dari containerFile ke input form sebelum diposting
         const form = event.target;
         let hiddenInput = document.getElementById('foto_jurnal_final');
         
@@ -331,7 +334,6 @@
         
         hiddenInput.files = containerFile.files;
 
-        // Tampilkan overlay loading
         document.getElementById('loading-overlay').classList.remove('d-none');
         const btn = document.getElementById('btn-submit');
         btn.disabled = true;
