@@ -188,22 +188,71 @@
     </div>
 <?php endif; ?>
 
-<!-- Foto Dokumentasi Drive versi Mobile Grid -->
+<!-- DOKUMENTASI FOTO GOOGLE DRIVE -->
 <div class="card card-mobile p-3 bg-white mb-4 shadow-sm border-0">
-    <h6 class="fw-bold text-rose mb-3"><i class="fas fa-camera me-2"></i>Foto Dokumentasi</h6>
+    <h6 class="fw-bold text-rose mb-3"><i class="fas fa-images me-2"></i>Foto Kegiatan / Dokumentasi</h6>
+    
     <?php if(!empty($fotos)): ?>
-        <div class="preview-grid-mobile">
+        <div class="row g-2">
             <?php foreach($fotos as $f): ?>
-                <div class="preview-item-mobile">
-                    <img loading="lazy" src="<?= base_url('gpk/renderFoto/' . esc($f['google_file_id'])) ?>" alt="Dokumentasi">
+                <div class="col-6 col-md-4">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body p-2 text-center bg-light rounded">
+                            <!-- Mengarahkan ke gpk/renderFoto agar pasti ter-load lewat cache lokal -->
+                            <img
+                              loading="lazy"
+                              src="<?= base_url('gpk/renderFoto/' . esc($f['google_file_id'])) ?>"
+                              class="img-fluid rounded border shadow-sm"
+                              alt="Foto Jurnal"
+                              style="max-height: 180px; width: 100%; object-fit: cover; cursor: zoom-in;"
+                              onclick="showImage(this.src)"
+                            />
+                        </div>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
     <?php else: ?>
-        <div class="text-center py-3 text-muted">
-            <small>Tidak ada foto dokumentasi untuk jurnal ini.</small>
+        <div class="bg-light rounded py-4 text-center text-muted small border">
+            <i class="fas fa-image fa-2x mb-2 text-secondary"></i><br />Tidak ada foto dokumentasi yang dilampirkan.
         </div>
     <?php endif; ?>
 </div>
+
+<!-- MODAL ZOOM-IN GAMBAR (Di-copy dari gpk/jurnal_detail) -->
+<div class="modal fade" id="imageViewerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0 shadow-none">
+      <div class="modal-header border-0 pb-0 justify-content-end">
+        <button
+          type="button"
+          class="btn-close btn-close-white fs-4"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          style="background-color: white; border-radius: 50%; padding: 0.5rem"
+        ></button>
+      </div>
+      <div class="modal-body text-center pt-2">
+        <img
+          loading="lazy"
+          id="enlargedImage"
+          src=""
+          class="img-fluid rounded shadow-lg"
+          style="max-height: 85vh; object-fit: contain"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showImage(src) {
+    document.getElementById("enlargedImage").src = src;
+    const viewerModal = new bootstrap.Modal(
+      document.getElementById("imageViewerModal")
+    );
+    viewerModal.show();
+  }
+</script>
 
 <?= $this->endSection() ?>

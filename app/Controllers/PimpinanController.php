@@ -89,9 +89,10 @@ class PimpinanController extends BaseController
         return view('pimpinan/jurnal_index', $data);
     }
 
-    // 3. DETAIL ENTRI JURNAL HARIAN (Bisa melihat isian narasi & isian asli)
+    // DETAIL JURNAL UNTUK PIMPINAN
     public function detailJurnal($id = null)
     {
+        // 1. Ambil data utama jurnal
         $jurnal = $this->db->table('jurnal')
                            ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas, peserta_didik.keterangan_iq, users.nama_lengkap as nama_gpk')
                            ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
@@ -104,12 +105,14 @@ class PimpinanController extends BaseController
             return redirect()->to('/pimpinan/jurnal');
         }
 
+        // 2. KUNCI PERBAIKAN: Ambil array foto dari tabel jurnal_foto
         $fotos = $this->db->table('jurnal_foto')
                          ->where('jurnal_id', $id)
                          ->get()->getResultArray();
 
+        // 3. Kirim $fotos ke View
         $data = [
-            'title'  => 'Detail Monitoring Jurnal',
+            'title'  => 'Detail Jurnal Harian',
             'jurnal' => $jurnal,
             'fotos'  => $fotos
         ];

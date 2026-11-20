@@ -54,21 +54,29 @@
 
 <!-- Rekap Keterisian Unit -->
 <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-    <h6 class="fw-bold text-rose mb-2"><i class="fas fa-layer-group me-2"></i>Rekap Jurnal per Unit</h6>
-    <div class="d-flex justify-content-between text-center pt-2 border-top">
-        <div>
-            <small class="text-muted d-block fw-bold">PERIL</small>
-            <span class="fs-5 fw-bold text-danger"><?= $rekapUnit['PERIL'] ?></span>
+    <h6 class="fw-bold text-rose mb-3">
+        <i class="fas fa-layer-group me-2"></i>Rekap Jurnal per Unit
+    </h6>
+    
+    <!-- Pembagi Kolom Presisi & Simetris -->
+    <div class="d-flex text-center pt-2 border-top">
+        <div class="flex-fill px-2">
+            <small class="text-muted d-block fw-bold mb-1">PERIL</small>
+            <span class="fs-4 fw-bold text-danger"><?= $rekapUnit['PERIL'] ?></span>
         </div>
-        <div class="border-end"></div>
-        <div>
-            <small class="text-muted d-block fw-bold">MI</small>
-            <span class="fs-5 fw-bold text-primary"><?= $rekapUnit['MI'] ?></span>
+        
+        <div class="border-end opacity-25"></div>
+        
+        <div class="flex-fill px-2">
+            <small class="text-muted d-block fw-bold mb-1">MI</small>
+            <span class="fs-4 fw-bold text-primary"><?= $rekapUnit['MI'] ?></span>
         </div>
-        <div class="border-end"></div>
-        <div>
-            <small class="text-muted d-block fw-bold">MTs</small>
-            <span class="fs-5 fw-bold text-success"><?= $rekapUnit['MTs'] ?></span>
+        
+        <div class="border-end opacity-25"></div>
+        
+        <div class="flex-fill px-2">
+            <small class="text-muted d-block fw-bold mb-1">MTs</small>
+            <span class="fs-4 fw-bold text-success"><?= $rekapUnit['MTs'] ?></span>
         </div>
     </div>
 </div>
