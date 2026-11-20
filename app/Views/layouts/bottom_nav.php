@@ -11,12 +11,10 @@ if ($role === 'gpk') {
         ['title' => 'Jurnal Anak', 'url' => '/gpk/jurnal-anak', 'icon' => 'fas fa-user-graduate', 'slug' => 'jurnal-anak'],
         ['title' => 'Akun',        'url' => '/gpk/profil',     'icon' => 'fas fa-user-circle',   'slug' => 'profil'],
     ];
-} elseif ($role === 'pimpinan') {
-    $navItems = [
-        ['title' => 'Beranda', 'url' => '/pimpinan/dashboard', 'icon' => 'fas fa-home',      'slug' => 'dashboard'],
-        ['title' => 'Jurnal',  'url' => '/pimpinan/jurnal',    'icon' => 'fas fa-book-open', 'slug' => 'jurnal'],
-        ['title' => 'Laporan', 'url' => '/pimpinan/laporan',   'icon' => 'fas fa-chart-bar', 'slug' => 'laporan'],
-        ['title' => 'Akun',    'url' => '/pimpinan/profil',    'icon' => 'fas fa-user-circle','slug' => 'profil'],
+} elseif ($role === 'pimpinan') {$navItems = [
+        ['title' => 'Beranda', 'url' => '/pimpinan/dashboard', 'icon' => 'fas fa-tachometer-alt', 'slug' => 'dashboard'],
+        ['title' => 'Jurnal',  'url' => '/pimpinan/jurnal',    'icon' => 'fas fa-book-open',     'slug' => 'jurnal'],
+        ['title' => 'Akun',    'url' => '/pimpinan/profil',    'icon' => 'fas fa-user-circle',   'slug' => 'profil'],
     ];
 } elseif ($role === 'ortu') {
     $navItems = [

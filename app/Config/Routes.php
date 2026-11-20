@@ -55,21 +55,14 @@ $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($ro
     $routes->post('profil/update-password', 'GpkController::updatePassword');
 });
 
-// ==========================================
-// 4. ROUTE PIMPINAN (KEPALA SEKOLAH / MONITORING)
-// ==========================================
-$routes->group('pimpinan', ['filter' => 'roleFilter:pimpinan,admin'], static function ($routes) { 
+$routes->group('pimpinan', ['filter' => 'roleFilter:pimpinan,admin'], static function ($routes) {
     $routes->get('dashboard', 'PimpinanController::index');
-    $routes->get('profil', 'PimpinanController::profil');
-    
-    // Monitoring Jurnal Harian Seluruh Unit (MI/MTs)
     $routes->get('jurnal', 'PimpinanController::jurnal');
     $routes->get('jurnal/detail/(:num)', 'PimpinanController::detailJurnal/$1');
     
-    // Rekap & Laporan Inklusi
-    $routes->get('laporan', 'PimpinanController::laporan');
-    $routes->get('laporan/cetak', 'PimpinanController::cetak');
-    $routes->get('renderFoto/(:any)', 'PimpinanController::renderFoto/$1');
+    // Rute Profil & Ganti Password Pimpinan
+    $routes->get('profil', 'PimpinanController::profil');
+    $routes->post('profil/update-password', 'PimpinanController::updatePassword');
 });
 
 // ==========================================
