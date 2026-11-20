@@ -114,4 +114,69 @@ class AdminController extends BaseController
 
         return redirect()->to('/admin/user');
     }
+
+    // ==========================================
+    // KELOLA & MONITORING JURNAL HARIAN (ADMIN)
+    // ==========================================
+
+    // 1. DAFTAR & REKAP JURNAL HARIAN PADA PANEL ADMIN
+    public function jurnal()
+    {
+        $bulan = $this->request->getGet('bulan') ?? date('m');
+        $tahun = $this->request->getGet('tahun') ?? date('Y');
+        $unit  = $this->request->getGet('unit') ?? '';
+
+        $builder = $this->db->table('jurnal')
+                           ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas, peserta_didik.unit, users.nama_lengkap as nama_gpk, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
+                           ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
+                           ->join('users', 'users.id = jurnal.gpk_id', 'left')
+                           ->where('MONTH(jurnal.tanggal)', $bulan)
+                           ->where('YEAR(jurnal.tanggal)', $tahun);
+
+        if (!empty($unit)) {
+            $builder->where('jurnal.unit', $unit);
+        }
+
+        $jurnalList = $builder->orderBy('jurnal.tanggal', 'DESC')
+                              ->orderBy('jurnal.id', 'DESC')
+                              ->get()->getResultArray();
+
+        $data = [
+            'title'      => 'Monitoring Jurnal Harian GPK',
+            'jurnalList' => $jurnalList,
+            'bulan'      => sprintf('%02d', $bulan),
+            'tahun'      => $tahun,
+            'unit'       => $unit
+        ];
+
+        return view('admin/jurnal_index', $data);
+    }
+
+    // 2. DETAIL ENTRI JURNAL HARIAN
+    public function detailJurnal($id = null)
+    {
+        $jurnal = $this->db->table('jurnal')
+                           ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas, peserta_didik.keterangan_iq, users.nama_lengkap as nama_gpk')
+                           ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
+                           ->join('users', 'users.id = jurnal.gpk_id', 'left')
+                           ->where('jurnal.id', $id)
+                           ->get()->getRowArray();
+
+        if (!$jurnal) {
+            session()->setFlashdata('error', 'Jurnal tidak ditemukan.');
+            return redirect()->to('/admin/jurnal');
+        }
+
+        $fotos = $this->db->table('jurnal_foto')
+                         ->where('jurnal_id', $id)
+                         ->get()->getResultArray();
+
+        $data = [
+            'title'  => 'Detail Jurnal Harian PDBK',
+            'jurnal' => $jurnal,
+            'fotos'  => $fotos
+        ];
+
+        return view('admin/jurnal_detail', $data);
+    }
 }

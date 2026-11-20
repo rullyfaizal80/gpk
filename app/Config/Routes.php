@@ -17,6 +17,7 @@ $routes->get('auth/unauthorized', 'Auth::unauthorized');
 
 // --- ROUTE ADMIN ---
 $routes->group('admin', ['filter' => 'roleFilter:admin'], static function ($routes) {
+    // Dashboard Admin
     $routes->get('dashboard', 'AdminController::index');
     
     // Kelola User
@@ -25,17 +26,15 @@ $routes->group('admin', ['filter' => 'roleFilter:admin'], static function ($rout
     $routes->post('user/edit', 'AdminController::editUser');
     $routes->get('user/hapus/(:num)', 'AdminController::hapusUser/$1');
     
-    // Kelola Peserta Didik (UBAH KE PesertaDidikController)
+    // Kelola Peserta Didik (Menggunakan PesertaDidikController)
     $routes->get('peserta-didik', 'PesertaDidikController::index');
     $routes->post('peserta-didik/tambah', 'PesertaDidikController::tambah');
     $routes->post('peserta-didik/edit', 'PesertaDidikController::edit');
     $routes->get('peserta-didik/hapus/(:num)', 'PesertaDidikController::hapus/$1');
 
-    // Jurnal & Laporan
+    // Monitoring Jurnal Harian Admin
     $routes->get('jurnal', 'AdminController::jurnal');
-    $routes->get('laporan', 'AdminController::laporan');
-    $routes->get('laporan/cetak', 'AdminController::cetak');
-    $routes->get('renderFoto/(:any)', 'AdminController::renderFoto/$1');
+    $routes->get('jurnal/detail/(:num)', 'AdminController::detailJurnal/$1');
 });
 
 $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($routes) {

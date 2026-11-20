@@ -11,25 +11,23 @@ if ($role === 'admin') {
         ['title' => 'Dashboard', 'url' => '/admin/dashboard', 'icon' => 'fas fa-tachometer-alt', 'slug' => 'dashboard'],
         ['title' => 'Data Peserta Didik', 'url' => '/admin/peserta-didik', 'icon' => 'fas fa-user-graduate', 'slug' => 'peserta-didik'],
         ['title' => 'Kelola User', 'url' => '/admin/user', 'icon' => 'fas fa-users', 'slug' => 'user'],
-        ['title' => 'Jurnal Harian', 'url' => '/admin/jurnal', 'icon' => 'fas fa-book', 'slug' => 'jurnal'],
-        ['title' => 'Rekap & Laporan', 'url' => '/admin/laporan', 'icon' => 'fas fa-print', 'slug' => 'laporan'],
+        ['title' => 'Monitoring Jurnal', 'url' => '/admin/jurnal', 'icon' => 'fas fa-journal-whills', 'slug' => 'jurnal'],
     ];
 } elseif ($role === 'gpk') {
     $menus = [
         ['title' => 'Dashboard', 'url' => '/gpk/dashboard', 'icon' => 'fas fa-tachometer-alt', 'slug' => 'dashboard'],
-        ['title' => 'Anak Dampingan', 'url' => '/gpk/peserta-didik', 'icon' => 'fas fa-user-graduate', 'slug' => 'peserta-didik'],
-        ['title' => 'Isi Jurnal Harian', 'url' => '/gpk/jurnal', 'icon' => 'fas fa-pen-alt', 'slug' => 'jurnal'],
+        ['title' => 'Anak Dampingan', 'url' => '/gpk/jurnal-anak', 'icon' => 'fas fa-child', 'slug' => 'jurnal-anak'],
+        ['title' => 'Profil Saya', 'url' => '/gpk/profil', 'icon' => 'fas fa-user-cog', 'slug' => 'profil'],
     ];
 } elseif ($role === 'pimpinan') {
     $menus = [
         ['title' => 'Dashboard', 'url' => '/pimpinan/dashboard', 'icon' => 'fas fa-tachometer-alt', 'slug' => 'dashboard'],
         ['title' => 'Monitoring Jurnal', 'url' => '/pimpinan/jurnal', 'icon' => 'fas fa-book-open', 'slug' => 'jurnal'],
-        ['title' => 'Rekap & Laporan', 'url' => '/pimpinan/laporan', 'icon' => 'fas fa-print', 'slug' => 'laporan'],
     ];
 } elseif ($role === 'ortu') {
     $menus = [
         ['title' => 'Dashboard', 'url' => '/ortu/dashboard', 'icon' => 'fas fa-home', 'slug' => 'dashboard'],
-        ['title' => 'Jurnal Perkembangan', 'url' => '/ortu/jurnal', 'icon' => 'fas fa-child', 'slug' => 'jurnal'],
+        ['title' => 'Jurnal Perkembangan', 'url' => '/ortu/jurnal', 'icon' => 'fas fa-file-alt', 'slug' => 'jurnal'],
     ];
 }
 ?>
