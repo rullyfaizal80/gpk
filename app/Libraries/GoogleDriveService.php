@@ -126,4 +126,40 @@ class GoogleDriveService
         
         return $response->getBody()->getContents();
     }
+
+    /**
+     * Hapus file di Google Drive berdasarkan File ID (Mendukung Shared Drive & Individual Drive)
+     */
+    public function deleteFile($fileId)
+    {
+        if (empty($fileId)) {
+            return false;
+        }
+
+        try {
+            // Opsi 1: Coba hapus permanen dari Drive
+            $this->service->files->delete($fileId, [
+                'supportsAllDrives' => true
+            ]);
+            return true;
+        } catch (\Exception $e) {
+            log_message('warning', 'Hapus permanen gagal, mencoba pindahkan ke Trash. ID (' . $fileId . '): ' . $e->getMessage());
+            
+            try {
+                // Opsi 2: Fallback jika akun Service Account tidak punya izin Hapus Permanen di Shared Drive
+                // Pindahkan file ke Sampah (Trash)
+                $emptyFile = new DriveFile([
+                    'trashed' => true
+                ]);
+
+                $this->service->files->update($fileId, $emptyFile, [
+                    'supportsAllDrives' => true
+                ]);
+                return true;
+            } catch (\Exception $ex) {
+                log_message('error', 'Gagal memindahkan ke Trash Drive ID (' . $fileId . '): ' . $ex->getMessage());
+                return false;
+            }
+        }
+    }
 }

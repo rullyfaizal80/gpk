@@ -9,13 +9,11 @@
 </style>
 
 <?php 
-    // SOLUSI 2: Pengecekan parameter 'from' dari URL
+    // Pengecekan parameter 'from' dari URL
     $from = $_GET['from'] ?? '';
     if ($from === 'jurnal_anak') {
-        // Kembali ke daftar riwayat jurnal anak terkait
         $backUrl = base_url('gpk/jurnal?pdbk_id=' . $jurnal['pdbk_id']);
     } else {
-        // Fallback kembali ke Beranda / Dashboard GPK
         $backUrl = base_url('gpk/dashboard');
     }
 ?>
@@ -31,7 +29,7 @@
     </div>
 </div>
 
-<!-- Header Identitas PDBK (Tanpa Badge PERIL/STANDARD) -->
+<!-- Header Identitas PDBK -->
 <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
     <div class="d-flex justify-content-between align-items-center">
         <div>
@@ -134,7 +132,39 @@
     <?php endif; ?>
 </div>
 
-<!-- Modal Zoom-In Gambar -->
+<!-- TOMBOL AKSI EDIT & HAPUS -->
+<div class="d-flex gap-2 mb-5">
+    <a href="/gpk/jurnal/edit/<?= $jurnal['id'] ?>" class="btn btn-warning text-dark flex-fill py-2 fw-bold rounded-3 shadow-sm">
+        <i class="fas fa-edit me-1"></i> Edit Jurnal
+    </a>
+    
+    <button type="button" class="btn btn-outline-danger flex-fill py-2 fw-bold rounded-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalHapusJurnal">
+        <i class="fas fa-trash-alt me-1"></i> Hapus Jurnal
+    </button>
+</div>
+
+<!-- MODAL KONFIRMASI HAPUS -->
+<div class="modal fade" id="modalHapusJurnal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 rounded-4 shadow">
+      <div class="modal-body text-center p-4">
+        <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+        <h6 class="fw-bold mb-2">Hapus Jurnal Harian?</h6>
+        <p class="small text-muted mb-4">Data jurnal dan foto dokumentasi di Google Drive akan dihapus secara permanen.</p>
+        
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-light flex-fill fw-semibold py-2 rounded-3" data-bs-dismiss="modal">Batal</button>
+            <form action="/gpk/jurnal/hapus/<?= $jurnal['id'] ?>" method="post" class="flex-fill">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-danger w-100 fw-bold py-2 rounded-3">Ya, Hapus</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ZOOM-IN GAMBAR -->
 <div class="modal fade" id="imageViewerModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content bg-transparent border-0 shadow-none">
@@ -169,4 +199,5 @@
     viewerModal.show();
   }
 </script>
+
 <?= $this->endSection() ?>

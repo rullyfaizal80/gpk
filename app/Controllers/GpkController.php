@@ -47,8 +47,8 @@ class GpkController extends BaseController
         return view('gpk/dashboard', $data);
     }
 
-    // 2. MENU ISI JURNAL (KHUSUS MEMILIH ANAK UNTUK ISI JURNAL BARU)
-    public function isiJurnal()
+    // 2. MENU JURNAL ANAK (DAFTAR ANAK DAMPINGAN)
+    public function jurnalAnak()
     {
         $gpkId = session()->get('id');
 
@@ -57,56 +57,35 @@ class GpkController extends BaseController
                                   ->get()->getResultArray();
 
         $data = [
-            'title'         => 'Isi Jurnal Harian',
+            'title'         => 'Jurnal Anak Dampingan',
             'anakDampingan' => $anakDampingan,
         ];
 
-        return view('gpk/jurnal_pilih_anak', $data);
+        return view('gpk/jurnal_anak', $data);
     }
 
-    // 3. DAFTAR ANAK DAMPINGAN & LIHAT JURNAL PER ANAK
-    public function pesertaDidik()
-    {
-        $gpkId = session()->get('id');
-
-        $anakDampingan = $this->db->table('peserta_didik')
-                                  ->where('gpk_id', $gpkId)
-                                  ->get()->getResultArray();
-
-        $data = [
-            'title'         => 'Anak Dampingan',
-            'anakDampingan' => $anakDampingan,
-        ];
-
-        return view('gpk/peserta_didik', $data);
-    }
-
-   // 3. DAFTAR JURNAL KHUSUS TIAP ANAK DAMPINGAN
+    // 3. DAFTAR JURNAL KHUSUS TIAP ANAK DAMPINGAN
     public function jurnal()
     {
         $gpkId  = session()->get('id');
         $pdbkId = $this->request->getGet('pdbk_id');
 
-        // Jika tidak ada parameter pdbk_id, kembalikan ke menu peserta didik
         if (!$pdbkId) {
-            return redirect()->to('/gpk/peserta-didik');
+            return redirect()->to('/gpk/jurnal-anak');
         }
 
-        // Ambil data detail anak
         $anak = $this->pesertaDidikModel->where('id', $pdbkId)
                                         ->where('gpk_id', $gpkId)
                                         ->first();
 
         if (!$anak) {
             session()->setFlashdata('error', 'Data anak tidak ditemukan atau bukan dampingan Anda.');
-            return redirect()->to('/gpk/peserta-didik');
+            return redirect()->to('/gpk/jurnal-anak');
         }
 
-        // Filter bulan & tahun (default ke bulan & tahun sekarang)
         $bulanAktif = $this->request->getGet('bulan') ?? date('m');
         $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
 
-        // Ambil riwayat jurnal khusus anak ini saja
         $jurnalList = $this->db->table('jurnal')
                                ->select('jurnal.*, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
                                ->where('jurnal.gpk_id', $gpkId)
@@ -133,15 +112,13 @@ class GpkController extends BaseController
     {
         $gpkId = session()->get('id');
 
-        // Pastikan anak tersebut adalah anak dampingan dari GPK yang sedang login
         $anak = $this->pesertaDidikModel->where('id', $id_pdbk)
                                         ->where('gpk_id', $gpkId)
                                         ->first();
 
         if (!$anak) {
             session()->setFlashdata('error', 'Data anak tidak ditemukan atau bukan dampingan Anda.');
-            // Diubah redirect-nya ke /gpk/isi-jurnal
-            return redirect()->to('/gpk/isi-jurnal');
+            return redirect()->to('/gpk/jurnal-anak');
         }
 
         $data = [
@@ -152,28 +129,23 @@ class GpkController extends BaseController
         return view('gpk/jurnal_tambah', $data);
     }
 
-    // PROSES SIMPAN JURNAL HARIAN
+    // 5. PROSES SIMPAN JURNAL HARIAN
     public function simpanJurnal()
     {
         $gpkId  = session()->get('id');
         $pdbkId = $this->request->getPost('pdbk_id');
 
-        // 1. Ambil nilai tanggal dari form POST
         $inputTanggal = $this->request->getPost('tanggal');
-
-        // Jika inputTanggal terisi (tidak kosong/null), gunakan inputTanggal. Jika kosong, baru fallback ke date('Y-m-d')
         $tanggalJurnal = (!empty($inputTanggal)) ? $inputTanggal : date('Y-m-d');
 
         $this->db->transStart();
 
-        // 2. Data Jurnal Utama
         $dataJurnal = [
-            'tanggal'                 => $tanggalJurnal, // Menggunakan tanggal dari form input
+            'tanggal'                 => $tanggalJurnal,
             'pdbk_id'                 => $pdbkId,
             'gpk_id'                  => $gpkId,
             'unit'                    => $this->request->getPost('unit'),
             'jenis_form'              => $this->request->getPost('jenis_form'),
-            // Form Standard (MI/MTs)
             'akademik_mapel'          => $this->request->getPost('akademik_mapel'),
             'akademik_materi'         => $this->request->getPost('akademik_materi'),
             'akademik_catatan'        => $this->request->getPost('akademik_catatan'),
@@ -183,7 +155,6 @@ class GpkController extends BaseController
             'perkembangan_aspek'      => $this->request->getPost('perkembangan_aspek'),
             'perkembangan_kegiatan'   => $this->request->getPost('perkembangan_kegiatan'),
             'perkembangan_catatan'    => $this->request->getPost('perkembangan_catatan'),
-            // Form PERIL (PG-RA)
             'peril_kegiatan'          => $this->request->getPost('peril_kegiatan'),
             'peril_partisipasi'       => $this->request->getPost('peril_partisipasi'),
             'peril_catatan_kegiatan'  => $this->request->getPost('peril_catatan_kegiatan'),
@@ -204,11 +175,8 @@ class GpkController extends BaseController
         ];
 
         $this->db->table('jurnal')->insert($dataJurnal);
-        // ... (proses upload foto ke drive dst tetap sama)
-        
         $jurnalId = $this->db->insertID();
 
-        // 2. Unggah Multi-Foto ke Google Drive (Struktur: Root -> GPK -> Tahun -> Bulan)
         $files = $this->request->getFiles();
         if (isset($files['foto_jurnal'])) {
             $driveService = new \App\Libraries\GoogleDriveService();
@@ -226,10 +194,8 @@ class GpkController extends BaseController
                     $mimeType = mime_content_type($fullPath);
 
                     try {
-                        // Memanggil penciptaan sub-folder otomatis di Google Drive
                         $googleFileId = $driveService->uploadImageToMonthlyFolder($fullPath, $newName, $mimeType);
 
-                        // Simpan metadata ke tabel jurnal_foto
                         $this->db->table('jurnal_foto')->insert([
                             'jurnal_id'      => $jurnalId,
                             'google_file_id' => $googleFileId,
@@ -276,7 +242,7 @@ class GpkController extends BaseController
 
         if (!$jurnal) {
             session()->setFlashdata('error', 'Jurnal tidak ditemukan.');
-            return redirect()->to('/gpk/jurnal');
+            return redirect()->to('/gpk/dashboard');
         }
 
         $fotos = $this->db->table('jurnal_foto')
@@ -292,7 +258,229 @@ class GpkController extends BaseController
         return view('gpk/jurnal_detail', $data);
     }
 
-    // 7. PROFIL GPK
+    // 1. FORM EDIT JURNAL (ASPEK LENGKAP & FOTO)
+    public function editJurnal($id = null)
+    {
+        $gpkId = session()->get('id');
+
+        $jurnal = $this->db->table('jurnal')
+                           ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas, peserta_didik.keterangan_iq')
+                           ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
+                           ->where('jurnal.id', $id)
+                           ->where('jurnal.gpk_id', $gpkId)
+                           ->get()->getRowArray();
+
+        if (!$jurnal) {
+            session()->setFlashdata('error', 'Jurnal tidak ditemukan atau Anda tidak memiliki akses.');
+            return redirect()->to('/gpk/jurnal-anak');
+        }
+
+        // Ambil daftar foto terkait jurnal ini
+        $fotos = $this->db->table('jurnal_foto')
+                          ->where('jurnal_id', $id)
+                          ->get()->getResultArray();
+
+        $data = [
+            'title'  => 'Edit Jurnal Harian',
+            'jurnal' => $jurnal,
+            'fotos'  => $fotos,
+        ];
+
+        return view('gpk/jurnal_edit', $data);
+    }
+
+    // PROSES UPDATE JURNAL HARIAN (DIPISAH BERDASARKAN JENIS FORM)
+    public function updateJurnal($id = null)
+    {
+        $gpkId = session()->get('id');
+
+        $jurnal = $this->db->table('jurnal')
+                           ->where('id', $id)
+                           ->where('gpk_id', $gpkId)
+                           ->get()->getRowArray();
+
+        if (!$jurnal) {
+            session()->setFlashdata('error', 'Jurnal tidak ditemukan.');
+            return redirect()->to('/gpk/jurnal-anak');
+        }
+
+        $inputTanggal  = $this->request->getPost('tanggal');
+        $tanggalJurnal = (!empty($inputTanggal)) ? $inputTanggal : $jurnal['tanggal'];
+        $jenisForm     = $jurnal['jenis_form']; // Ambil jenis form dari data existing
+
+        $this->db->transStart();
+
+        // 1. Data Dasar
+        $dataUpdate = [
+            'tanggal' => $tanggalJurnal,
+        ];
+
+        // 2. Pemetaan Data Berdasarkan Jenis Form
+        if ($jenisForm === 'peril') {
+            $dataUpdate['peril_kegiatan']          = $this->request->getPost('peril_kegiatan');
+            $dataUpdate['peril_partisipasi']       = $this->request->getPost('peril_partisipasi');
+            $dataUpdate['peril_catatan_kegiatan']  = $this->request->getPost('peril_catatan_kegiatan');
+            $dataUpdate['peril_makan_minum']       = $this->request->getPost('peril_makan_minum');
+            $dataUpdate['peril_kebersihan_toilet'] = $this->request->getPost('peril_kebersihan_toilet');
+            $dataUpdate['peril_merapikan_barang']  = $this->request->getPost('peril_merapikan_barang');
+            $dataUpdate['peril_bantuan_harian']    = $this->request->getPost('peril_bantuan_harian');
+            $dataUpdate['peril_komunikasi']        = $this->request->getPost('peril_komunikasi');
+            $dataUpdate['peril_interaksi']         = $this->request->getPost('peril_interaksi');
+            $dataUpdate['peril_emosi']             = $this->request->getPost('peril_emosi');
+            $dataUpdate['peril_respon_arahan']     = $this->request->getPost('peril_respon_arahan');
+            $dataUpdate['peril_strategi_dukungan'] = $this->request->getPost('peril_strategi_dukungan');
+            $dataUpdate['peril_pencapaian_positif']= $this->request->getPost('peril_pencapaian_positif');
+            $dataUpdate['peril_perlu_stimulasi']   = $this->request->getPost('peril_perlu_stimulasi');
+            $dataUpdate['peril_info_ortu']         = $this->request->getPost('peril_info_ortu');
+            $dataUpdate['peril_stimulasi_rumah']   = $this->request->getPost('peril_stimulasi_rumah');
+        } else {
+            $dataUpdate['akademik_mapel']        = $this->request->getPost('akademik_mapel');
+            $dataUpdate['akademik_materi']       = $this->request->getPost('akademik_materi');
+            $dataUpdate['akademik_catatan']      = $this->request->getPost('akademik_catatan');
+            $dataUpdate['daily_toilet']          = $this->request->getPost('daily_toilet');
+            $dataUpdate['daily_kemandirian']     = $this->request->getPost('daily_kemandirian');
+            $dataUpdate['daily_keterlibatan']    = $this->request->getPost('daily_keterlibatan');
+            $dataUpdate['perkembangan_aspek']    = $this->request->getPost('perkembangan_aspek');
+            $dataUpdate['perkembangan_kegiatan'] = $this->request->getPost('perkembangan_kegiatan');
+            $dataUpdate['perkembangan_catatan']  = $this->request->getPost('perkembangan_catatan');
+        }
+
+        // Eksekusi Update ke Database
+        $this->db->table('jurnal')->where('id', $id)->update($dataUpdate);
+
+        // 3. Upload Foto Tambahan Baru ke Google Drive jika Ada
+        $files = $this->request->getFiles();
+        if (isset($files['foto_jurnal'])) {
+            $driveService = new \App\Libraries\GoogleDriveService();
+            $tempFolder   = FCPATH . 'uploads/temp/';
+
+            if (!is_dir($tempFolder)) {
+                mkdir($tempFolder, 0777, true);
+            }
+
+            foreach ($files['foto_jurnal'] as $foto) {
+                if ($foto->isValid() && !$foto->hasMoved()) {
+                    $newName  = $foto->getRandomName();
+                    $foto->move($tempFolder, $newName);
+                    $fullPath = $tempFolder . $newName;
+                    $mimeType = mime_content_type($fullPath);
+
+                    try {
+                        $googleFileId = $driveService->uploadImageToMonthlyFolder($fullPath, $newName, $mimeType);
+
+                        $this->db->table('jurnal_foto')->insert([
+                            'jurnal_id'      => $id,
+                            'google_file_id' => $googleFileId,
+                            'nama_file'      => $newName,
+                            'tgl_upload'     => date('Y-m-d H:i:s')
+                        ]);
+
+                        if (file_exists($fullPath)) {
+                            unlink($fullPath);
+                        }
+                    } catch (\Exception $e) {
+                        if (file_exists($fullPath)) {
+                            unlink($fullPath);
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            session()->setFlashdata('error', 'Gagal memperbarui data jurnal di database.');
+            return redirect()->back()->withInput();
+        }
+
+        session()->setFlashdata('success', 'Jurnal harian berhasil diperbarui.');
+        return redirect()->to('/gpk/jurnal/detail/' . $id);
+    }
+
+    // 3. PROSES HAPUS 1 FOTO SPESIFIK DARI EDIT JURNAL
+    public function hapusFotoSingle($fotoId = null)
+    {
+        $gpkId = session()->get('id');
+
+        $foto = $this->db->table('jurnal_foto')
+                         ->select('jurnal_foto.*, jurnal.gpk_id')
+                         ->join('jurnal', 'jurnal.id = jurnal_foto.jurnal_id')
+                         ->where('jurnal_foto.id', $fotoId)
+                         ->where('jurnal.gpk_id', $gpkId)
+                         ->get()->getRowArray();
+
+        if (!$foto) {
+            session()->setFlashdata('error', 'Foto tidak ditemukan.');
+            return redirect()->back();
+        }
+
+        $jurnalId = $foto['jurnal_id'];
+
+        // Hapus fisik file di Google Drive
+        if (!empty($foto['google_file_id'])) {
+            $driveService = new \App\Libraries\GoogleDriveService();
+            $driveService->deleteFile($foto['google_file_id']);
+        }
+
+        // Hapus record dari database
+        $this->db->table('jurnal_foto')->where('id', $fotoId)->delete();
+
+        session()->setFlashdata('success', 'Foto dokumentasi berhasil dihapus.');
+        return redirect()->to('/gpk/jurnal/edit/' . $jurnalId);
+    }
+
+    // PROSES HAPUS JURNAL HARIAN
+    public function hapusJurnal($id = null)
+    {
+        $gpkId = session()->get('id');
+
+        // 1. Cek keberadaan jurnal
+        $jurnal = $this->db->table('jurnal')
+                           ->where('id', $id)
+                           ->where('gpk_id', $gpkId)
+                           ->get()->getRowArray();
+
+        if (!$jurnal) {
+            session()->setFlashdata('error', 'Jurnal tidak ditemukan.');
+            return redirect()->to('/gpk/dashboard');
+        }
+
+        $pdbkId = $jurnal['pdbk_id'];
+
+        // 2. AMBIL FOTO SEBELUM TRANSAKSI / PENGHAPUSAN DATABASE
+        $fotos = $this->db->table('jurnal_foto')
+                         ->where('jurnal_id', $id)
+                         ->get()->getResultArray();
+
+        // 3. HAPUS FOTO DI GOOGLE DRIVE TERLEBIH DAHULU
+        if (!empty($fotos)) {
+            $driveService = new \App\Libraries\GoogleDriveService();
+            foreach ($fotos as $f) {
+                if (!empty($f['google_file_id'])) {
+                    $driveService->deleteFile($f['google_file_id']);
+                }
+            }
+        }
+
+        // 4. SETELAH DRIVE CLEANUP, BARU HAPUS DATABASE LOCAL
+        $this->db->transStart();
+        
+        $this->db->table('jurnal_foto')->where('jurnal_id', $id)->delete();
+        $this->db->table('jurnal')->where('id', $id)->delete();
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            session()->setFlashdata('error', 'Gagal menghapus data jurnal dari database.');
+            return redirect()->back();
+        }
+
+        session()->setFlashdata('success', 'Jurnal harian beserta foto dokumentasi di Google Drive berhasil dihapus.');
+        return redirect()->to('/gpk/jurnal?pdbk_id=' . $pdbkId);
+    }
+
+    // 10. PROFIL GPK
     public function profil()
     {
         $userId = session()->get('id');
@@ -306,7 +494,7 @@ class GpkController extends BaseController
         return view('gpk/profil', $data);
     }
 
-    // RENDER FOTO DARI GOOGLE DRIVE
+    // 11. RENDER FOTO DARI GOOGLE DRIVE
     public function renderFoto($fileId = null)
     {
         if (empty($fileId)) {
@@ -322,25 +510,7 @@ class GpkController extends BaseController
                         ->setHeader('Cache-Control', 'max-age=86400, public')
                         ->setBody($gambarData);
         } catch (\Exception $e) {
-            // Jika gagal ambil dari Drive, kembalikan response 404
             return $this->response->setStatusCode(404)->setBody('Gambar tidak ditemukan: ' . $e->getMessage());
         }
-    }
-
-    // MENU JURNAL ANAK (GABUNGAN DAFTAR ANAK & PILIH AKSI)
-    public function jurnalAnak()
-    {
-        $gpkId = session()->get('id');
-
-        $anakDampingan = $this->db->table('peserta_didik')
-                                  ->where('gpk_id', $gpkId)
-                                  ->get()->getResultArray();
-
-        $data = [
-            'title'         => 'Jurnal Anak Dampingan',
-            'anakDampingan' => $anakDampingan,
-        ];
-
-        return view('gpk/jurnal_anak', $data);
     }
 }

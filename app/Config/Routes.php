@@ -47,6 +47,11 @@ $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($ro
     $routes->get('jurnal/detail/(:num)', 'GpkController::detailJurnal/$1');
     $routes->get('profil', 'GpkController::profil');
     $routes->get('renderFoto/(:any)', 'GpkController::renderFoto/$1');
+    // RUTE EDIT & HAPUS JURNAL
+    $routes->get('jurnal/edit/(:num)', 'GpkController::editJurnal/$1');
+    $routes->post('jurnal/update/(:num)', 'GpkController::updateJurnal/$1');
+    $routes->get('jurnal/foto/hapus/(:num)', 'GpkController::hapusFotoSingle/$1'); // ROUTE BARU HAPUS FOTO
+    $routes->post('jurnal/hapus/(:num)', 'GpkController::hapusJurnal/$1');
 });
 
 // ==========================================

@@ -1,0 +1,217 @@
+DEBUG - 2026-11-20 07:53:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:53:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:53:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:53:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:53:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:53:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 07:53:40 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\', `peril_kegiatan` = NULL, `peril_partisipasi` = NULL, `peril_catatan_kegiatan` = NULL, `peril_makan_minum` = NULL, `peril_kebersihan_toilet` = NULL, `peril_merapikan_barang` = NULL, `peril_bantuan_harian` = NULL, `peril_komunikasi` = NULL, `peril_interaksi` = NULL, `peril_emosi` = NULL, `peril_respon_arahan` = NULL, `peril_strategi_dukungan` = NULL, `peril_pencapaian_positif` = NULL, `peril_perlu_stimulasi` = NULL, `peril_info_ortu` = NULL, `peril_stimulasi_rumah` = NULL, `updated_at` = \'2026-11-20 07:53:40\'
+WHERE `id` = \'4\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\', `peril_kegiatan` = NULL, `peril_partisipasi` = NULL, `peril_catatan_kegiatan` = NULL, `peril_makan_minum` = NULL, `peril_kebersihan_toilet` = NULL, `peril_merapikan_barang` = NULL, `peril_bantuan_harian` = NULL, `peril_komunikasi` = NULL, `peril_interaksi` = NULL, `peril_emosi` = NULL, `peril_respon_arahan` = NULL, `peril_strategi_dukungan` = NULL, `peril_pencapaian_positif` = NULL, `peril_perlu_stimulasi` = NULL, `peril_info_ortu` = NULL, `peril_stimulasi_rumah` = NULL, `updated_at` = \'2026-11-20 07:53:40\'
+WHERE `id` = \'4\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\', `peril_kegiatan` = NULL, `peril_partisipasi` = NULL, `peril_catatan_kegiatan` = NULL, `peril_makan_minum` = NULL, `peril_kebersihan_toilet` = NULL, `peril_merapikan_barang` = NULL, `peril_bantuan_harian` = NULL, `peril_komunikasi` = NULL, `peril_interaksi` = NULL, `peril_emosi` = NULL, `peril_respon_arahan` = NULL, `peril_strategi_dukungan` = NULL, `peril_pencapaian_positif` = NULL, `peril_perlu_stimulasi` = NULL, `peril_info_ortu` = NULL, `peril_stimulasi_rumah` = NULL, `updated_at` = \'2026-11-20 07:53:40\'
+WHERE `id` = \'4\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:, `peril_kegiatan` = :peril_kegiatan:, `peril_partisipasi` = :peril_partisipasi:, `peril_catatan_kegiatan` = :peril_catatan_kegiatan:, `peril_makan_minum` = :peril_makan_minum:, `peril_kebersihan_toilet` = :peril_kebersihan_toilet:, `peril_merapikan_barang` = :peril_merapikan_barang:, `peril_bantuan_harian` = :peril_bantuan_harian:, `peril_komunikasi` = :peril_komunikasi:, `peril_interaksi` = :peril_interaksi:, `peril_emosi` = :peril_emosi:, `peril_respon_arahan` = :peril_respon_arahan:, `peril_strategi_dukungan` = :peril_strategi_dukungan:, `peril_pencapaian_positif` = :peril_pencapaian_positif:, `peril_perlu_stimulasi` = :peril_perlu_stimulasi:, `peril_info_ortu` = :peril_info_ortu:, `peril_stimulasi_rumah` = :peril_stimulasi_rumah:, `updated_at` = :updated_at:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(343): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('4')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 07:53:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:53:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:54:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:54:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:54:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 07:54:26 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-19\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\', `peril_kegiatan` = NULL, `peril_partisipasi` = NULL, `peril_catatan_kegiatan` = NULL, `peril_makan_minum` = NULL, `peril_kebersihan_toilet` = NULL, `peril_merapikan_barang` = NULL, `peril_bantuan_harian` = NULL, `peril_komunikasi` = NULL, `peril_interaksi` = NULL, `peril_emosi` = NULL, `peril_respon_arahan` = NULL, `peril_strategi_dukungan` = NULL, `peril_pencapaian_positif` = NULL, `peril_perlu_stimulasi` = NULL, `peril_info_ortu` = NULL, `peril_stimulasi_rumah` = NULL, `updated_at` = \'2026-11-20 07:54:26\'
+WHERE `id` = \'4\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-19\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\', `peril_kegiatan` = NULL, `peril_partisipasi` = NULL, `peril_catatan_kegiatan` = NULL, `peril_makan_minum` = NULL, `peril_kebersihan_toilet` = NULL, `peril_merapikan_barang` = NULL, `peril_bantuan_harian` = NULL, `peril_komunikasi` = NULL, `peril_interaksi` = NULL, `peril_emosi` = NULL, `peril_respon_arahan` = NULL, `peril_strategi_dukungan` = NULL, `peril_pencapaian_positif` = NULL, `peril_perlu_stimulasi` = NULL, `peril_info_ortu` = NULL, `peril_stimulasi_rumah` = NULL, `updated_at` = \'2026-11-20 07:54:26\'
+WHERE `id` = \'4\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-19\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\', `peril_kegiatan` = NULL, `peril_partisipasi` = NULL, `peril_catatan_kegiatan` = NULL, `peril_makan_minum` = NULL, `peril_kebersihan_toilet` = NULL, `peril_merapikan_barang` = NULL, `peril_bantuan_harian` = NULL, `peril_komunikasi` = NULL, `peril_interaksi` = NULL, `peril_emosi` = NULL, `peril_respon_arahan` = NULL, `peril_strategi_dukungan` = NULL, `peril_pencapaian_positif` = NULL, `peril_perlu_stimulasi` = NULL, `peril_info_ortu` = NULL, `peril_stimulasi_rumah` = NULL, `updated_at` = \'2026-11-20 07:54:26\'
+WHERE `id` = \'4\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:, `peril_kegiatan` = :peril_kegiatan:, `peril_partisipasi` = :peril_partisipasi:, `peril_catatan_kegiatan` = :peril_catatan_kegiatan:, `peril_makan_minum` = :peril_makan_minum:, `peril_kebersihan_toilet` = :peril_kebersihan_toilet:, `peril_merapikan_barang` = :peril_merapikan_barang:, `peril_bantuan_harian` = :peril_bantuan_harian:, `peril_komunikasi` = :peril_komunikasi:, `peril_interaksi` = :peril_interaksi:, `peril_emosi` = :peril_emosi:, `peril_respon_arahan` = :peril_respon_arahan:, `peril_strategi_dukungan` = :peril_strategi_dukungan:, `peril_pencapaian_positif` = :peril_pencapaian_positif:, `peril_perlu_stimulasi` = :peril_perlu_stimulasi:, `peril_info_ortu` = :peril_info_ortu:, `peril_stimulasi_rumah` = :peril_stimulasi_rumah:, `updated_at` = :updated_at:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(343): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('4')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 07:54:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:54:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 07:54:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 08:59:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:00:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:04:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:04:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:04:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:04:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:04:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:04:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 09:04:57 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:04:57\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:04:57\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:04:57\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `updated_at` = :updated_at:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(350): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('4')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 09:04:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 09:05:17 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:05:17\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:05:17\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:05:17\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `updated_at` = :updated_at:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(350): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('4')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 09:05:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 09:05:36 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:05:36\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:05:36\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:05:36\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `updated_at` = :updated_at:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(350): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('4')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 09:05:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:05:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:06:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:06:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:06:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 09:06:56 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:06:56\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:06:56\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:06:56\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `updated_at` = :updated_at:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(350): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('4')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 09:06:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:11:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:11:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:11:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:11:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:11:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:11:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:11:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 09:11:46 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:11:46\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:11:46\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:11:46\', `akademik_mapel` = \'Matematika\', `akademik_materi` = \'Aljabar\', `akademik_catatan` = \'Mengerjakan LKPD\', `daily_toilet` = \'k\', `daily_kemandirian` = \'k\', `daily_keterlibatan` = \'k\', `perkembangan_aspek` = \'k\', `perkembangan_kegiatan` = \'k\', `perkembangan_catatan` = \'k\'
+WHERE `id` = \'4\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `updated_at` = :updated_at:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(350): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('4')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 09:11:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:23:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:24:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:24:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:24:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:24:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 09:24:09 --> Unknown column 'updated_at' in 'field list'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:24:09\', `akademik_mapel` = \'INFORMATIKA\', `akademik_materi` = \'Premograman\', `akademik_catatan` = \'d\', `daily_toilet` = \'d\', `daily_kemandirian` = \'d\', `daily_keterlibatan` = \'d\', `perkembangan_aspek` = \'d\', `perkembangan_kegiatan` = \'d\', `perkembangan_catatan` = \'d\'
+WHERE `id` = \'5\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:24:09\', `akademik_mapel` = \'INFORMATIKA\', `akademik_materi` = \'Premograman\', `akademik_catatan` = \'d\', `daily_toilet` = \'d\', `daily_kemandirian` = \'d\', `daily_keterlibatan` = \'d\', `perkembangan_aspek` = \'d\', `perkembangan_kegiatan` = \'d\', `perkembangan_catatan` = \'d\'
+WHERE `id` = \'5\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `jurnal` SET `tanggal` = \'2026-11-20\', `updated_at` = \'2026-11-20 09:24:09\', `akademik_mapel` = \'INFORMATIKA\', `akademik_materi` = \'Premograman\', `akademik_catatan` = \'d\', `daily_toilet` = \'d\', `daily_kemandirian` = \'d\', `daily_keterlibatan` = \'d\', `perkembangan_aspek` = \'d\', `perkembangan_kegiatan` = \'d\', `perkembangan_catatan` = \'d\'
+WHERE `id` = \'5\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2540): CodeIgniter\Database\BaseConnection->query('UPDATE `jurnal` SET `tanggal` = :tanggal:, `updated_at` = :updated_at:, `akademik_mapel` = :akademik_mapel:, `akademik_materi` = :akademik_materi:, `akademik_catatan` = :akademik_catatan:, `daily_toilet` = :daily_toilet:, `daily_kemandirian` = :daily_kemandirian:, `daily_keterlibatan` = :daily_keterlibatan:, `perkembangan_aspek` = :perkembangan_aspek:, `perkembangan_kegiatan` = :perkembangan_kegiatan:, `perkembangan_catatan` = :perkembangan_catatan:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH/Controllers/GpkController.php(350): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\GpkController->updateJurnal('5')
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GpkController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 09:24:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:27:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:29:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:29:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:29:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:29:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:29:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 09:29:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
