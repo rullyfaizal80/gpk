@@ -348,3 +348,168 @@ DEBUG - 2026-11-20 09:47:18 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2026-11-20 09:47:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-11-20 09:47:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-11-20 09:47:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 10:22:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 10:22:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 10:29:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 10:29:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:23:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:23:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:23:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:23:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:23:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:23:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:23:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-11-20 12:23:30 --> Table 'db_gpk.tiket_perawatan' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(1744): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = :status:
+AND MONTH(tgl_dibuat) = :MONTH(tgl_dibuat):
+AND YEAR(tgl_dibuat) = :YEAR(tgl_dibuat):', [...], false)
+ 5 SYSTEMPATH/Model.php(526): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 6 APPPATH/Controllers/AdminController.php(22): CodeIgniter\Model->countAllResults()
+ 7 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\AdminController->index()
+ 8 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminController))
+ 9 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+CRITICAL - 2026-11-20 12:23:30 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'db_gpk.tiket_perawatan' doesn't exist
+[Method: GET, Route: admin/dashboard]
+in SYSTEMPATH/Database/BaseConnection.php on line 883.
+ 1 SYSTEMPATH/Database/BaseBuilder.php(1744): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = :status:
+AND MONTH(tgl_dibuat) = :MONTH(tgl_dibuat):
+AND YEAR(tgl_dibuat) = :YEAR(tgl_dibuat):', [...], false)
+ 2 SYSTEMPATH/Model.php(526): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 3 APPPATH/Controllers/AdminController.php(22): CodeIgniter\Model->countAllResults()
+ 4 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\AdminController->index()
+ 5 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminController))
+ 6 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+CRITICAL - 2026-11-20 12:23:30 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'db_gpk.tiket_perawatan' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 330.
+ 1 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'')
+ 2 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'')
+ 3 SYSTEMPATH/Database/BaseBuilder.php(1744): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = :status:
+AND MONTH(tgl_dibuat) = :MONTH(tgl_dibuat):
+AND YEAR(tgl_dibuat) = :YEAR(tgl_dibuat):', [...], false)
+ 4 SYSTEMPATH/Model.php(526): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 5 APPPATH/Controllers/AdminController.php(22): CodeIgniter\Model->countAllResults()
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\AdminController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+CRITICAL - 2026-11-20 12:23:30 --> [Caused by] mysqli_sql_exception: Table 'db_gpk.tiket_perawatan' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 316.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(316): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(928): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'')
+ 3 SYSTEMPATH/Database/BaseConnection.php(845): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = \'menunggu_respon\'
+AND MONTH(tgl_dibuat) = \'11\'
+AND YEAR(tgl_dibuat) = \'2026\'')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(1744): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `tiket_perawatan`
+WHERE `status` = :status:
+AND MONTH(tgl_dibuat) = :MONTH(tgl_dibuat):
+AND YEAR(tgl_dibuat) = :YEAR(tgl_dibuat):', [...], false)
+ 5 SYSTEMPATH/Model.php(526): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 6 APPPATH/Controllers/AdminController.php(22): CodeIgniter\Model->countAllResults()
+ 7 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\AdminController->index()
+ 8 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminController))
+ 9 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 12:32:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:32:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-11-20 12:32:06 --> ErrorException: Undefined variable $bulan_ini
+[Method: GET, Route: admin/dashboard]
+in APPPATH/Views/admin/dashboard.php on line 23.
+ 1 APPPATH/Views/admin/dashboard.php(23): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $bulan_ini', '/Users/rullyfaizal/Downloads/Project/gpk/app/Views/admin/dashboard.php', 23)
+ 2 SYSTEMPATH/View/View.php(238): include('/Users/rullyfaizal/Downloads/Project/gpk/app/Views/admin/dashboard.php')
+ 3 SYSTEMPATH/View/View.php(241): CodeIgniter\View\View->{closure:CodeIgniter\View\View::render():235}()
+ 4 SYSTEMPATH/Common.php(1268): CodeIgniter\View\View->render('admin/dashboard', [], true)
+ 5 APPPATH/Controllers/AdminController.php(38): view('admin/dashboard', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\AdminController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 12:32:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:32:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:32:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:32:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:32:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-11-20 12:32:21 --> ErrorException: Undefined variable $bulan_ini
+[Method: GET, Route: admin/dashboard]
+in APPPATH/Views/admin/dashboard.php on line 23.
+ 1 APPPATH/Views/admin/dashboard.php(23): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $bulan_ini', '/Users/rullyfaizal/Downloads/Project/gpk/app/Views/admin/dashboard.php', 23)
+ 2 SYSTEMPATH/View/View.php(238): include('/Users/rullyfaizal/Downloads/Project/gpk/app/Views/admin/dashboard.php')
+ 3 SYSTEMPATH/View/View.php(241): CodeIgniter\View\View->{closure:CodeIgniter\View\View::render():235}()
+ 4 SYSTEMPATH/Common.php(1268): CodeIgniter\View\View->render('admin/dashboard', [], true)
+ 5 APPPATH/Controllers/AdminController.php(38): view('admin/dashboard', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(972): App\Controllers\AdminController->index()
+ 7 SYSTEMPATH/CodeIgniter.php(518): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminController))
+ 8 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Users/rullyfaizal/Downloads/Project/gpk/public/index.php')
+DEBUG - 2026-11-20 12:34:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:34:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:35:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:35:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:35:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:35:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:35:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:35:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:35:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:36:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:36:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-11-20 12:36:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
