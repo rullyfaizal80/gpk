@@ -65,14 +65,11 @@ $routes->group('pimpinan', ['filter' => 'roleFilter:pimpinan,admin'], static fun
     $routes->post('profil/update-password', 'PimpinanController::updatePassword');
 });
 
-// ==========================================
-// 5. ROUTE ORANG TUA (PESERTA DIDIK)
-// ==========================================
+// --- ROUTE ORANG TUA ---
 $routes->group('ortu', ['filter' => 'roleFilter:ortu,admin'], static function ($routes) {
     $routes->get('dashboard', 'OrtuController::index');
-    $routes->get('profil', 'OrtuController::profil');
-    
-    // Membaca Narasi Perkembangan Ananda
     $routes->get('jurnal', 'OrtuController::jurnal');
     $routes->get('jurnal/detail/(:num)', 'OrtuController::detailJurnal/$1');
+    $routes->get('profil', 'OrtuController::profil');
+    $routes->post('profil/update-password', 'OrtuController::updatePassword');
 });
