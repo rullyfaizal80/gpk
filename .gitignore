@@ -1,2 +1,4 @@
 # Google API Credentials
 writable/credentials.json
+.env
+.gitignore
