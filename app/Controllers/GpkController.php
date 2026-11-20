@@ -480,7 +480,7 @@ class GpkController extends BaseController
         return redirect()->to('/gpk/jurnal?pdbk_id=' . $pdbkId);
     }
 
-    // 10. PROFIL GPK
+    // 10. TAMPILAN PROFIL GPK
     public function profil()
     {
         $userId = session()->get('id');
@@ -492,6 +492,48 @@ class GpkController extends BaseController
         ];
 
         return view('gpk/profil', $data);
+    }
+
+    // PROSES GANTI PASSWORD GPK
+    public function updatePassword()
+    {
+        $userId = session()->get('id');
+        $user   = $this->userModel->find($userId);
+
+        $passwordLama = $this->request->getPost('password_lama');
+        $passwordBaru = $this->request->getPost('password_baru');
+        $konfirmasi   = $this->request->getPost('konfirmasi_password');
+
+        // 1. Verifikasi Password Lama (Gunakan password_verify jika di-hash atau perbandingan langsung jika plain text)
+        $passwordMatch = password_verify($passwordLama, $user['password'] ?? '') || ($user['password'] === $passwordLama);
+
+        if (!$passwordMatch) {
+            session()->setFlashdata('error', 'Password saat ini salah.');
+            return redirect()->back();
+        }
+
+        // 2. Validasi Konfirmasi Password Baru
+        if ($passwordBaru !== $konfirmasi) {
+            session()->setFlashdata('error', 'Konfirmasi password baru tidak cocok.');
+            return redirect()->back();
+        }
+
+        // 3. Validasi Panjang Password Baru
+        if (strlen($passwordBaru) < 6) {
+            session()->setFlashdata('error', 'Password baru minimal harus 6 karakter.');
+            return redirect()->back();
+        }
+
+        // 4. Update Password (Direkomendasikan me-hash password dengan password_hash)
+        $newPasswordHash = password_hash($passwordBaru, PASSWORD_BCRYPT);
+
+        $this->userModel->update($userId, [
+            'password'   => $newPasswordHash,
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        session()->setFlashdata('success', 'Password berhasil diperbarui.');
+        return redirect()->to('/gpk/profil');
     }
 
     // 11. RENDER FOTO DARI GOOGLE DRIVE

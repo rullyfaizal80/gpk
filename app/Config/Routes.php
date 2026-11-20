@@ -52,6 +52,8 @@ $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($ro
     $routes->post('jurnal/update/(:num)', 'GpkController::updateJurnal/$1');
     $routes->get('jurnal/foto/hapus/(:num)', 'GpkController::hapusFotoSingle/$1'); // ROUTE BARU HAPUS FOTO
     $routes->post('jurnal/hapus/(:num)', 'GpkController::hapusJurnal/$1');
+    $routes->get('profil', 'GpkController::profil');
+    $routes->post('profil/update-password', 'GpkController::updatePassword');
 });
 
 // ==========================================
