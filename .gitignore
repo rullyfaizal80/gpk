@@ -1,4 +1,4 @@
-# CodeIgniter 4 Writable Logs & Debugbar
+# CodeIgniter 4 Writable Directory Ignore Rules
 writable/logs/*
 !writable/logs/index.html
 !writable/logs/.gitkeep
@@ -6,6 +6,15 @@ writable/logs/*
 writable/debugbar/*
 !writable/debugbar/index.html
 !writable/debugbar/.gitkeep
+
+writable/session/*
+!writable/session/index.html
+!writable/session/.gitkeep
+writable/ci_session*
+
+writable/cache/*
+!writable/cache/index.html
+!writable/cache/.gitkeep
 
 # Sensitive Credentials
 writable/credentials.json
