@@ -2,3 +2,4 @@
 writable/credentials.json
 .env
 .gitignore
+public/writable/
