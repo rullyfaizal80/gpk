@@ -1,5 +1,14 @@
-# Google API Credentials
+# CodeIgniter 4 Writable Logs & Debugbar
+writable/logs/*
+!writable/logs/index.html
+!writable/logs/.gitkeep
+
+writable/debugbar/*
+!writable/debugbar/index.html
+!writable/debugbar/.gitkeep
+
+# Sensitive Credentials
 writable/credentials.json
+
 .env
 .gitignore
-public/writable/
