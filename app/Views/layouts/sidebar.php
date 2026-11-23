@@ -12,6 +12,7 @@ if ($role === 'admin') {
         ['title' => 'Data Peserta Didik', 'url' => '/admin/peserta-didik', 'icon' => 'fas fa-user-graduate', 'slug' => 'peserta-didik'],
         ['title' => 'Kelola User', 'url' => '/admin/user', 'icon' => 'fas fa-users', 'slug' => 'user'],
         ['title' => 'Monitoring Jurnal', 'url' => '/admin/jurnal', 'icon' => 'fas fa-journal-whills', 'slug' => 'jurnal'],
+        ['title' => 'Jadwal Notifikasi', 'url' => '/admin/jadwal-notif', 'icon' => 'fas fa-calendar-alt', 'slug' => 'jadwal-notif'],
     ];
 } elseif ($role === 'gpk') {
     $menus = [

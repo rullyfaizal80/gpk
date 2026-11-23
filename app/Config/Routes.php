@@ -35,7 +35,15 @@ $routes->group('admin', ['filter' => 'roleFilter:admin'], static function ($rout
     // Monitoring Jurnal Harian Admin
     $routes->get('jurnal', 'AdminController::jurnal');
     $routes->get('jurnal/detail/(:num)', 'AdminController::detailJurnal/$1');
+
+    // Jadwal Notifikasi Admin (Prefix 'admin' Otomatis Terikut)
+    $routes->get('jadwal-notif', 'Admin\JadwalNotifController::index');
+    $routes->post('jadwal-notif/toggle', 'Admin\JadwalNotifController::toggleStatus');
+    $routes->post('jadwal-notif/generate', 'Admin\JadwalNotifController::generateBulan');
 });
+
+// --- ROUTE CRON JOB (DILUAR FILTER ADMIN AGAR DAPAT DIPANGGIL SERVER) ---
+$routes->get('cron/notifikasi/(:segment)', 'CronController::eksekusiNotifikasi/$1');
 
 $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($routes) {
     $routes->get('dashboard', 'GpkController::index');
