@@ -307,7 +307,7 @@ class GpkController extends BaseController
 
         $inputTanggal  = $this->request->getPost('tanggal');
         $tanggalJurnal = (!empty($inputTanggal)) ? $inputTanggal : $jurnal['tanggal'];
-        $jenisForm     = $jurnal['jenis_form']; // Ambil jenis form dari data existing
+        $jenisForm     = $jurnal['jenis_form'];
 
         $this->db->transStart();
 
@@ -332,9 +332,9 @@ class GpkController extends BaseController
             $dataUpdate['peril_strategi_dukungan'] = $this->request->getPost('peril_strategi_dukungan');
             $dataUpdate['peril_pencapaian_positif']= $this->request->getPost('peril_pencapaian_positif');
             $dataUpdate['peril_perlu_stimulasi']   = $this->request->getPost('peril_perlu_stimulasi');
-            $dataUpdate['peril_info_ortu']          = $this->request->getPost('peril_info_ortu');
-$dataUpdate['peril_stimulasi_rumah']    = $this->request->getPost('peril_stimulasi_rumah');
-$dataUpdate['peril_komunikasi_lanjut'] = $this->request->getPost('peril_komunikasi_lanjut'); // <-- Tambahkan baris ini
+            $dataUpdate['peril_info_ortu']         = $this->request->getPost('peril_info_ortu');
+            $dataUpdate['peril_stimulasi_rumah']   = $this->request->getPost('peril_stimulasi_rumah');
+            $dataUpdate['peril_komunikasi_lanjut'] = $this->request->getPost('peril_komunikasi_lanjut');
         } else {
             $dataUpdate['akademik_mapel']        = $this->request->getPost('akademik_mapel');
             $dataUpdate['akademik_materi']       = $this->request->getPost('akademik_materi');

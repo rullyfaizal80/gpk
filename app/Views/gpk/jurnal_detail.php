@@ -41,65 +41,73 @@
 </div>
 
 <?php if($jurnal['jenis_form'] == 'peril'): ?>
-    <!-- ================= RINCIAN JURNAL PERIL ================= -->
+    <!-- ========================================== -->
+    <!-- RINCIAN JURNAL PERIL (6 BAGIAN LENGKAP)    -->
+    <!-- ========================================== -->
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-child me-2"></i>1. Kegiatan Pembelajaran</h6>
-        <p class="small mb-1"><strong>Kegiatan:</strong> <?= esc($jurnal['peril_kegiatan']) ?></p>
-        <p class="small mb-1"><strong>Partisipasi:</strong> <span class="badge bg-warning text-dark"><?= esc($jurnal['peril_partisipasi']) ?></span></p>
-        <p class="small mb-0"><strong>Catatan Respons:</strong> <?= esc($jurnal['peril_catatan_kegiatan']) ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-child me-2"></i>1. Kegiatan Pembelajaran</h6>
+        <p class="small mb-2"><strong>Kegiatan yang Diikuti:</strong><br><?= esc($jurnal['peril_kegiatan']) ?></p>
+        <p class="small mb-2"><strong>Tingkat Partisipasi:</strong> <span class="badge bg-warning text-dark"><?= esc($jurnal['peril_partisipasi']) ?></span></p>
+        <p class="small mb-0"><strong>Catatan Kegiatan & Respons Ananda:</strong><br><?= esc($jurnal['peril_catatan_kegiatan']) ?></p>
     </div>
 
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-utensils me-2"></i>2. Kemandirian & Aktivitas Harian</h6>
-        <p class="small mb-1"><strong>Makan/Minum:</strong> <?= esc($jurnal['peril_makan_minum'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Toilet Training:</strong> <?= esc($jurnal['peril_kebersihan_toilet'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Merapikan Barang:</strong> <?= esc($jurnal['peril_merapikan_barang'] ?? '-') ?></p>
-        <p class="small mb-0"><strong>Bantuan Diperlukan:</strong> <?= esc($jurnal['peril_bantuan_harian'] ?? '-') ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-utensils me-2"></i>2. Kemandirian & Aktivitas Harian</h6>
+        <p class="small mb-2"><strong>Kegiatan Makan & Minum:</strong><br><?= esc($jurnal['peril_makan_minum'] ?? '-') ?></p>
+        <p class="small mb-2"><strong>Kebersihan Diri & Toilet:</strong><br><?= esc($jurnal['peril_kebersihan_toilet'] ?? '-') ?></p>
+        <p class="small mb-2"><strong>Kemandirian Merapikan Barang:</strong><br><?= esc($jurnal['peril_merapikan_barang'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Bantuan yang Masih Diperlukan:</strong><br><?= esc($jurnal['peril_bantuan_harian'] ?? '-') ?></p>
     </div>
 
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-comments me-2"></i>3. Komunikasi & Interaksi Sosial</h6>
-        <p class="small mb-1"><strong>Komunikasi:</strong> <?= esc($jurnal['peril_komunikasi'] ?? '-') ?></p>
-        <p class="small mb-0"><strong>Interaksi:</strong> <?= esc($jurnal['peril_interaksi'] ?? '-') ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-comments me-2"></i>3. Komunikasi & Interaksi Sosial</h6>
+        <p class="small mb-2"><strong>Cara Menyampaikan Keinginan / Instruksi:</strong><br><?= esc($jurnal['peril_komunikasi'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Interaksi dengan Guru & Teman:</strong><br><?= esc($jurnal['peril_interaksi'] ?? '-') ?></p>
     </div>
 
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-smile me-2"></i>4. Regulasi Emosi</h6>
-        <p class="small mb-1"><strong>Kondisi Emosi:</strong> <?= esc($jurnal['peril_emosi'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Respons Transisi:</strong> <?= esc($jurnal['peril_respon_arahan'] ?? '-') ?></p>
-        <p class="small mb-0"><strong>Strategi Membantu:</strong> <?= esc($jurnal['peril_strategi_dukungan'] ?? '-') ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-smile me-2"></i>4. Regulasi Emosi</h6>
+        <p class="small mb-2"><strong>Kondisi Emosi Selama Kegiatan:</strong><br><?= esc($jurnal['peril_emosi'] ?? '-') ?></p>
+        <p class="small mb-2"><strong>Respons Arahan / Transisi Kegiatan:</strong><br><?= esc($jurnal['peril_respon_arahan'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Strategi / Dukungan yang Membantu:</strong><br><?= esc($jurnal['peril_strategi_dukungan'] ?? '-') ?></p>
     </div>
 
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-star me-2"></i>5. Apresiasi & Catatan Rumah</h6>
-        <p class="small mb-1"><strong>Pencapaian Positif:</strong> <?= esc($jurnal['peril_pencapaian_positif'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Perlu Distimulasi:</strong> <?= esc($jurnal['peril_perlu_stimulasi'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Info Ortu:</strong> <?= esc($jurnal['peril_info_ortu'] ?? '-') ?></p>
-        <p class="small mb-0"><strong>Saran Rumah:</strong> <?= esc($jurnal['peril_stimulasi_rumah'] ?? '-') ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-star me-2"></i>5. Apresiasi & Perkembangan Hari Ini</h6>
+        <p class="small mb-2"><strong>Pencapaian / Usaha Positif Hari Ini:</strong><br><?= esc($jurnal['peril_pencapaian_positif'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Keterampilan Perlu Distimulasi:</strong><br><?= esc($jurnal['peril_perlu_stimulasi'] ?? '-') ?></p>
+    </div>
+
+    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-info-circle me-2"></i>6. Informasi Tambahan & Stimulasi di Rumah</h6>
+        <p class="small mb-2"><strong>Informasi Khusus untuk Orang Tua:</strong><br><?= esc($jurnal['peril_info_ortu'] ?? '-') ?></p>
+        <p class="small mb-2"><strong>Stimulasi Sederhana di Rumah:</strong><br><?= esc($jurnal['peril_stimulasi_rumah'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Hal Dikomunikasikan Lebih Lanjut (Ortu/Tim):</strong><br><?= esc($jurnal['peril_komunikasi_lanjut'] ?? '-') ?></p>
     </div>
 
 <?php else: ?>
-    <!-- ================= RINCIAN JURNAL MI & MTS ================= -->
+    <!-- ========================================== -->
+    <!-- RINCIAN JURNAL MI & MTS (STANDARD)         -->
+    <!-- ========================================== -->
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-book me-2"></i>1. Bidang Akademik</h6>
-        <p class="small mb-1"><strong>Mata Pelajaran:</strong> <?= esc($jurnal['akademik_mapel']) ?></p>
-        <p class="small mb-1"><strong>Uraian Materi:</strong> <?= esc($jurnal['akademik_materi']) ?></p>
-        <p class="small mb-0"><strong>Catatan Respons:</strong> <?= esc($jurnal['akademik_catatan']) ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-book me-2"></i>1. Bidang Akademik</h6>
+        <p class="small mb-2"><strong>Mata Pelajaran:</strong> <?= esc($jurnal['akademik_mapel']) ?></p>
+        <p class="small mb-2"><strong>Uraian Materi:</strong><br><?= esc($jurnal['akademik_materi']) ?></p>
+        <p class="small mb-0"><strong>Catatan Kegiatan (Respons Anak):</strong><br><?= esc($jurnal['akademik_catatan']) ?></p>
     </div>
 
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-user-check me-2"></i>2. Daily Life Skill</h6>
-        <p class="small mb-1"><strong>Toilet Training:</strong> <?= esc($jurnal['daily_toilet'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Kemandirian:</strong> <?= esc($jurnal['daily_kemandirian'] ?? '-') ?></p>
-        <p class="small mb-0"><strong>Keterlibatan Kelas:</strong> <?= esc($jurnal['daily_keterlibatan'] ?? '-') ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-user-check me-2"></i>2. Daily Life Skill</h6>
+        <p class="small mb-2"><strong>Toilet Training:</strong> <?= esc($jurnal['daily_toilet'] ?? '-') ?></p>
+        <p class="small mb-2"><strong>Kemandirian:</strong> <?= esc($jurnal['daily_kemandirian'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Keterlibatan Kegiatan di Kelas:</strong> <?= esc($jurnal['daily_keterlibatan'] ?? '-') ?></p>
     </div>
 
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-seedling me-2"></i>3. Aspek Perkembangan</h6>
-        <p class="small mb-1"><strong>Aspek Distimulasi:</strong> <?= esc($jurnal['perkembangan_aspek'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Uraian Kegiatan:</strong> <?= esc($jurnal['perkembangan_kegiatan'] ?? '-') ?></p>
-        <p class="small mb-1"><strong>Catatan Respons:</strong> <?= esc($jurnal['perkembangan_catatan'] ?? '-') ?></p>
-        <p class="small mb-0"><strong>Hal Perlu Dikomunikasikan Lanjut:</strong><br><?= esc($jurnal['peril_komunikasi_lanjut'] ?? '-') ?></p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-seedling me-2"></i>3. Perkembangan</h6>
+        <p class="small mb-2"><strong>Aspek Distimulasi:</strong> <?= esc($jurnal['perkembangan_aspek'] ?? '-') ?></p>
+        <p class="small mb-2"><strong>Uraian Kegiatan:</strong><br><?= esc($jurnal['perkembangan_kegiatan'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Catatan Kegiatan (Respons Anak):</strong><br><?= esc($jurnal['perkembangan_catatan'] ?? '-') ?></p>
     </div>
 <?php endif; ?>
 

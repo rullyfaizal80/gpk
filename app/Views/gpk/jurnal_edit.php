@@ -58,7 +58,6 @@
 <form action="/gpk/jurnal/update/<?= $jurnal['id'] ?>" method="post" enctype="multipart/form-data" onsubmit="return validasiDanLoading(event)">
     <?= csrf_field() ?>
 
-    <!-- TAMBAHKAN 3 BARIS HIDDEN INPUT INI -->
     <input type="hidden" name="jenis_form" value="<?= esc($jurnal['jenis_form']) ?>">
     <input type="hidden" name="unit" value="<?= esc($jurnal['unit']) ?>">
     <input type="hidden" name="pdbk_id" value="<?= esc($jurnal['pdbk_id']) ?>">
@@ -107,68 +106,76 @@
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-utensils me-2"></i>2. Kemandirian & Aktivitas Harian</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kegiatan Makan & Minum</label>
-                <input type="text" name="peril_makan_minum" class="form-control" value="<?= esc($jurnal['peril_makan_minum']) ?>">
+                <label class="form-label small fw-bold">Kegiatan Makan & Minum *</label>
+                <textarea name="peril_makan_minum" class="form-control" rows="2" required><?= esc($jurnal['peril_makan_minum']) ?></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kebersihan Diri & Toilet</label>
-                <input type="text" name="peril_kebersihan_toilet" class="form-control" value="<?= esc($jurnal['peril_kebersihan_toilet']) ?>">
+                <label class="form-label small fw-bold">Kebersihan Diri & Toilet *</label>
+                <textarea name="peril_kebersihan_toilet" class="form-control" rows="2" required><?= esc($jurnal['peril_kebersihan_toilet']) ?></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kemandirian Merapikan Barang</label>
-                <input type="text" name="peril_merapikan_barang" class="form-control" value="<?= esc($jurnal['peril_merapikan_barang']) ?>">
+                <label class="form-label small fw-bold">Kemandirian Merapikan Barang *</label>
+                <textarea name="peril_merapikan_barang" class="form-control" rows="2" required><?= esc($jurnal['peril_merapikan_barang']) ?></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Bantuan yang Masih Diperlukan</label>
-                <input type="text" name="peril_bantuan_harian" class="form-control" value="<?= esc($jurnal['peril_bantuan_harian']) ?>">
+                <label class="form-label small fw-bold">Bantuan yang Masih Diperlukan *</label>
+                <textarea name="peril_bantuan_harian" class="form-control" rows="2" required><?= esc($jurnal['peril_bantuan_harian']) ?></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-comments me-2"></i>3. Komunikasi & Interaksi Sosial</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Penyampaian Keinginan / Instruksi</label>
-                <textarea name="peril_komunikasi" class="form-control" rows="2"><?= esc($jurnal['peril_komunikasi']) ?></textarea>
+                <label class="form-label small fw-bold">Penyampaian Keinginan / Instruksi *</label>
+                <textarea name="peril_komunikasi" class="form-control" rows="2" required><?= esc($jurnal['peril_komunikasi']) ?></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Interaksi dengan Guru & Teman</label>
-                <textarea name="peril_interaksi" class="form-control" rows="2"><?= esc($jurnal['peril_interaksi']) ?></textarea>
+                <label class="form-label small fw-bold">Interaksi dengan Guru & Teman *</label>
+                <textarea name="peril_interaksi" class="form-control" rows="2" required><?= esc($jurnal['peril_interaksi']) ?></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-smile me-2"></i>4. Regulasi Emosi</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kondisi Emosi Selama Kegiatan</label>
-                <input type="text" name="peril_emosi" class="form-control" value="<?= esc($jurnal['peril_emosi']) ?>">
+                <label class="form-label small fw-bold">Kondisi Emosi Selama Kegiatan *</label>
+                <textarea name="peril_emosi" class="form-control" rows="2" required><?= esc($jurnal['peril_emosi']) ?></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Respons Perpindahan Kegiatan</label>
-                <input type="text" name="peril_respon_arahan" class="form-control" value="<?= esc($jurnal['peril_respon_arahan']) ?>">
+                <label class="form-label small fw-bold">Respons Perpindahan Kegiatan *</label>
+                <textarea name="peril_respon_arahan" class="form-control" rows="2" required><?= esc($jurnal['peril_respon_arahan']) ?></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Strategi / Dukungan yang Membantu</label>
-                <input type="text" name="peril_strategi_dukungan" class="form-control" value="<?= esc($jurnal['peril_strategi_dukungan']) ?>">
+                <label class="form-label small fw-bold">Strategi / Dukungan yang Membantu *</label>
+                <textarea name="peril_strategi_dukungan" class="form-control" rows="2" required><?= esc($jurnal['peril_strategi_dukungan']) ?></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-star me-2"></i>5. Apresiasi & Informasi Ortu</h6>
+            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-star me-2"></i>5. Apresiasi & Perkembangan Hari Ini</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Pencapaian / Usaha Positif Hari Ini</label>
-                <textarea name="peril_pencapaian_positif" class="form-control" rows="2"><?= esc($jurnal['peril_pencapaian_positif']) ?></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label small fw-bold">Keterampilan Perlu Distimulasi</label>
-                <textarea name="peril_perlu_stimulasi" class="form-control" rows="2"><?= esc($jurnal['peril_perlu_stimulasi']) ?></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label small fw-bold">Informasi Khusus Orang Tua</label>
-                <input type="text" name="peril_info_ortu" class="form-control" value="<?= esc($jurnal['peril_info_ortu']) ?>">
+                <label class="form-label small fw-bold">Pencapaian / Usaha Positif Hari Ini *</label>
+                <textarea name="peril_pencapaian_positif" class="form-control" rows="2" required><?= esc($jurnal['peril_pencapaian_positif']) ?></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Saran Stimulasi di Rumah</label>
-                <textarea name="peril_stimulasi_rumah" class="form-control" rows="2"><?= esc($jurnal['peril_stimulasi_rumah']) ?></textarea>
+                <label class="form-label small fw-bold">Keterampilan Perlu Distimulasi *</label>
+                <textarea name="peril_perlu_stimulasi" class="form-control" rows="2" required><?= esc($jurnal['peril_perlu_stimulasi']) ?></textarea>
+            </div>
+        </div>
+
+        <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
+            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-info-circle me-2"></i>6. Informasi Tambahan & Stimulasi di Rumah</h6>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Informasi Khusus Orang Tua *</label>
+                <textarea name="peril_info_ortu" class="form-control" rows="2" required><?= esc($jurnal['peril_info_ortu']) ?></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Saran Stimulasi di Rumah *</label>
+                <textarea name="peril_stimulasi_rumah" class="form-control" rows="2" required><?= esc($jurnal['peril_stimulasi_rumah']) ?></textarea>
+            </div>
+            <div class="mb-0">
+                <label class="form-label small fw-bold">Hal Dikomunikasikan Lebih Lanjut (Ortu/Tim Pendamping) *</label>
+                <textarea name="peril_komunikasi_lanjut" class="form-control" rows="2" required><?= esc($jurnal['peril_komunikasi_lanjut']) ?></textarea>
             </div>
         </div>
 
@@ -178,7 +185,7 @@
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-book me-2"></i>1. Bidang Akademik</h6>
             <div class="mb-3">
                 <label class="form-label small fw-bold">Mata Pelajaran *</label>
-                <input type="text" name="akademik_mapel" class="form-control" value="<?= esc($jurnal['akademik_mapel']) ?>" required>
+                <textarea name="akademik_mapel" class="form-control" rows="1" required><?= esc($jurnal['akademik_mapel']) ?></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label small fw-bold">Uraian Materi *</label>
@@ -193,32 +200,32 @@
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-user-check me-2"></i>2. Daily Life Skill</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Toilet Training</label>
-                <input type="text" name="daily_toilet" class="form-control" value="<?= esc($jurnal['daily_toilet']) ?>">
+                <label class="form-label small fw-bold">Toilet Training *</label>
+                <textarea name="daily_toilet" class="form-control" rows="2" required><?= esc($jurnal['daily_toilet']) ?></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kemandirian</label>
-                <input type="text" name="daily_kemandirian" class="form-control" value="<?= esc($jurnal['daily_kemandirian']) ?>">
+                <label class="form-label small fw-bold">Kemandirian *</label>
+                <textarea name="daily_kemandirian" class="form-control" rows="2" required><?= esc($jurnal['daily_kemandirian']) ?></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Keterlibatan Kegiatan di Kelas</label>
-                <input type="text" name="daily_keterlibatan" class="form-control" value="<?= esc($jurnal['daily_keterlibatan']) ?>">
+                <label class="form-label small fw-bold">Keterlibatan Kegiatan di Kelas *</label>
+                <textarea name="daily_keterlibatan" class="form-control" rows="2" required><?= esc($jurnal['daily_keterlibatan']) ?></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-seedling me-2"></i>3. Aspek Perkembangan</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Aspek yang Distimulasi</label>
-                <input type="text" name="perkembangan_aspek" class="form-control" value="<?= esc($jurnal['perkembangan_aspek']) ?>">
+                <label class="form-label small fw-bold">Aspek yang Distimulasi *</label>
+                <textarea name="perkembangan_aspek" class="form-control" rows="2" required><?= esc($jurnal['perkembangan_aspek']) ?></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Uraian Kegiatan</label>
-                <textarea name="perkembangan_kegiatan" class="form-control" rows="2"><?= esc($jurnal['perkembangan_kegiatan']) ?></textarea>
+                <label class="form-label small fw-bold">Uraian Kegiatan *</label>
+                <textarea name="perkembangan_kegiatan" class="form-control" rows="2" required><?= esc($jurnal['perkembangan_kegiatan']) ?></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Catatan Kegiatan (Respons Anak)</label>
-                <textarea name="perkembangan_catatan" class="form-control" rows="2"><?= esc($jurnal['perkembangan_catatan']) ?></textarea>
+                <label class="form-label small fw-bold">Catatan Kegiatan (Respons Anak) *</label>
+                <textarea name="perkembangan_catatan" class="form-control" rows="2" required><?= esc($jurnal['perkembangan_catatan']) ?></textarea>
             </div>
         </div>
     <?php endif; ?>
@@ -234,10 +241,9 @@
                 <?php foreach($fotos as $f): ?>
                     <div class="preview-item">
                         <img loading="lazy" src="<?= base_url('gpk/renderFoto/' . esc($f['google_file_id'])) ?>" alt="Dokumentasi">
-                        <!-- Trigger Modal Hapus Foto -->
                         <button type="button" class="btn-delete-photo btn-hapus-foto" data-id="<?= $f['id'] ?>" title="Hapus Foto">
-    <i class="fas fa-times"></i>
-</button>
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -269,7 +275,7 @@
     </button>
 </form>
 
-<!-- MODAL PROPOSIONAL KONFIRMASI HAPUS FOTO -->
+<!-- MODAL KONFIRMASI HAPUS FOTO -->
 <div class="modal fade" id="modalHapusFoto" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content border-0 rounded-4 shadow">
@@ -297,7 +303,6 @@
 <script>
     let containerFile = new DataTransfer();
 
-    // Penanganan Klik Tombol Hapus Foto tanpa Syntax Error di VS Code
     document.addEventListener('click', function (e) {
         const btn = e.target.closest('.btn-hapus-foto');
         if (btn) {
