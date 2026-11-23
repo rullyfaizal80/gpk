@@ -169,9 +169,10 @@ class GpkController extends BaseController
             'peril_strategi_dukungan' => $this->request->getPost('peril_strategi_dukungan'),
             'peril_pencapaian_positif'=> $this->request->getPost('peril_pencapaian_positif'),
             'peril_perlu_stimulasi'   => $this->request->getPost('peril_perlu_stimulasi'),
-            'peril_info_ortu'         => $this->request->getPost('peril_info_ortu'),
-            'peril_stimulasi_rumah'   => $this->request->getPost('peril_stimulasi_rumah'),
-            'created_at'              => date('Y-m-d H:i:s')
+            'peril_info_ortu'          => $this->request->getPost('peril_info_ortu'),
+'peril_stimulasi_rumah'    => $this->request->getPost('peril_stimulasi_rumah'),
+'peril_komunikasi_lanjut' => $this->request->getPost('peril_komunikasi_lanjut'), // <-- Tambahkan baris ini
+'created_at'               => date('Y-m-d H:i:s')
         ];
 
         $this->db->table('jurnal')->insert($dataJurnal);
@@ -331,8 +332,9 @@ class GpkController extends BaseController
             $dataUpdate['peril_strategi_dukungan'] = $this->request->getPost('peril_strategi_dukungan');
             $dataUpdate['peril_pencapaian_positif']= $this->request->getPost('peril_pencapaian_positif');
             $dataUpdate['peril_perlu_stimulasi']   = $this->request->getPost('peril_perlu_stimulasi');
-            $dataUpdate['peril_info_ortu']         = $this->request->getPost('peril_info_ortu');
-            $dataUpdate['peril_stimulasi_rumah']   = $this->request->getPost('peril_stimulasi_rumah');
+            $dataUpdate['peril_info_ortu']          = $this->request->getPost('peril_info_ortu');
+$dataUpdate['peril_stimulasi_rumah']    = $this->request->getPost('peril_stimulasi_rumah');
+$dataUpdate['peril_komunikasi_lanjut'] = $this->request->getPost('peril_komunikasi_lanjut'); // <-- Tambahkan baris ini
         } else {
             $dataUpdate['akademik_mapel']        = $this->request->getPost('akademik_mapel');
             $dataUpdate['akademik_materi']       = $this->request->getPost('akademik_materi');

@@ -39,24 +39,22 @@
     </div>
 </div>
 
-<!-- FORM PEMBUNKA (PEMBUNGKUS UTAMA SELURUH INPUT) -->
+<!-- FORM UTAMA -->
 <form action="/gpk/jurnal/simpan" method="post" enctype="multipart/form-data" onsubmit="return validasiDanLoading(event)">
+    <?= csrf_field() ?>
     <input type="hidden" name="pdbk_id" value="<?= $anak['id'] ?>">
     <input type="hidden" name="unit" value="<?= $anak['unit'] ?>">
     <input type="hidden" name="jenis_form" value="<?= ($anak['unit'] === 'PERIL') ? 'peril' : 'standard' ?>">
 
-    <!-- Card Ringkasan PDBK & Input Tanggal (SEKARANG SUDAH DI DALAM FORM) -->
+    <!-- Card Ringkasan PDBK & Input Tanggal -->
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
         <div class="d-flex align-items-center justify-content-between mb-2">
             <div>
-                <span class="badge bg-rose-light text-rose border border-rose-subtle mb-1"><?= esc($anak['unit']) ?> - Kelas <?= esc($anak['kelas']) ?></span>
                 <h6 class="fw-bold text-dark mb-0"><?= esc($anak['nama_pdbk']) ?></h6>
-                <small class="text-muted"><i class="fas fa-brain me-1"></i> IQ: <?= esc($anak['keterangan_iq'] ?? '-') ?></small>
             </div>
         </div>
         <hr class="my-2 opacity-25">
         
-        <!-- Field Input Tanggal Jurnal (Dapat Diubah, Default Hari Ini) -->
         <div>
             <label for="tanggal_jurnal" class="form-label small fw-bold text-secondary mb-1">
                 <i class="far fa-calendar-alt me-1 text-rose"></i> Tanggal Kegiatan *
@@ -67,13 +65,13 @@
 
     <?php if($anak['unit'] === 'PERIL'): ?>
         <!-- ========================================== -->
-        <!-- FORM 1: KHUSUS UNIT PERIL (PG - RA)        -->
+        <!-- FORM KHUSUS UNIT PERIL (PG - RA)           -->
         <!-- ========================================== -->
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-child me-2"></i>1. Kegiatan Pembelajaran</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kegiatan yang Diikuti *</label>
-                <textarea name="peril_kegiatan" class="form-control" rows="2" placeholder="Contoh: Murojaah, menempel garis, dll" required></textarea>
+                <label class="form-label small fw-bold">Kegiatan yang diikuti ananda hari ini *</label>
+                <textarea name="peril_kegiatan" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label small fw-bold">Tingkat Partisipasi *</label>
@@ -88,145 +86,148 @@
                 </select>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Catatan Kegiatan & Respons Ananda *</label>
-                <textarea name="peril_catatan_kegiatan" class="form-control" rows="2" placeholder="Uraian respons ananda" required></textarea>
+                <label class="form-label small fw-bold">Catatan kegiatan dan respons ananda *</label>
+                <textarea name="peril_catatan_kegiatan" class="form-control" rows="2" required></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-utensils me-2"></i>2. Kemandirian & Aktivitas Harian</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kegiatan Makan & Minum</label>
-                <input type="text" name="peril_makan_minum" class="form-control" placeholder="Contoh: Makan mandiri tanpa bersisa">
+                <label class="form-label small fw-bold">Kegiatan makan dan minum *</label>
+                <textarea name="peril_makan_minum" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kebersihan Diri & Toilet</label>
-                <input type="text" name="peril_kebersihan_toilet" class="form-control" placeholder="Contoh: Toilet training mandiri">
+                <label class="form-label small fw-bold">Kebersihan diri dan toilet *</label>
+                <textarea name="peril_kebersihan_toilet" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kemandirian Merapikan Barang</label>
-                <input type="text" name="peril_merapikan_barang" class="form-control" placeholder="Contoh: Merapikan tas sendiri">
+                <label class="form-label small fw-bold">Kemandirian merapikan barang pribadi *</label>
+                <textarea name="peril_merapikan_barang" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Bantuan yang Masih Diperlukan</label>
-                <input type="text" name="peril_bantuan_harian" class="form-control" placeholder="Contoh: Membuka tutup tempat makan">
+                <label class="form-label small fw-bold">Bantuan yang masih diperlukan dalam aktivitas harian *</label>
+                <textarea name="peril_bantuan_harian" class="form-control" rows="2" required></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-comments me-2"></i>3. Komunikasi & Interaksi Sosial</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Penyampaian Keinginan / Instruksi</label>
-                <textarea name="peril_komunikasi" class="form-control" rows="2" placeholder="Cara anak mengungkapkan pesan"></textarea>
+                <label class="form-label small fw-bold">Cara ananda menyampaikan keinginan atau merespons instruksi *</label>
+                <textarea name="peril_komunikasi" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Interaksi dengan Guru & Teman</label>
-                <textarea name="peril_interaksi" class="form-control" rows="2" placeholder="Merespons sapaan, main bersama, bergiliran"></textarea>
+                <label class="form-label small fw-bold">Interaksi ananda dengan guru dan teman *</label>
+                <textarea name="peril_interaksi" class="form-control" rows="2" required></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-smile me-2"></i>4. Regulasi Emosi</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kondisi Emosi Selama Kegiatan</label>
-                <input type="text" name="peril_emosi" class="form-control" placeholder="Deskripsi objektif emosi ananda">
+                <label class="form-label small fw-bold">Kondisi emosi ananda selama kegiatan *</label>
+                <textarea name="peril_emosi" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Respons Perpindahan Kegiatan</label>
-                <input type="text" name="peril_respon_arahan" class="form-control" placeholder="Respons saat transisi materi">
+                <label class="form-label small fw-bold">Respons terhadap arahan atau perpindahan kegiatan *</label>
+                <textarea name="peril_respon_arahan" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Strategi / Dukungan yang Membantu</label>
-                <input type="text" name="peril_strategi_dukungan" class="form-control" placeholder="Misal: Jadwal visual, jeda singkat">
+                <label class="form-label small fw-bold">Strategi atau dukungan yang membantu ananda *</label>
+                <textarea name="peril_strategi_dukungan" class="form-control" rows="2" required></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-star me-2"></i>5. Apresiasi & Informasi Ortu</h6>
+            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-star me-2"></i>5. Apresiasi dan Perkembangan Hari Ini</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Pencapaian / Usaha Positif Hari Ini</label>
-                <textarea name="peril_pencapaian_positif" class="form-control" rows="2"></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label small fw-bold">Keterampilan Perlu Distimulasi</label>
-                <textarea name="peril_perlu_stimulasi" class="form-control" rows="2"></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label small fw-bold">Informasi Khusus Orang Tua</label>
-                <input type="text" name="peril_info_ortu" class="form-control" value="Tidak ada">
+                <label class="form-label small fw-bold">Pencapaian atau usaha positif ananda hari ini *</label>
+                <textarea name="peril_pencapaian_positif" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Saran Stimulasi di Rumah</label>
-                <textarea name="peril_stimulasi_rumah" class="form-control" rows="2" placeholder="Saran praktis untuk ortu"></textarea>
+                <label class="form-label small fw-bold">Keterampilan yang masih perlu distimulasi *</label>
+                <textarea name="peril_perlu_stimulasi" class="form-control" rows="2" required></textarea>
+            </div>
+        </div>
+
+        <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
+            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-info-circle me-2"></i>6. Informasi Tambahan dan Stimulasi di Rumah</h6>            
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Informasi khusus untuk orang tua *</label>
+                <textarea name="peril_info_ortu" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Stimulasi sederhana yang disarankan di rumah *</label>
+                <textarea name="peril_stimulasi_rumah" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="mb-0">
+                <label class="form-label small fw-bold">Hal yang perlu dikomunikasikan lebih lanjut kepada orang tua atau tim pendamping *</label>
+                <textarea name="peril_komunikasi_lanjut" class="form-control" rows="2" required></textarea>
             </div>
         </div>
 
     <?php else: ?>
         <!-- ========================================== -->
-        <!-- FORM 2: UNTUK UNIT MI DAN MTS (STANDARD)   -->
+        <!-- FORM UNTUK UNIT MI DAN MTS (STANDARD)      -->
         <!-- ========================================== -->
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-book me-2"></i>1. Bidang Akademik</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Mata Pelajaran *</label>
-                <input type="text" name="akademik_mapel" class="form-control" placeholder="Contoh: Matematika, Bahasa Indonesia" required>
+                <label class="form-label small fw-bold">Mata pelajaran *</label>
+                <textarea name="akademik_mapel" class="form-control" required></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Uraian Materi *</label>
-                <textarea name="akademik_materi" class="form-control" rows="2" placeholder="Contoh: Penjumlahan bersusun ke bawah" required></textarea>
+                <label class="form-label small fw-bold">Uraian materi *</label>
+                <textarea name="akademik_materi" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Catatan Kegiatan (Respons Anak) *</label>
-                <textarea name="akademik_catatan" class="form-control" rows="2" placeholder="Fokus anak, pengerjaan LKPD, dll" required></textarea>
+                <label class="form-label small fw-bold">Catatan kegiatan (Respon anak saat materi diberikan) *</label>
+                <textarea name="akademik_catatan" class="form-control" rows="2" required></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
             <h6 class="fw-bold text-rose mb-3"><i class="fas fa-user-check me-2"></i>2. Daily Life Skill</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Toilet Training</label>
-                <input type="text" name="daily_toilet" class="form-control" placeholder="Contoh: Mandiri & mampu membersihkan sendiri">
+                <label class="form-label small fw-bold">Toilet training *</label>
+                <textarea name="daily_toilet" class="form-control" required></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Kemandirian</label>
-                <input type="text" name="daily_kemandirian" class="form-control" placeholder="Merapikan alat tulis, makan sendiri">
+                <label class="form-label small fw-bold">Kemandirian *</label>
+                <textarea name="daily_kemandirian" class="form-control" required></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Keterlibatan Kegiatan di Kelas</label>
-                <input type="text" name="daily_keterlibatan" class="form-control" placeholder="Bergabung & interaksi dengan teman">
+                <label class="form-label small fw-bold">Keterlibatan kegiatan di kelas *</label>
+                <textarea name="daily_keterlibatan" class="form-control" required></textarea>
             </div>
         </div>
 
         <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-seedling me-2"></i>3. Aspek Perkembangan</h6>
+            <h6 class="fw-bold text-rose mb-3"><i class="fas fa-seedling me-2"></i>3. Perkembangan</h6>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Aspek yang Distimulasi</label>
-                <input type="text" name="perkembangan_aspek" class="form-control" placeholder="Contoh: Motorik Kasar / Emosi">
+                <label class="form-label small fw-bold">Aspek perkembangan yang distimulasi *</label>
+                <textarea name="perkembangan_aspek" class="form-control" required></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label small fw-bold">Uraian Kegiatan</label>
-                <textarea name="perkembangan_kegiatan" class="form-control" rows="2" placeholder="Lempar tangkap bola 2 tangan"></textarea>
+                <label class="form-label small fw-bold">Uraian kegiatan *</label>
+                <textarea name="perkembangan_kegiatan" class="form-control" rows="2" required></textarea>
             </div>
             <div class="mb-0">
-                <label class="form-label small fw-bold">Catatan Kegiatan (Respons Anak)</label>
-                <textarea name="perkembangan_catatan" class="form-control" rows="2" placeholder="Mampu menangkap bola tepat sasaran"></textarea>
+                <label class="form-label small fw-bold">Catatan kegiatan (Respon anak saat distimulasi) *</label>
+                <textarea name="perkembangan_catatan" class="form-control" rows="2" required></textarea>
             </div>
         </div>
     <?php endif; ?>
 
-    <!-- ========================================== -->
-    <!-- BAGIAN UPLOAD FOTO DOKUMENTASI (MAX 10)    -->
-    <!-- ========================================== -->
+    <!-- UPLOAD FOTO DOKUMENTASI -->
     <div class="card card-mobile p-3 bg-white mb-3 shadow-sm">
-        <h6 class="fw-bold text-rose mb-2"><i class="fas fa-camera me-2"></i>Foto Kegiatan (Maksimal 10 Foto)</h6>
-        <p class="small text-muted mb-3">Foto akan otomatis diunggah dan tersimpan ke Google Drive sekolah.</p>
+        <h6 class="fw-bold text-rose mb-3"><i class="fas fa-camera me-2"></i>Foto Kegiatan (Maksimal 10 Foto)</h6>
 
-        <!-- Input File Tersembunyi -->
         <input type="file" id="input_kamera" accept="image/*" capture="environment" multiple class="d-none" onchange="tangkapFoto(this)">
         <input type="file" id="input_galeri" accept="image/*" multiple class="d-none" onchange="tangkapFoto(this)">
 
-        <!-- Tombol Pilihan -->
-        <div class="d-flex gap-2 mb-3">
+        <div class="d-flex gap-2 mb-0">
             <label for="input_kamera" class="btn btn-outline-danger flex-fill fw-bold py-2 shadow-sm cursor-pointer mb-0">
                 <i class="fas fa-camera me-1"></i> Kamera
             </label>
@@ -235,11 +236,7 @@
             </label>
         </div>
 
-        <!-- Hidden Container untuk Menyimpan File Final -->
-        <div id="file-holder" class="d-none"></div>
-
-        <!-- Pratinjau Grid Foto -->
-        <div id="preview-section" class="d-none">
+        <div id="preview-section" class="d-none mt-3">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <small class="fw-bold text-dark">Pratinjau Foto (<span id="foto-count">0</span>/10):</small>
                 <button type="button" class="btn btn-link btn-sm text-danger p-0 text-decoration-none" onclick="resetFoto()">Hapus Semua</button>
@@ -250,7 +247,7 @@
 
     <!-- Tombol Simpan Jurnal -->
     <button type="submit" id="btn-submit" class="btn btn-rose w-100 py-3 fw-bold shadow mb-4">
-        <i class="fas fa-paper-plane me-2"></i> Simpan & Unggah Jurnal
+        <i class="fas fa-paper-plane me-2"></i> Simpan Jurnal
     </button>
 </form>
 
@@ -261,7 +258,6 @@
     <p class="text-muted small mb-0">Mohon tunggu, media sedang diunggah ke Google Drive.</p>
 </div>
 
-<!-- SCRIPT HANDLER FOTO MULTIPLE & PREVIEW -->
 <script>
     let containerFile = new DataTransfer();
 
@@ -306,7 +302,7 @@
             
             const div = document.createElement('div');
             div.className = 'preview-item';
-            div.innerHTML = `<img src="${src}" onclick="showImage('${src}')">`;
+            div.innerHTML = `<img src="${src}">`;
             grid.appendChild(div);
         }
     }

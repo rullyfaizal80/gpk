@@ -98,7 +98,8 @@
         <h6 class="fw-bold text-rose mb-2"><i class="fas fa-seedling me-2"></i>3. Aspek Perkembangan</h6>
         <p class="small mb-1"><strong>Aspek Distimulasi:</strong> <?= esc($jurnal['perkembangan_aspek'] ?? '-') ?></p>
         <p class="small mb-1"><strong>Uraian Kegiatan:</strong> <?= esc($jurnal['perkembangan_kegiatan'] ?? '-') ?></p>
-        <p class="small mb-0"><strong>Catatan Respons:</strong> <?= esc($jurnal['perkembangan_catatan'] ?? '-') ?></p>
+        <p class="small mb-1"><strong>Catatan Respons:</strong> <?= esc($jurnal['perkembangan_catatan'] ?? '-') ?></p>
+        <p class="small mb-0"><strong>Hal Perlu Dikomunikasikan Lanjut:</strong><br><?= esc($jurnal['peril_komunikasi_lanjut'] ?? '-') ?></p>
     </div>
 <?php endif; ?>
 
