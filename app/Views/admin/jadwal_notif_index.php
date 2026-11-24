@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/mobile_layout') ?>
+<?= $this->extend('layouts/dashboard_layout') ?>
 
 <?= $this->section('content') ?>
 <style>

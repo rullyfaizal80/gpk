@@ -1,13 +1,5 @@
 <?= $this->extend('layouts/dashboard_layout') ?>
 
-<?= $this->section('sidebar_menu') ?>
-    <li class="nav-item"><a class="nav-link" href="/admin/dashboard"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a></li>
-    <li class="nav-item"><a class="nav-link" href="/admin/peserta-didik"><i class="fas fa-user-graduate me-2"></i> Data Peserta Didik</a></li>
-    <li class="nav-item"><a class="nav-link active" href="/admin/user"><i class="fas fa-users me-2"></i> Kelola User</a></li>
-    <li class="nav-item"><a class="nav-link" href="/admin/jurnal"><i class="fas fa-book me-2"></i> Jurnal Harian</a></li>
-    <li class="nav-item"><a class="nav-link" href="/admin/laporan"><i class="fas fa-print me-2"></i> Rekap & Laporan</a></li>
-<?= $this->endSection() ?>
-
 <?= $this->section('content') ?>
     <style>
         .text-rose { color: #e11d48 !important; }

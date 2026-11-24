@@ -15,28 +15,103 @@ class AdminController extends BaseController
         $this->db        = \Config\Database::connect();
     }
 
-    // 1. DASHBOARD ADMIN
     public function index()
-    {
-        // Menghitung statistik pengguna & jurnal untuk dashboard admin GPK
-        $totalGpk      = $this->userModel->where('role', 'gpk')->countAllResults();
-        $totalPdbk     = $this->db->table('peserta_didik')->countAllResults();
-        $totalJurnal   = $this->db->table('jurnal')->countAllResults();
-        $jurnalBulanIni = $this->db->table('jurnal')
-                                  ->where('MONTH(tanggal)', date('m'))
-                                  ->where('YEAR(tanggal)', date('Y'))
-                                  ->countAllResults();
+{
+    $bulanAktif = $this->request->getGet('bulan') ?? date('m');
+    $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
+    $unitFilter = $this->request->getGet('unit') ?? '';
 
-        $data = [
-            'title'          => 'Dashboard Admin',
-            'totalGpk'       => $totalGpk,
-            'totalPdbk'      => $totalPdbk,
-            'totalJurnal'    => $totalJurnal,
-            'jurnalBulanIni' => $jurnalBulanIni,
+    // 1. Hitung Statistik Ringkasan
+    $totalGpk       = $this->userModel->where('role', 'gpk')->countAllResults();
+    $totalPdbk      = $this->db->table('peserta_didik')->countAllResults();
+    $totalJurnal    = $this->db->table('jurnal')->countAllResults();
+    $jurnalBulanIni = $this->db->table('jurnal')
+                               ->where('MONTH(tanggal)', $bulanAktif)
+                               ->where('YEAR(tanggal)', $tahunAktif)
+                               ->countAllResults();
+
+    // 2. Ambil Jadwal Hari Efektif Bulan Ini
+    $jadwalBulan = $this->db->table('pengaturan_jadwal_notif')
+                            ->where('MONTH(tanggal)', $bulanAktif)
+                            ->where('YEAR(tanggal)', $tahunAktif)
+                            ->orderBy('tanggal', 'ASC')
+                            ->get()->getResultArray();
+
+    $mapTanggal = [];
+    foreach ($jadwalBulan as $j) {
+        $mapTanggal[$j['tanggal']] = $j;
+    }
+
+    // 3. Susun Matriks Ceklisan GPK
+    $gpkList = $this->userModel->where('role', 'gpk')->findAll();
+    $matriksData = [];
+
+    foreach ($gpkList as $gpk) {
+        $builderAnak = $this->db->table('peserta_didik')->where('gpk_id', $gpk['id']);
+        if (!empty($unitFilter)) {
+            $builderAnak->where('unit', $unitFilter);
+        }
+        $listAnak = $builderAnak->get()->getResultArray();
+        $totalAnak = count($listAnak);
+
+        if ($totalAnak === 0 && !empty($unitFilter)) {
+            continue;
+        }
+
+        $rowGPK = [
+            'nama_gpk'   => $gpk['nama_lengkap'],
+            'total_anak' => $totalAnak,
+            'harian'     => []
         ];
 
-        return view('admin/dashboard', $data);
+        foreach ($mapTanggal as $tgl => $infoTgl) {
+            if ($infoTgl['is_aktif'] == 0) {
+                $rowGPK['harian'][$tgl] = ['status' => 'libur', 'keterangan' => $infoTgl['keterangan']];
+            } else {
+                $listAnakIds = array_column($listAnak, 'id');
+                $terisi = 0;
+                if (!empty($listAnakIds)) {
+                    $terisi = $this->db->table('jurnal')
+                                       ->where('gpk_id', $gpk['id'])
+                                       ->where('tanggal', $tgl)
+                                       ->whereIn('pdbk_id', $listAnakIds)
+                                       ->countAllResults();
+                }
+
+                if ($terisi == 0) {
+                    $status = 'kosong';
+                } elseif ($terisi < $totalAnak) {
+                    $status = 'parsial';
+                } else {
+                    $status = 'lengkap';
+                }
+
+                $rowGPK['harian'][$tgl] = [
+                    'status' => $status,
+                    'terisi' => $terisi,
+                    'total'  => $totalAnak
+                ];
+            }
+        }
+
+        $matriksData[] = $rowGPK;
     }
+
+    $data = [
+        'title'          => 'Dashboard Admin',
+        'totalGpk'       => $totalGpk,
+        'totalPdbk'      => $totalPdbk,
+        'totalJurnal'    => $totalJurnal,
+        'jurnalBulanIni' => $jurnalBulanIni,
+        'matriksData'    => $matriksData,
+        'mapTanggal'     => $mapTanggal,
+        'bulanAktif'     => sprintf('%02d', $bulanAktif),
+        'tahunAktif'     => $tahunAktif,
+        'unitFilter'     => $unitFilter,
+    ];
+
+    return view('admin/dashboard', $data);
+}
 
     // ==========================================
     // BAGIAN KELOLA USER (PENGGUNA)
@@ -179,4 +254,5 @@ class AdminController extends BaseController
 
         return view('admin/jurnal_detail', $data);
     }
+
 }
