@@ -11,50 +11,104 @@ class PimpinanController extends BaseController
         $this->db = \Config\Database::connect();
     }
 
-    // 1. DASHBOARD PIMPINAN
-    public function index()
-    {
-        $bulanAktif = date('m');
-        $tahunAktif = date('Y');
+    // 1. DASHBOARD PIMPINAN (MATRIKS HARIAN TANPA REKAP UNIT)
+public function index()
+{
+    $bulanAktif = $this->request->getGet('bulan') ?? date('m');
+    $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
+    $unitFilter = $this->request->getGet('unit') ?? '';
 
-        // Statistik Utama
-        $totalPdbk     = $this->db->table('peserta_didik')->countAllResults();
-        $totalGpk      = $this->db->table('users')->where('role', 'gpk')->countAllResults();
-        $jurnalHariIni = $this->db->table('jurnal')->where('tanggal', date('Y-m-d'))->countAllResults();
-        $jurnalBulanIni= $this->db->table('jurnal')
-                                  ->where('MONTH(tanggal)', $bulanAktif)
-                                  ->where('YEAR(tanggal)', $tahunAktif)
-                                  ->countAllResults();
+    // 1. Statistik Utama
+    $totalPdbk     = $this->db->table('peserta_didik')->countAllResults();
+    $totalGpk      = $this->db->table('users')->where('role', 'gpk')->countAllResults();
+    $jurnalHariIni = $this->db->table('jurnal')->where('tanggal', date('Y-m-d'))->countAllResults();
+    $jurnalBulanIni= $this->db->table('jurnal')
+                              ->where('MONTH(tanggal)', $bulanAktif)
+                              ->where('YEAR(tanggal)', $tahunAktif)
+                              ->countAllResults();
 
-        // Rekap Keterisian per Unit Bulan Ini
-        $rekapUnit = [
-            'PERIL' => $this->db->table('jurnal')->where('unit', 'PERIL')->where('MONTH(tanggal)', $bulanAktif)->where('YEAR(tanggal)', $tahunAktif)->countAllResults(),
-            'MI'    => $this->db->table('jurnal')->where('unit', 'MI')->where('MONTH(tanggal)', $bulanAktif)->where('YEAR(tanggal)', $tahunAktif)->countAllResults(),
-            'MTs'   => $this->db->table('jurnal')->where('unit', 'MTs')->where('MONTH(tanggal)', $bulanAktif)->where('YEAR(tanggal)', $tahunAktif)->countAllResults(),
-        ];
+    // 2. Ambil Jadwal Hari Efektif Bulan Ini
+    $jadwalBulan = $this->db->table('pengaturan_jadwal_notif')
+                            ->where('MONTH(tanggal)', $bulanAktif)
+                            ->where('YEAR(tanggal)', $tahunAktif)
+                            ->orderBy('tanggal', 'ASC')
+                            ->get()->getResultArray();
 
-        // 5 Jurnal Terbaru
-        $latestJurnal = $this->db->table('jurnal')
-                                 ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas, users.nama_lengkap as nama_gpk')
-                                 ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
-                                 ->join('users', 'users.id = jurnal.gpk_id', 'left')
-                                 ->orderBy('jurnal.tanggal', 'DESC')
-                                 ->orderBy('jurnal.id', 'DESC')
-                                 ->limit(5)
-                                 ->get()->getResultArray();
-
-        $data = [
-            'title'          => 'Dashboard Pimpinan',
-            'totalPdbk'      => $totalPdbk,
-            'totalGpk'       => $totalGpk,
-            'jurnalHariIni'  => $jurnalHariIni,
-            'jurnalBulanIni' => $jurnalBulanIni,
-            'rekapUnit'      => $rekapUnit,
-            'latestJurnal'   => $latestJurnal,
-        ];
-
-        return view('pimpinan/dashboard', $data);
+    $mapTanggal = [];
+    foreach ($jadwalBulan as $j) {
+        $mapTanggal[$j['tanggal']] = $j;
     }
+
+    // 3. Hitung Matriks Ceklisan GPK
+    $gpkList = $this->db->table('users')->where('role', 'gpk')->get()->getResultArray();
+    $matriksData = [];
+
+    foreach ($gpkList as $gpk) {
+        $builderAnak = $this->db->table('peserta_didik')->where('gpk_id', $gpk['id']);
+        if (!empty($unitFilter)) {
+            $builderAnak->where('unit', $unitFilter);
+        }
+        $listAnak = $builderAnak->get()->getResultArray();
+        $totalAnak = count($listAnak);
+
+        if ($totalAnak === 0 && !empty($unitFilter)) {
+            continue; // Skip jika GPK tidak mengajar di unit yang difilter
+        }
+
+        $rowGPK = [
+            'nama_gpk'   => $gpk['nama_lengkap'],
+            'total_anak' => $totalAnak,
+            'harian'     => []
+        ];
+
+        foreach ($mapTanggal as $tgl => $infoTgl) {
+            if ($infoTgl['is_aktif'] == 0) {
+                $rowGPK['harian'][$tgl] = ['status' => 'libur', 'keterangan' => $infoTgl['keterangan']];
+            } else {
+                $listAnakIds = array_column($listAnak, 'id');
+                $terisi = 0;
+                if (!empty($listAnakIds)) {
+                    $terisi = $this->db->table('jurnal')
+                                       ->where('gpk_id', $gpk['id'])
+                                       ->where('tanggal', $tgl)
+                                       ->whereIn('pdbk_id', $listAnakIds)
+                                       ->countAllResults();
+                }
+
+                if ($terisi == 0) {
+                    $status = 'kosong';
+                } elseif ($terisi < $totalAnak) {
+                    $status = 'parsial';
+                } else {
+                    $status = 'lengkap';
+                }
+
+                $rowGPK['harian'][$tgl] = [
+                    'status' => $status,
+                    'terisi' => $terisi,
+                    'total'  => $totalAnak
+                ];
+            }
+        }
+
+        $matriksData[] = $rowGPK;
+    }
+
+    $data = [
+        'title'          => 'Dashboard Pimpinan',
+        'totalPdbk'      => $totalPdbk,
+        'totalGpk'       => $totalGpk,
+        'jurnalHariIni'  => $jurnalHariIni,
+        'jurnalBulanIni' => $jurnalBulanIni,
+        'matriksData'    => $matriksData,
+        'mapTanggal'     => $mapTanggal,
+        'bulanAktif'     => sprintf('%02d', $bulanAktif),
+        'tahunAktif'     => $tahunAktif,
+        'unitFilter'     => $unitFilter,
+    ];
+
+    return view('pimpinan/dashboard', $data);
+}
 
     // 2. MONITORING JURNAL HARIAN (SELURUH UNIT)
     public function jurnal()

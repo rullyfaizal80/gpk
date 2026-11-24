@@ -52,58 +52,98 @@
     </div>
 </div>
 
-<!-- Rekap Keterisian Unit -->
-<div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-    <h6 class="fw-bold text-rose mb-3">
-        <i class="fas fa-layer-group me-2"></i>Rekap Jurnal per Unit
-    </h6>
-    
-    <!-- Pembagi Kolom Presisi & Simetris -->
-    <div class="d-flex text-center pt-2 border-top">
-        <div class="flex-fill px-2">
-            <small class="text-muted d-block fw-bold mb-1">PERIL</small>
-            <span class="fs-4 fw-bold text-danger"><?= $rekapUnit['PERIL'] ?></span>
-        </div>
-        
-        <div class="border-end opacity-25"></div>
-        
-        <div class="flex-fill px-2">
-            <small class="text-muted d-block fw-bold mb-1">MI</small>
-            <span class="fs-4 fw-bold text-primary"><?= $rekapUnit['MI'] ?></span>
-        </div>
-        
-        <div class="border-end opacity-25"></div>
-        
-        <div class="flex-fill px-2">
-            <small class="text-muted d-block fw-bold mb-1">MTs</small>
-            <span class="fs-4 fw-bold text-success"><?= $rekapUnit['MTs'] ?></span>
-        </div>
-    </div>
-</div>
-
-<!-- Daftar Jurnal Terbaru (Mobile Cards List) -->
+<!-- MATRIKS MONITORING PENGISIAN HARIAN PERTANGGAL -->
 <div class="d-flex justify-content-between align-items-center mb-2">
-    <h6 class="fw-bold text-dark mb-0"><i class="fas fa-clock text-rose me-1"></i> Jurnal Terbaru</h6>
-    <a href="/pimpinan/jurnal" class="small text-rose fw-bold text-decoration-none">Lihat Semua <i class="fas fa-chevron-right ms-1"></i></a>
+    <h6 class="fw-bold text-dark mb-0">
+        <i class="fas fa-calendar-check text-rose me-1"></i> Monitoring Pengisian Pertanggal
+    </h6>
 </div>
 
-<?php if(!empty($latestJurnal)): ?>
-    <div class="d-flex flex-column gap-2 mb-4">
-        <?php foreach($latestJurnal as $j): ?>
-            <a href="/pimpinan/jurnal/detail/<?= $j['id'] ?>" class="card card-mobile p-3 bg-white shadow-sm border-0 text-decoration-none text-dark">
-                <div class="d-flex justify-content-between align-items-start mb-1">
-                    <span class="badge bg-rose-light text-rose border border-rose-subtle" style="font-size: 0.7rem;"><?= esc($j['unit']) ?> - Kelas <?= esc($j['kelas']) ?></span>
-                    <small class="text-muted" style="font-size: 0.75rem;"><i class="far fa-calendar-alt me-1"></i><?= date('d/m/Y', strtotime($j['tanggal'])) ?></small>
-                </div>
-                <h6 class="fw-bold mb-1 text-dark"><?= esc($j['nama_pdbk']) ?></h6>
-                <small class="text-muted d-block"><i class="fas fa-user-circle me-1"></i> GPK: <?= esc($j['nama_gpk'] ?? '-') ?></small>
-            </a>
-        <?php endforeach; ?>
-    </div>
-<?php else: ?>
-    <div class="text-center py-4 bg-white rounded-4 border border-dashed mb-4">
-        <small class="text-muted">Belum ada jurnal yang terisi.</small>
-    </div>
-<?php endif; ?>
+<!-- Dropdown Filter Otomatis Reload (Tanpa Tombol Submit) -->
+<div class="card p-2 bg-white border-0 mb-3 shadow-sm">
+    <form method="get" action="/pimpinan/dashboard">
+        <div class="row g-2">
+            <div class="col-4">
+                <select name="bulan" class="form-select form-select-sm border-light bg-light text-dark fw-bold" onchange="this.form.submit()">
+                    <?php 
+                    $namaBulan = ['01'=>'Jan','02'=>'Feb','03'=>'Mar','04'=>'Apr','05'=>'Mei','06'=>'Jun','07'=>'Jul','08'=>'Agu','09'=>'Sep','10'=>'Okt','11'=>'Nov','12'=>'Des'];
+                    foreach($namaBulan as $k => $v): ?>
+                        <option value="<?= $k ?>" <?= (($bulanAktif ?? date('m')) == $k) ? 'selected' : '' ?>><?= $v ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-4">
+                <select name="tahun" class="form-select form-select-sm border-light bg-light text-dark fw-bold" onchange="this.form.submit()">
+                    <?php for($y = date('Y'); $y >= date('Y')-2; $y--): ?>
+                        <option value="<?= $y ?>" <?= (($tahunAktif ?? date('Y')) == $y) ? 'selected' : '' ?>><?= $y ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+            <div class="col-4">
+                <select name="unit" class="form-select form-select-sm border-light bg-light text-dark fw-bold" onchange="this.form.submit()">
+                    <option value="">Semua</option>
+                    <option value="PERIL" <?= (($unitFilter ?? '') == 'PERIL') ? 'selected' : '' ?>>PERIL</option>
+                    <option value="MI" <?= (($unitFilter ?? '') == 'MI') ? 'selected' : '' ?>>MI</option>
+                    <option value="MTs" <?= (($unitFilter ?? '') == 'MTs') ? 'selected' : '' ?>>MTs</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
 
+<!-- Keterangan Warna Status -->
+<div class="d-flex flex-wrap gap-2 mb-2 px-1 text-dark" style="font-size: 0.72rem;">
+    <span><i class="fas fa-square text-success me-1"></i> Lengkap</span>
+    <span><i class="fas fa-square text-warning me-1"></i> Parsial</span>
+    <span><i class="fas fa-square text-danger me-1"></i> Kosong</span>
+    <span><i class="fas fa-square text-secondary me-1"></i> Libur</span>
+</div>
+
+<!-- Tabel Matriks Grid Scrollable -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-0 table-responsive">
+        <table class="table table-bordered table-sm text-center align-middle mb-0" style="font-size: 0.78rem;">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th style="min-width: 130px;" class="text-start ps-2 py-2">Nama GPK</th>
+                    <th style="width: 45px;">Anak</th>
+                    <?php if(!empty($mapTanggal)): ?>
+                        <?php foreach($mapTanggal as $tgl => $info): ?>
+                            <th class="<?= ($info['is_aktif'] == 0) ? 'bg-secondary opacity-50' : '' ?>" title="<?= esc($info['keterangan']) ?>">
+                                <?= date('d', strtotime($tgl)) ?>
+                            </th>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <th>-</th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(!empty($matriksData)): ?>
+                    <?php foreach($matriksData as $m): ?>
+                        <tr>
+                            <td class="text-start ps-2 fw-bold text-dark text-truncate" style="max-width: 130px;"><?= esc($m['nama_gpk']) ?></td>
+                            <td><span class="badge bg-light text-dark border"><?= $m['total_anak'] ?></span></td>
+                            <?php foreach($m['harian'] as $tgl => $h): ?>
+                                <?php if($h['status'] === 'libur'): ?>
+                                    <td class="table-secondary text-muted" title="<?= esc($h['keterangan']) ?>">—</td>
+                                <?php elseif($h['status'] === 'lengkap'): ?>
+                                    <td class="bg-success text-white fw-bold" title="Lengkap (<?= $h['terisi'] ?>/<?= $h['total'] ?>)"><i class="fas fa-check"></i></td>
+                                <?php elseif($h['status'] === 'parsial'): ?>
+                                    <td class="bg-warning text-dark fw-bold" title="Terisi <?= $h['terisi'] ?> dari <?= $h['total'] ?>"><?= $h['terisi'] ?>/<?= $h['total'] ?></td>
+                                <?php else: ?>
+                                    <td class="bg-danger text-white fw-bold" title="Belum mengisi jurnal"><i class="fas fa-times"></i></td>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="<?= count($mapTanggal ?? []) + 2 ?>" class="py-4 text-muted">Data GPK atau jadwal pengisian tidak ditemukan.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 <?= $this->endSection() ?>

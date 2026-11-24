@@ -8,6 +8,24 @@
         .btn-outline-rose { color: #e11d48; border-color: #e11d48; }
         .btn-outline-rose:hover { background-color: #e11d48; color: white; }
         .bg-rose { background-color: #e11d48 !important; color: white; }
+        /* Custom Pagination Styling */
+.pagination .page-link {
+    color: #e11d48;
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.pagination .page-link:hover {
+    background-color: #fff1f2;
+    color: #be123c;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #e11d48 !important;
+    border-color: #e11d48 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(225, 29, 72, 0.3) !important;
+}
     </style>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -21,6 +39,12 @@
     <?php if(session()->getFlashdata('success')): ?>
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
             <i class="fas fa-check-circle me-1"></i> <?= session()->getFlashdata('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php if(session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-exclamation-circle me-1"></i> <?= session()->getFlashdata('error') ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
@@ -43,7 +67,14 @@
                 </thead>
                 <tbody>
                     <?php if(!empty($peserta_didik)): ?>
-                        <?php $no = 1; foreach($peserta_didik as $p): ?>
+                        <?php 
+                        // Hitung nomor urut dinamis berdasarkan halaman pagination
+                        $page = isset($currentPage) ? $currentPage : 1;
+                        $perPage = isset($perPage) ? $perPage : 10;
+                        $no = 1 + ($perPage * ($page - 1));
+
+                        foreach($peserta_didik as $p): 
+                        ?>
                             <tr>
                                 <td><?= $no++ ?></td>
                                 <td class="fw-bold text-dark"><?= esc($p['nama_pdbk']) ?></td>
@@ -59,14 +90,14 @@
                                     <span class="badge <?= $badgeUnit ?>"><?= esc($p['unit']) ?></span>
                                 </td>
                                 <td>
-                                    <?php if($p['nama_gpk']): ?>
+                                    <?php if(!empty($p['nama_gpk'])): ?>
                                         <i class="fas fa-user-tie text-rose me-1"></i> <?= esc($p['nama_gpk']) ?>
                                     <?php else: ?>
                                         <span class="text-muted small italic">Belum Ditentukan</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if($p['nama_ortu']): ?>
+                                    <?php if(!empty($p['nama_ortu'])): ?>
                                         <i class="fas fa-heart text-danger me-1"></i> <?= esc($p['nama_ortu']) ?>
                                     <?php else: ?>
                                         <span class="text-muted small">Belum Dihubungkan</span>
@@ -120,22 +151,22 @@
                                                     <label class="form-label fw-bold small">Guru GPK Pendamping</label>
                                                     <select class="form-select" name="gpk_id">
                                                         <option value="">-- Belum Ditentukan --</option>
-                                                        <?php foreach($list_gpk as $gpk): ?>
+                                                        <?php if(!empty($list_gpk)): foreach($list_gpk as $gpk): ?>
                                                             <option value="<?= $gpk['id'] ?>" <?= $p['gpk_id'] == $gpk['id'] ? 'selected' : '' ?>>
                                                                 <?= esc($gpk['nama_lengkap']) ?>
                                                             </option>
-                                                        <?php endforeach; ?>
+                                                        <?php endforeach; endif; ?>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label fw-bold small">Akun Orang Tua</label>
                                                     <select class="form-select" name="ortu_id">
                                                         <option value="">-- Hubungkan dengan Akun Ortu --</option>
-                                                        <?php foreach($list_ortu as $ortu): ?>
+                                                        <?php if(!empty($list_ortu)): foreach($list_ortu as $ortu): ?>
                                                             <option value="<?= $ortu['id'] ?>" <?= $p['ortu_id'] == $ortu['id'] ? 'selected' : '' ?>>
                                                                 <?= esc($ortu['nama_lengkap']) ?> (<?= esc($ortu['username']) ?>)
                                                             </option>
-                                                        <?php endforeach; ?>
+                                                        <?php endforeach; endif; ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -154,6 +185,13 @@
                 </tbody>
             </table>
         </div>
+
+       <!-- Render Link Pagination Bootstrap Kustom -->
+<?php if (isset($pager) && $pager): ?>
+    <div class="card-footer bg-white border-0 py-3">
+        <?= $pager->links('peserta_didik', 'bootstrap_full') ?>
+    </div>
+<?php endif; ?>
     </div>
 
     <!-- MODAL TAMBAH PDBK -->
@@ -192,18 +230,18 @@
                             <label class="form-label fw-bold small">Tugaskan Guru GPK</label>
                             <select class="form-select" name="gpk_id">
                                 <option value="">-- Pilih GPK Pendamping --</option>
-                                <?php foreach($list_gpk as $gpk): ?>
+                                <?php if(!empty($list_gpk)): foreach($list_gpk as $gpk): ?>
                                     <option value="<?= $gpk['id'] ?>"><?= esc($gpk['nama_lengkap']) ?></option>
-                                <?php endforeach; ?>
+                                <?php endforeach; endif; ?>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold small">Hubungkan Akun Orang Tua</label>
                             <select class="form-select" name="ortu_id">
                                 <option value="">-- Pilih Akun Orang Tua --</option>
-                                <?php foreach($list_ortu as $ortu): ?>
+                                <?php if(!empty($list_ortu)): foreach($list_ortu as $ortu): ?>
                                     <option value="<?= $ortu['id'] ?>"><?= esc($ortu['nama_lengkap']) ?> (<?= esc($ortu['username']) ?>)</option>
-                                <?php endforeach; ?>
+                                <?php endforeach; endif; ?>
                             </select>
                         </div>
                     </div>

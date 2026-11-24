@@ -16,18 +16,22 @@ class PesertaDidikController extends BaseController
         $this->userModel        = new UserModel();
     }
 
-    // Method 'index' menggantikan 'pesertaDidik'
     public function index()
-    {
-        $data = [
-            'title'         => 'Kelola Peserta Didik (PDBK)',
-            'peserta_didik' => $this->pesertaDidikModel->getPesertaDidikWithUser(),
-            'list_gpk'      => $this->userModel->where('role', 'gpk')->where('is_active', 1)->findAll(),
-            'list_ortu'     => $this->userModel->where('role', 'ortu')->where('is_active', 1)->findAll(),
-        ];
+{
+    $perPage = 10;
 
-        return view('admin/peserta_didik', $data);
-    }
+    $data = [
+        'title'         => 'Kelola Peserta Didik (PDBK)',
+        'peserta_didik' => $this->pesertaDidikModel->getPesertaDidikPaginated($perPage),
+        'pager'         => $this->pesertaDidikModel->pager,
+        'currentPage'   => $this->request->getVar('page_peserta_didik') ? $this->request->getVar('page_peserta_didik') : 1,
+        'perPage'       => $perPage,
+        'list_gpk'      => $this->userModel->where('role', 'gpk')->where('is_active', 1)->findAll(),
+        'list_ortu'     => $this->userModel->where('role', 'ortu')->where('is_active', 1)->findAll(),
+    ];
+
+    return view('admin/peserta_didik', $data);
+}
 
     public function tambah()
     {

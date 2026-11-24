@@ -15,13 +15,12 @@ class PesertaDidikModel extends Model
     protected $createdField     = 'created_at';
     protected $updatedField     = '';
 
-    // Ambil data PDBK beserta nama GPK dan Orang Tua
-    public function getPesertaDidikWithUser()
-    {
-        return $this->select('peserta_didik.*, gpk.nama_lengkap as nama_gpk, ortu.nama_lengkap as nama_ortu')
-                    ->join('users as gpk', 'gpk.id = peserta_didik.gpk_id', 'left')
-                    ->join('users as ortu', 'ortu.id = peserta_didik.ortu_id', 'left')
-                    ->orderBy('peserta_didik.id', 'DESC')
-                    ->findAll();
-    }
+   public function getPesertaDidikPaginated($perPage = 10)
+{
+    return $this->select('peserta_didik.*, gpk.nama_lengkap as nama_gpk, ortu.nama_lengkap as nama_ortu')
+                ->join('users as gpk', 'gpk.id = peserta_didik.gpk_id', 'left')
+                ->join('users as ortu', 'ortu.id = peserta_didik.ortu_id', 'left')
+                ->orderBy('peserta_didik.id', 'DESC')
+                ->paginate($perPage, 'peserta_didik');
+}
 }

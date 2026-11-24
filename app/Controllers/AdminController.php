@@ -117,16 +117,20 @@ class AdminController extends BaseController
     // BAGIAN KELOLA USER (PENGGUNA)
     // ==========================================
     
-    // Tampilkan daftar pengguna
     public function users()
-    {
-        $data = [
-            'title' => 'Kelola Pengguna',
-            'users' => $this->userModel->orderBy('role', 'ASC')->orderBy('nama_lengkap', 'ASC')->findAll()
-        ];
+{
+    $perPage = 10; // Jumlah baris per halaman
+    
+    $data = [
+        'title'       => 'Kelola Pengguna',
+        'users'       => $this->userModel->orderBy('role', 'ASC')->orderBy('nama_lengkap', 'ASC')->paginate($perPage, 'users'),
+        'pager'       => $this->userModel->pager,
+        'currentPage' => $this->request->getVar('page_users') ? $this->request->getVar('page_users') : 1,
+        'perPage'     => $perPage
+    ];
 
-        return view('admin/kelola_user', $data);
-    }
+    return view('admin/kelola_user', $data);
+}
 
     // Tambah Pengguna Baru
     public function tambahUser()
