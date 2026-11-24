@@ -167,10 +167,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <?= $this->renderSection('scripts') ?>
 
-    <!-- PWA Push Notification Scripts -->
+   <!-- PWA Push Notification Scripts -->
     <script src="<?= base_url('assets/js/pwa-push.js') ?>"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
+        // 1. Daftarkan Service Worker dengan URL Absolut Projek
+        if ('serviceWorker' in navigator) {
+            try {
+                const swUrl = "<?= base_url('sw.js') ?>";
+                await navigator.serviceWorker.register(swUrl);
+                console.log('Service Worker MIMHa berhasil terdaftar:', swUrl);
+            } catch (error) {
+                console.error('Gagal mendaftarkan Service Worker:', error);
+            }
+        }
+
+        // 2. Jalankan Inisialisasi Web Push PWA
         const vapidPublicKey = "<?= env('VAPID_PUBLIC_KEY') ?>";
         if (vapidPublicKey && typeof initPwaPushNotification === 'function') {
             initPwaPushNotification(vapidPublicKey);
