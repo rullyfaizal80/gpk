@@ -117,12 +117,12 @@ class AdminController extends BaseController
     // BAGIAN KELOLA USER (PENGGUNA)
     // ==========================================
     
-    public function users()
+   public function users()
 {
-    $perPage = 10; // Jumlah baris per halaman
-    
+    $perPage = 10; // Menampilkan 10 data per halaman
+
     $data = [
-        'title'       => 'Kelola Pengguna',
+        'title'       => 'Kelola Pengguna Sistem',
         'users'       => $this->userModel->orderBy('role', 'ASC')->orderBy('nama_lengkap', 'ASC')->paginate($perPage, 'users'),
         'pager'       => $this->userModel->pager,
         'currentPage' => $this->request->getVar('page_users') ? $this->request->getVar('page_users') : 1,

@@ -18,11 +18,15 @@ class PesertaDidikController extends BaseController
 
     public function index()
 {
-    $perPage = 10;
+    $perPage = 10; // Menampilkan 10 data per halaman
 
     $data = [
         'title'         => 'Kelola Peserta Didik (PDBK)',
-        'peserta_didik' => $this->pesertaDidikModel->getPesertaDidikPaginated($perPage),
+        'peserta_didik' => $this->pesertaDidikModel->select('peserta_didik.*, gpk.nama_lengkap as nama_gpk, ortu.nama_lengkap as nama_ortu')
+                                                    ->join('users as gpk', 'gpk.id = peserta_didik.gpk_id', 'left')
+                                                    ->join('users as ortu', 'ortu.id = peserta_didik.ortu_id', 'left')
+                                                    ->orderBy('peserta_didik.id', 'DESC')
+                                                    ->paginate($perPage, 'peserta_didik'),
         'pager'         => $this->pesertaDidikModel->pager,
         'currentPage'   => $this->request->getVar('page_peserta_didik') ? $this->request->getVar('page_peserta_didik') : 1,
         'perPage'       => $perPage,

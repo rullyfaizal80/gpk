@@ -9,14 +9,14 @@ $pager->setSurroundCount(2);
     <ul class="pagination justify-content-center align-items-center gap-2 mb-0">
         
         <!-- Tombol First & Previous -->
-        <?php if ($pager->hasPrevious()) : ?>
+        <?php if ($pager->hasPreviousPage()) : ?>
             <li class="page-item">
                 <a class="page-link rounded-3 px-3 py-2 border-0 shadow-sm" href="<?= $pager->getFirst() ?>" aria-label="First">
                     <i class="fas fa-angle-double-left"></i> First
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link rounded-3 px-3 py-2 border-0 shadow-sm" href="<?= $pager->getPrevious() ?>" aria-label="Previous">
+                <a class="page-link rounded-3 px-3 py-2 border-0 shadow-sm" href="<?= $pager->getPreviousPage() ?>" aria-label="Previous">
                     <i class="fas fa-chevron-left me-1"></i> Prev
                 </a>
             </li>
@@ -26,7 +26,7 @@ $pager->setSurroundCount(2);
             </li>
         <?php endif ?>
 
-        <!-- Angka Halaman Berjarak (Gap) -->
+        <!-- Angka Halaman -->
         <?php foreach ($pager->links() as $link) : ?>
             <li class="page-item <?= $link['active'] ? 'active' : '' ?>">
                 <a class="page-link rounded-3 px-3 py-2 border-0 shadow-sm fw-bold" href="<?= $link['uri'] ?>">
@@ -36,9 +36,9 @@ $pager->setSurroundCount(2);
         <?php endforeach ?>
 
         <!-- Tombol Next & Last -->
-        <?php if ($pager->hasNext()) : ?>
+        <?php if ($pager->hasNextPage()) : ?>
             <li class="page-item">
-                <a class="page-link rounded-3 px-3 py-2 border-0 shadow-sm" href="<?= $pager->getNext() ?>" aria-label="Next">
+                <a class="page-link rounded-3 px-3 py-2 border-0 shadow-sm" href="<?= $pager->getNextPage() ?>" aria-label="Next">
                     Next <i class="fas fa-chevron-right ms-1"></i>
                 </a>
             </li>

@@ -186,7 +186,7 @@
             </table>
         </div>
 
-       <!-- Render Link Pagination Bootstrap Kustom -->
+       <!-- Render Link Pagination Bootstrap Kustom untuk Peserta Didik -->
 <?php if (isset($pager) && $pager): ?>
     <div class="card-footer bg-white border-0 py-3">
         <?= $pager->links('peserta_didik', 'bootstrap_full') ?>

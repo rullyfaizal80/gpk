@@ -164,7 +164,7 @@
             </table>            
         </div>
 
-        <!-- Render Link Pagination Bootstrap Kustom -->
+        <!-- Render Link Pagination Bootstrap Kustom untuk Users -->
 <?php if (isset($pager) && $pager): ?>
     <div class="card-footer bg-white border-0 py-3">
         <?= $pager->links('users', 'bootstrap_full') ?>
