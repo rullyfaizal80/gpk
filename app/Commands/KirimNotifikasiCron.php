@@ -118,11 +118,17 @@ class KirimNotifikasiCron extends BaseCommand
         $gagal   = 0;
 
         foreach ($subscriptions as $sub) {
+            // Paksa upgrade encoding ke aes128gcm jika tersimpan legacy/kosong
+            $encoding = !empty($sub['content_encoding']) ? $sub['content_encoding'] : 'aes128gcm';
+            if ($encoding === 'aesgcm') {
+                $encoding = 'aes128gcm';
+            }
+
             $subscription = Subscription::create([
                 'endpoint'        => $sub['endpoint'],
                 'publicKey'       => $sub['public_key'],
                 'authToken'       => $sub['auth_token'],
-                'contentEncoding' => !empty($sub['content_encoding']) ? $sub['content_encoding'] : 'aesgcm',
+                'contentEncoding' => $encoding,
             ]);
 
             $payload = json_encode([
