@@ -1,19 +1,28 @@
 <?php return array(
     'root' => array(
         'name' => 'codeigniter4/appstarter',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'c1b0f045b256d33f4610e8105c9b360915c0a381',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'codeigniter4/appstarter' => array(
-            'pretty_version' => '1.0.0+no-version-set',
+        'brick/math' => array(
+            'pretty_version' => '1.0.0',
             'version' => '1.0.0.0',
-            'reference' => null,
+            'reference' => '2effe05d2177c451b86c6a073196a4034c02f211',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../brick/math',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'codeigniter4/appstarter' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'c1b0f045b256d33f4610e8105c9b360915c0a381',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -118,6 +127,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'minishlink/web-push' => array(
+            'pretty_version' => 'v11.0.0',
+            'version' => '11.0.0.0',
+            'reference' => 'f8410afb73486ab895bb4792b879bdca62025b47',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../minishlink/web-push',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'monolog/monolog' => array(
             'pretty_version' => '3.13.0',
             'version' => '3.13.0.0',
@@ -162,6 +180,45 @@
             'install_path' => __DIR__ . '/../phar-io/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'php-http/async-client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '*',
+            ),
+        ),
+        'php-http/client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '*',
+            ),
+        ),
+        'php-http/discovery' => array(
+            'pretty_version' => '1.20.0',
+            'version' => '1.20.0.0',
+            'reference' => '82fe4c73ef3363caed49ff8dd1539ba06044910d',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../php-http/discovery',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'php-http/httplug' => array(
+            'pretty_version' => '2.4.1',
+            'version' => '2.4.1.0',
+            'reference' => '5cad731844891a4c282f3f3e1b582c46839d22f4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-http/httplug',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'php-http/promise' => array(
+            'pretty_version' => '1.3.1',
+            'version' => '1.3.1.0',
+            'reference' => 'fc85b1fba37c169a69a07ef0d5a8075770cc1f83',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-http/promise',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'phpunit/php-code-coverage' => array(
             'pretty_version' => '10.1.16',
@@ -226,6 +283,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'psr/clock' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => 'e41a24703d4560fd0acb709162f73b8adfc3aa0d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/clock',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'psr/container' => array(
             'pretty_version' => '2.0.2',
             'version' => '2.0.2.0',
@@ -247,7 +313,8 @@
         'psr/http-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
+                0 => '*',
+                1 => '1.0',
             ),
         ),
         'psr/http-factory' => array(
@@ -262,7 +329,8 @@
         'psr/http-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.1',
+                0 => '*',
+                1 => '1.1',
             ),
         ),
         'psr/http-message' => array(
@@ -277,7 +345,8 @@
         'psr/http-message-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '2.0',
+                0 => '*',
+                1 => '2.0',
             ),
         ),
         'psr/log' => array(
@@ -430,6 +499,24 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'spomky-labs/base64url' => array(
+            'pretty_version' => 'v2.0.4',
+            'version' => '2.0.4.0',
+            'reference' => '7752ce931ec285da4ed1f4c5aa27e45e097be61d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../spomky-labs/base64url',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'spomky-labs/pki-framework' => array(
+            'pretty_version' => '1.6.3',
+            'version' => '1.6.3.0',
+            'reference' => '792e909d4e387adffe3c4f404451c7d57a3d2022',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../spomky-labs/pki-framework',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'symfony/deprecation-contracts' => array(
             'pretty_version' => 'v3.8.1',
             'version' => '3.8.1.0',
@@ -457,6 +544,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'symfony/polyfill-php83' => array(
+            'pretty_version' => 'v1.43.0',
+            'version' => '1.43.0.0',
+            'reference' => '80ccff923a8d61f73ebe9da0aa94e25232f004ce',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-php83',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'theseer/tokenizer' => array(
             'pretty_version' => '1.3.1',
             'version' => '1.3.1.0',
@@ -465,6 +561,15 @@
             'install_path' => __DIR__ . '/../theseer/tokenizer',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'web-token/jwt-library' => array(
+            'pretty_version' => '4.2.7',
+            'version' => '4.2.7.0',
+            'reference' => '62643a2f31274c546a7d158ceab6dd5c052db911',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../web-token/jwt-library',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
     ),
 );

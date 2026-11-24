@@ -45,6 +45,9 @@ $routes->group('admin', ['filter' => 'roleFilter:admin'], static function ($rout
 // --- ROUTE CRON JOB (DILUAR FILTER ADMIN AGAR DAPAT DIPANGGIL SERVER) ---
 $routes->get('cron/notifikasi/(:segment)', 'CronController::eksekusiNotifikasi/$1');
 
+// Route API Simpan Token Web Push PWA (Bisa diakses oleh semua user terautentikasi)
+$routes->post('pwa/subscribe', 'PwaController::subscribe');
+
 $routes->group('gpk', ['filter' => 'roleFilter:gpk,admin'], static function ($routes) {
     $routes->get('dashboard', 'GpkController::index');
     $routes->get('jurnal-anak', 'GpkController::jurnalAnak'); // ROUTE BARU JURNAL ANAK

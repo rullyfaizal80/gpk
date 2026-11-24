@@ -12,9 +12,14 @@
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="<?= base_url('manifest.json') ?>">
     <meta name="theme-color" content="#e11d48">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="<?= base_url('assets/images/logo.png') ?>">
+
+    <!-- SweetAlert2 CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -161,5 +166,16 @@
     <!-- Script Global -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <?= $this->renderSection('scripts') ?>
+
+    <!-- PWA Push Notification Scripts -->
+    <script src="<?= base_url('assets/js/pwa-push.js') ?>"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const vapidPublicKey = "<?= env('VAPID_PUBLIC_KEY') ?>";
+        if (vapidPublicKey && typeof initPwaPushNotification === 'function') {
+            initPwaPushNotification(vapidPublicKey);
+        }
+    });
+    </script>
 </body>
 </html>
