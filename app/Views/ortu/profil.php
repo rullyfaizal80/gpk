@@ -33,6 +33,14 @@
     </div>
 <?php endif; ?>
 
+<?php 
+// Normalisasi data anak: jika $anak single array, ubah menjadi list array
+$listAnak = [];
+if (!empty($anak)) {
+    $listAnak = isset($anak[0]) ? $anak : [$anak];
+}
+?>
+
 <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0 text-center">
     <div class="mb-2">
         <div class="bg-rose-light text-rose rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
@@ -41,8 +49,14 @@
     </div>
     <h6 class="fw-bold text-dark mb-1"><?= esc($user['nama_lengkap'] ?? session()->get('nama_lengkap')) ?></h6>
     <span class="badge bg-rose-light text-rose border border-rose-subtle align-self-center text-uppercase mb-2">Orang Tua / Wali</span>
-    <?php if(!empty($anak)): ?>
-        <small class="text-muted d-block"><i class="fas fa-child me-1"></i> Orang Tua dari: <strong><?= esc($anak['nama_pdbk']) ?></strong></small>
+    
+    <?php if(!empty($listAnak)): ?>
+        <small class="text-muted d-block">
+            <i class="fas fa-child me-1"></i> Orang Tua dari: 
+            <strong>
+                <?= esc(implode(', ', array_column($listAnak, 'nama_pdbk'))) ?>
+            </strong>
+        </small>
     <?php endif; ?>
 </div>
 

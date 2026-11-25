@@ -15,73 +15,78 @@ class OrtuController extends BaseController
         $this->userModel = new UserModel();
     }
 
-    // Helper Private: Mengambil data anak yang terikat dengan akun ortu ini
+    // Helper Private: Mengambil SEMUA data anak yang terhubung dengan akun ortu ini
     private function getAnakOrtu()
     {
         $userId = session()->get('id');
         
-        // Cari data anak berdasarkan ortu_id (atau user_id ortu yang terhubung di tabel peserta_didik)
-        $anak = $this->db->table('peserta_didik')
-                         ->select('peserta_didik.*, users.nama_lengkap as nama_gpk')
-                         ->join('users', 'users.id = peserta_didik.gpk_id', 'left')
-                         ->where('peserta_didik.ortu_id', $userId)
-                         ->get()->getRowArray();
-
-        return $anak;
+        // Ambil semua anak dalam bentuk Multi-Array (getResultArray)
+        return $this->db->table('peserta_didik')
+                        ->select('peserta_didik.*, users.nama_lengkap as nama_gpk')
+                        ->join('users', 'users.id = peserta_didik.gpk_id', 'left')
+                        ->where('peserta_didik.ortu_id', $userId)
+                        ->get()->getResultArray();
     }
 
     // 1. DASHBOARD ORANG TUA
-    public function index()
-    {
-        $anak = $this->getAnakOrtu();
+public function index()
+{
+    $anakList = $this->getAnakOrtu();
 
-        if (!$anak) {
-            $data = [
-                'title' => 'Dashboard Orang Tua',
-                'anak'  => null,
-            ];
-            return view('ortu/dashboard', $data);
-        }
-
-        $bulanAktif = $this->request->getGet('bulan') ?? date('m');
-        $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
-
-        // Ambil riwayat jurnal khusus anak ortu ini
-        $jurnalList = $this->db->table('jurnal')
-                               ->select('jurnal.*, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
-                               ->where('jurnal.pdbk_id', $anak['id'])
-                               ->where('MONTH(jurnal.tanggal)', $bulanAktif)
-                               ->where('YEAR(jurnal.tanggal)', $tahunAktif)
-                               ->orderBy('jurnal.tanggal', 'DESC')
-                               ->orderBy('jurnal.id', 'DESC')
-                               ->get()->getResultArray();
-
+    if (empty($anakList)) {
         $data = [
-            'title'      => 'Dashboard Orang Tua',
-            'anak'       => $anak,
-            'jurnalList' => $jurnalList,
-            'bulanAktif' => sprintf('%02d', $bulanAktif),
-            'tahunAktif' => $tahunAktif,
+            'title' => 'Dashboard Orang Tua',
+            'anak'  => [],
         ];
-
         return view('ortu/dashboard', $data);
     }
 
-    // 2. DAFTAR JURNAL PERKEMBANGAN
+    $anakIds = array_column($anakList, 'id');
+
+    $bulanAktif = $this->request->getGet('bulan') ?? date('m');
+    $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
+
+    // PERBAIKAN: Tambahkan JOIN ke tabel peserta_didik untuk mengambil nama_pdbk
+    $jurnalList = $this->db->table('jurnal')
+                           ->select('jurnal.*, peserta_didik.nama_pdbk, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
+                           ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
+                           ->whereIn('jurnal.pdbk_id', $anakIds)
+                           ->where('MONTH(jurnal.tanggal)', $bulanAktif)
+                           ->where('YEAR(jurnal.tanggal)', $tahunAktif)
+                           ->orderBy('jurnal.tanggal', 'DESC')
+                           ->orderBy('jurnal.id', 'DESC')
+                           ->get()->getResultArray();
+
+    $data = [
+        'title'      => 'Dashboard Orang Tua',
+        'anak'       => $anakList,
+        'jurnalList' => $jurnalList,
+        'bulanAktif' => sprintf('%02d', $bulanAktif),
+        'tahunAktif' => $tahunAktif,
+    ];
+
+    return view('ortu/dashboard', $data);
+}
+
+    // 2. DAFTAR JURNAL PERKEMBANGAN (SEMUA ANAK PER BULAN)
     public function jurnal()
     {
-        $anak = $this->getAnakOrtu();
+        $anakList = $this->getAnakOrtu();
 
-        if (!$anak) {
+        if (empty($anakList)) {
             return redirect()->to('/ortu/dashboard');
         }
+
+        $anakIds = array_column($anakList, 'id');
 
         $bulanAktif = $this->request->getGet('bulan') ?? date('m');
         $tahunAktif = $this->request->getGet('tahun') ?? date('Y');
 
+        // Mengambil seluruh jurnal milik anak ortu ini dengan JOIN ke peserta_didik
         $jurnalList = $this->db->table('jurnal')
-                               ->select('jurnal.*, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
-                               ->where('jurnal.pdbk_id', $anak['id'])
+                               ->select('jurnal.*, peserta_didik.nama_pdbk, (SELECT google_file_id FROM jurnal_foto WHERE jurnal_id = jurnal.id LIMIT 1) as foto_sampul')
+                               ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
+                               ->whereIn('jurnal.pdbk_id', $anakIds)
                                ->where('MONTH(jurnal.tanggal)', $bulanAktif)
                                ->where('YEAR(jurnal.tanggal)', $tahunAktif)
                                ->orderBy('jurnal.tanggal', 'DESC')
@@ -90,7 +95,7 @@ class OrtuController extends BaseController
 
         $data = [
             'title'      => 'Jurnal Perkembangan Ananda',
-            'anak'       => $anak,
+            'anak'       => $anakList,
             'jurnalList' => $jurnalList,
             'bulanAktif' => sprintf('%02d', $bulanAktif),
             'tahunAktif' => $tahunAktif,
@@ -102,25 +107,27 @@ class OrtuController extends BaseController
     // 3. DETAIL JURNAL PERKEMBANGAN ANANDA
     public function detailJurnal($id = null)
     {
-        $anak = $this->getAnakOrtu();
+        $anakList = $this->getAnakOrtu();
 
-        if (!$anak) {
+        if (empty($anakList)) {
             session()->setFlashdata('error', 'Akses ditolak.');
             return redirect()->to('/ortu/dashboard');
         }
 
-        // Proteksi: Hanya bisa membaca detail jurnal dari anaknya sendiri
+        $anakIds = array_column($anakList, 'id');
+
+        // Proteksi: Hanya bisa membaca detail jurnal jika pdbk_id termasuk salah satu anak milik ortu ini
         $jurnal = $this->db->table('jurnal')
                            ->select('jurnal.*, peserta_didik.nama_pdbk, peserta_didik.kelas, users.nama_lengkap as nama_gpk')
                            ->join('peserta_didik', 'peserta_didik.id = jurnal.pdbk_id')
                            ->join('users', 'users.id = jurnal.gpk_id', 'left')
                            ->where('jurnal.id', $id)
-                           ->where('jurnal.pdbk_id', $anak['id'])
+                           ->whereIn('jurnal.pdbk_id', $anakIds)
                            ->get()->getRowArray();
 
         if (!$jurnal) {
             session()->setFlashdata('error', 'Jurnal tidak ditemukan atau bukan milik ananda.');
-            return redirect()->to('/ortu/jurnal');
+            return redirect()->to('/ortu/dashboard');
         }
 
         $fotos = $this->db->table('jurnal_foto')
@@ -139,52 +146,16 @@ class OrtuController extends BaseController
     // 4. PROFIL AKUN ORTU & GANTI PASSWORD
     public function profil()
     {
-        $userId = session()->get('id');
-        $user   = $this->userModel->find($userId);
-        $anak   = $this->getAnakOrtu();
+        $userId   = session()->get('id');
+        $user     = $this->userModel->find($userId);
+        $anakList = $this->getAnakOrtu();
 
         $data = [
             'title' => 'Akun Orang Tua',
             'user'  => $user,
-            'anak'  => $anak,
+            'anak'  => $anakList,
         ];
 
         return view('ortu/profil', $data);
-    }
-
-    // PROSES GANTI PASSWORD ORTU
-    public function updatePassword()
-    {
-        $userId = session()->get('id');
-        $user   = $this->userModel->find($userId);
-
-        $passwordLama = $this->request->getPost('password_lama');
-        $passwordBaru = $this->request->getPost('password_baru');
-        $konfirmasi   = $this->request->getPost('konfirmasi_password');
-
-        $passwordMatch = password_verify($passwordLama, $user['password'] ?? '') || ($user['password'] === $passwordLama);
-
-        if (!$passwordMatch) {
-            session()->setFlashdata('error', 'Password saat ini salah.');
-            return redirect()->back();
-        }
-
-        if ($passwordBaru !== $konfirmasi) {
-            session()->setFlashdata('error', 'Konfirmasi password baru tidak cocok.');
-            return redirect()->back();
-        }
-
-        if (strlen($passwordBaru) < 6) {
-            session()->setFlashdata('error', 'Password baru minimal 6 karakter.');
-            return redirect()->back();
-        }
-
-        $this->userModel->update($userId, [
-            'password'   => password_hash($passwordBaru, PASSWORD_BCRYPT),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-
-        session()->setFlashdata('success', 'Password berhasil diperbarui.');
-        return redirect()->to('/ortu/profil');
     }
 }

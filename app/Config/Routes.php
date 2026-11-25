@@ -48,7 +48,7 @@ $routes->get('cron/notifikasi/(:segment)', 'CronController::eksekusiNotifikasi/$
 // Route API Simpan Token Web Push PWA (Bisa diakses oleh semua user terautentikasi)
 $routes->post('pwa/subscribe', 'PwaController::subscribe');
 
-$routes->group('gpk', ['filter' => 'roleFilter:gpk,admin,pimpinan'], static function ($routes) {
+$routes->group('gpk', ['filter' => 'roleFilter:gpk,admin,pimpinan,ortu'], static function ($routes) {
     $routes->get('dashboard', 'GpkController::index');
     $routes->get('jurnal-anak', 'GpkController::jurnalAnak'); // ROUTE BARU JURNAL ANAK
     $routes->get('jurnal', 'GpkController::jurnal');

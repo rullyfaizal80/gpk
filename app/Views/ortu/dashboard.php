@@ -7,11 +7,15 @@
     .bg-rose-light { background-color: #fff1f2 !important; }
     .border-rose-subtle { border-color: #fecdd3 !important; }
 
-    .card-jurnal-mobile {
+    .card-jurnal {
+        border: 1px solid #f1f5f9;
         border-radius: 14px;
-        transition: transform 0.15s ease;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+        color: inherit;
+        display: block;
     }
-    .card-jurnal-mobile:active {
+    .card-jurnal:active {
         transform: scale(0.98);
     }
 </style>
@@ -25,77 +29,111 @@
     <span class="badge bg-rose-light text-rose border border-rose-subtle px-2 py-1">Orang Tua</span>
 </div>
 
-<?php if(!empty($anak)): ?>
-    <!-- Card Profil Ananda -->
-    <div class="card card-mobile p-3 bg-white mb-3 shadow-sm border-0">
-        <div class="d-flex align-items-center gap-3">
-            <div class="bg-rose-light text-rose rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; min-width: 50px;">
-                <i class="fas fa-child fa-2x"></i>
+<?php 
+// Normalisasi data anak jika dikirim sebagai single array
+$listAnak = [];
+if (!empty($anak)) {
+    $listAnak = isset($anak[0]) ? $anak : [$anak];
+}
+?>
+
+<?php if(!empty($listAnak)): ?>
+    <!-- Card Profil Ananda (Menampilkan Semua Anak Terhubung) -->
+    <div class="d-flex flex-column gap-2 mb-3">
+        <?php foreach($listAnak as $a): ?>
+            <div class="card card-mobile p-3 bg-white shadow-sm border-0">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-rose-light text-rose rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; min-width: 50px;">
+                        <i class="fas fa-child fa-2x"></i>
+                    </div>
+                    <div class="flex-grow-1 overflow-hidden">
+                        <span class="badge bg-rose-light text-rose border border-rose-subtle mb-1"><?= esc($a['unit']) ?> - Kelas <?= esc($a['kelas']) ?></span>
+                        <h6 class="fw-bold text-dark mb-0 text-truncate"><?= esc($a['nama_pdbk']) ?></h6>
+                        <small class="text-muted d-block text-truncate"><i class="fas fa-user-circle me-1"></i> GPK: <?= esc($a['nama_gpk'] ?? 'Guru Pendamping') ?></small>
+                    </div>
+                </div>
             </div>
-            <div class="flex-grow-1 overflow-hidden">
-                <span class="badge bg-rose-light text-rose border border-rose-subtle mb-1"><?= esc($anak['unit']) ?> - Kelas <?= esc($anak['kelas']) ?></span>
-                <h6 class="fw-bold text-dark mb-0 text-truncate"><?= esc($anak['nama_pdbk']) ?></h6>
-                <small class="text-muted d-block text-truncate"><i class="fas fa-user-circle me-1"></i> GPK: <?= esc($anak['nama_gpk'] ?? 'Guru Pendamping') ?></small>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 
-    <!-- Filter Bulan & Tahun -->
-    <form method="get" action="/ortu/dashboard" class="card card-mobile p-2 bg-white shadow-sm border-0 mb-3">
-        <div class="row g-2">
-            <div class="col-6">
-                <select name="bulan" class="form-select form-select-sm border-0 bg-light fw-bold text-secondary" onchange="this.form.submit()">
-                    <?php 
-                    $namaBulan = ['01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus', '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'];
-                    foreach($namaBulan as $k => $v): 
-                    ?>
-                        <option value="<?= $k ?>" <?= ($bulanAktif == $k) ? 'selected' : '' ?>><?= $v ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="col-6">
-                <select name="tahun" class="form-select form-select-sm border-0 bg-light fw-bold text-secondary" onchange="this.form.submit()">
-                    <?php for($y = date('Y'); $y >= date('Y')-2; $y--): ?>
-                        <option value="<?= $y ?>" <?= ($tahunAktif == $y) ? 'selected' : '' ?>><?= $y ?></option>
-                    <?php endfor; ?>
-                </select>
-            </div>
-        </div>
-    </form>
+    <!-- Filter List Jurnal Khusus Minggu Ini (Senin - Minggu) -->
+    <?php
+    $jurnalMingguIni = [];
+    if (!empty($jurnalList)) {
+        $startOfWeek = strtotime('monday this week');
+        $endOfWeek   = strtotime('sunday this week 23:59:59');
 
-    <!-- List Jurnal Ananda -->
+        foreach ($jurnalList as $j) {
+            $tglJurnal = strtotime($j['tanggal']);
+            if ($tglJurnal >= $startOfWeek && $tglJurnal <= $endOfWeek) {
+                $jurnalMingguIni[] = $j;
+            }
+        }
+    }
+    ?>
+
+    <!-- Header List Jurnal -->
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <h6 class="fw-bold text-dark mb-0"><i class="fas fa-book-open text-rose me-1"></i> Catatan Harian</h6>
-        <small class="text-muted">Total: <?= count($jurnalList) ?> Catatan</small>
+        <h6 class="fw-bold text-dark mb-0"><i class="fas fa-book-open text-rose me-1"></i> Jurnal Minggu Ini</h6>
+        <small class="text-muted">Total: <?= count($jurnalMingguIni) ?> Catatan</small>
     </div>
 
-    <?php if(!empty($jurnalList)): ?>
+    <!-- Daftar Kartu Jurnal Ortu (4 Baris Terstruktur Disamakan dengan GPK) -->
+    <?php if(!empty($jurnalMingguIni)): ?>
         <div class="d-flex flex-column gap-2 mb-4">
-            <?php foreach($jurnalList as $j): ?>
-                <a href="/ortu/jurnal/detail/<?= $j['id'] ?>" class="card card-mobile p-3 bg-white shadow-sm border-0 card-jurnal-mobile text-decoration-none text-dark">
+            <?php foreach($jurnalMingguIni as $j): ?>
+                <a href="/ortu/jurnal/detail/<?= $j['id'] ?>" class="card card-jurnal bg-white p-3 shadow-sm">
+                    
+                    <!-- Baris 1: Tanggal & Badge Status Foto -->
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-rose fw-bold" style="font-size: 0.75rem;">
-                            <i class="far fa-calendar-alt me-1"></i> <?= date('d F Y', strtotime($j['tanggal'])) ?>
+                        <small class="text-muted fw-bold" style="font-size: 0.75rem;">
+                            <i class="far fa-calendar-alt me-1 text-rose"></i> <?= date('d F Y', strtotime($j['tanggal'])) ?>
                         </small>
-                        <?php if(!empty($j['foto_sampul'])): ?>
-                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.65rem;"><i class="fas fa-camera me-1"></i> Ada Dokumentasi</span>
-                        <?php endif; ?>
+                        
+                        <div>
+                            <?php if(!empty($j['foto_sampul'])): ?>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1" style="font-size: 0.65rem;">
+                                    <i class="fas fa-camera me-1"></i> Ada Foto
+                                </span>
+                            <?php else: ?>
+                                <span class="badge bg-light text-muted border px-2 py-1" style="font-size: 0.65rem;">
+                                    Tanpa Foto
+                                </span>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
-                    <h6 class="fw-bold mb-1 text-dark text-truncate">
-                        <?= esc(($j['jenis_form'] == 'peril') ? ($j['peril_kegiatan'] ?? 'Kegiatan Harian') : ($j['akademik_mapel'] ?? 'Akademik')) ?>
-                    </h6>
-                    
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.8rem;">
-                        <?= esc(($j['jenis_form'] == 'peril') ? ($j['peril_catatan_kegiatan'] ?? '-') : ($j['akademik_materi'] ?? '-')) ?>
+                   <!-- Baris 2: Nama Anak Dampingan -->
+<h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 0.9rem;">
+    <?= esc($j['nama_pdbk'] ?? 'Ananda') ?>
+</h6>
+
+                    <!-- Baris 3: Ringkasan Kegiatan / Mapel Utama -->
+                    <small class="text-secondary d-block text-truncate fw-semibold mb-1" style="font-size: 0.78rem;">
+                        <?php if($j['jenis_form'] === 'peril'): ?>
+                            <i class="fas fa-child text-warning me-1"></i> Kegiatan: <?= esc($j['peril_kegiatan'] ?? 'Kegiatan Harian PERIL') ?>
+                        <?php else: ?>
+                            <i class="fas fa-book text-success me-1"></i> Mapel: <?= esc($j['akademik_mapel'] ?? 'Akademik') ?>
+                        <?php endif; ?>
                     </small>
+
+                    <!-- Baris 4: Informasi Spesifik (Materi Akademik / Partisipasi PERIL) -->
+                    <small class="text-dark d-block text-truncate fw-semibold" style="font-size: 0.78rem;">
+                        <?php if($j['jenis_form'] === 'peril'): ?>
+                            <i class="fas fa-chart-line text-info me-1"></i> Partisipasi: <span class="badge bg-warning text-dark py-0 px-1 font-normal"><?= esc($j['peril_partisipasi'] ?? 'Belum Diisi') ?></span>
+                        <?php else: ?>
+                            <i class="fas fa-file-alt text-primary me-1"></i> Materi: <?= esc($j['akademik_materi'] ?? '-') ?>
+                        <?php endif; ?>
+                    </small>
+
                 </a>
             <?php endforeach; ?>
         </div>
     <?php else: ?>
+        <!-- Tampilan Jika Jurnal Belum Ada -->
         <div class="text-center py-5 bg-white rounded-4 border border-dashed mb-4">
             <i class="fas fa-folder-open fa-3x text-muted mb-2"></i>
-            <p class="small text-muted mb-0">Belum ada catatan jurnal pada bulan <?= $namaBulan[$bulanAktif] ?> <?= $tahunAktif ?>.</p>
+            <p class="small text-muted mb-0">Belum ada riwayat jurnal pada minggu ini.</p>
         </div>
     <?php endif; ?>
 
