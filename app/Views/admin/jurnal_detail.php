@@ -35,7 +35,7 @@
     <div class="col-md-8">
         <?php if($jurnal['jenis_form'] === 'peril'): ?>
             <!-- ========================================== -->
-            <!-- DETAIL FORM PERIL LENGKAP (PG - RA)        -->
+            <!-- DETAIL FORM PERIL LENGKAP (6 BAGIAN)       -->
             <!-- ========================================== -->
             <div class="card shadow-sm border-0 mb-3">
                 <div class="card-header bg-white fw-bold text-danger"><i class="fas fa-child me-2"></i>1. Kegiatan Pembelajaran</div>
@@ -49,17 +49,17 @@
             <div class="card shadow-sm border-0 mb-3">
                 <div class="card-header bg-white fw-bold text-danger"><i class="fas fa-utensils me-2"></i>2. Kemandirian & Aktivitas Harian</div>
                 <div class="card-body">
-                    <p class="mb-2"><strong>Kegiatan Makan & Minum:</strong> <?= esc($jurnal['peril_makan_minum'] ?? '-') ?></p>
-                    <p class="mb-2"><strong>Kebersihan Diri & Toilet:</strong> <?= esc($jurnal['peril_kebersihan_toilet'] ?? '-') ?></p>
-                    <p class="mb-2"><strong>Kemandirian Merapikan Barang:</strong> <?= esc($jurnal['peril_merapikan_barang'] ?? '-') ?></p>
-                    <p class="mb-0"><strong>Bantuan yang Masih Diperlukan:</strong> <?= esc($jurnal['peril_bantuan_harian'] ?? '-') ?></p>
+                    <p class="mb-2"><strong>Kegiatan Makan & Minum:</strong><br><?= esc($jurnal['peril_makan_minum'] ?? '-') ?></p>
+                    <p class="mb-2"><strong>Kebersihan Diri & Toilet:</strong><br><?= esc($jurnal['peril_kebersihan_toilet'] ?? '-') ?></p>
+                    <p class="mb-2"><strong>Kemandirian Merapikan Barang:</strong><br><?= esc($jurnal['peril_merapikan_barang'] ?? '-') ?></p>
+                    <p class="mb-0"><strong>Bantuan yang Masih Diperlukan:</strong><br><?= esc($jurnal['peril_bantuan_harian'] ?? '-') ?></p>
                 </div>
             </div>
 
             <div class="card shadow-sm border-0 mb-3">
                 <div class="card-header bg-white fw-bold text-danger"><i class="fas fa-comments me-2"></i>3. Komunikasi & Interaksi Sosial</div>
                 <div class="card-body">
-                    <p class="mb-2"><strong>Penyampaian Keinginan / Instruksi:</strong><br><?= esc($jurnal['peril_komunikasi'] ?? '-') ?></p>
+                    <p class="mb-2"><strong>Cara Menyampaikan Keinginan / Instruksi:</strong><br><?= esc($jurnal['peril_komunikasi'] ?? '-') ?></p>
                     <p class="mb-0"><strong>Interaksi dengan Guru & Teman:</strong><br><?= esc($jurnal['peril_interaksi'] ?? '-') ?></p>
                 </div>
             </div>
@@ -67,19 +67,26 @@
             <div class="card shadow-sm border-0 mb-3">
                 <div class="card-header bg-white fw-bold text-danger"><i class="fas fa-smile me-2"></i>4. Regulasi Emosi</div>
                 <div class="card-body">
-                    <p class="mb-2"><strong>Kondisi Emosi Selama Kegiatan:</strong> <?= esc($jurnal['peril_emosi'] ?? '-') ?></p>
-                    <p class="mb-2"><strong>Respons Perpindahan Kegiatan:</strong> <?= esc($jurnal['peril_respon_arahan'] ?? '-') ?></p>
-                    <p class="mb-0"><strong>Strategi / Dukungan yang Membantu:</strong> <?= esc($jurnal['peril_strategi_dukungan'] ?? '-') ?></p>
+                    <p class="mb-2"><strong>Kondisi Emosi Selama Kegiatan:</strong><br><?= esc($jurnal['peril_emosi'] ?? '-') ?></p>
+                    <p class="mb-2"><strong>Respons Arahan / Transisi Kegiatan:</strong><br><?= esc($jurnal['peril_respon_arahan'] ?? '-') ?></p>
+                    <p class="mb-0"><strong>Strategi / Dukungan yang Membantu:</strong><br><?= esc($jurnal['peril_strategi_dukungan'] ?? '-') ?></p>
                 </div>
             </div>
 
             <div class="card shadow-sm border-0 mb-3">
-                <div class="card-header bg-white fw-bold text-danger"><i class="fas fa-star me-2"></i>5. Apresiasi & Informasi Ortu</div>
+                <div class="card-header bg-white fw-bold text-danger"><i class="fas fa-star me-2"></i>5. Apresiasi & Perkembangan Hari Ini</div>
                 <div class="card-body">
                     <p class="mb-2"><strong>Pencapaian / Usaha Positif Hari Ini:</strong><br><?= esc($jurnal['peril_pencapaian_positif'] ?? '-') ?></p>
-                    <p class="mb-2"><strong>Keterampilan Perlu Distimulasi:</strong><br><?= esc($jurnal['peril_perlu_stimulasi'] ?? '-') ?></p>
-                    <p class="mb-2"><strong>Informasi Khusus Orang Tua:</strong> <?= esc($jurnal['peril_info_ortu'] ?? '-') ?></p>
-                    <p class="mb-0"><strong>Saran Stimulasi di Rumah:</strong><br><?= esc($jurnal['peril_stimulasi_rumah'] ?? '-') ?></p>
+                    <p class="mb-0"><strong>Keterampilan Perlu Distimulasi:</strong><br><?= esc($jurnal['peril_perlu_stimulasi'] ?? '-') ?></p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-header bg-white fw-bold text-danger"><i class="fas fa-info-circle me-2"></i>6. Informasi Tambahan & Stimulasi di Rumah</div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>Informasi Khusus untuk Orang Tua:</strong><br><?= esc($jurnal['peril_info_ortu'] ?? '-') ?></p>
+                    <p class="mb-2"><strong>Stimulasi Sederhana di Rumah:</strong><br><?= esc($jurnal['peril_stimulasi_rumah'] ?? '-') ?></p>
+                    <p class="mb-0"><strong>Hal Dikomunikasikan Lebih Lanjut (Ortu/Tim):</strong><br><?= esc($jurnal['peril_komunikasi_lanjut'] ?? '-') ?></p>
                 </div>
             </div>
 
@@ -119,7 +126,10 @@
     <!-- Kolom Samping: Dokumentasi Foto Google Drive -->
     <div class="col-md-4">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header bg-white fw-bold"><i class="fas fa-camera text-primary me-2"></i>Foto Dokumentasi Drive</div>
+            <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-camera text-primary me-2"></i>Foto Dokumentasi Drive</span>
+                <span class="badge bg-primary rounded-pill"><?= count($fotos ?? []) ?> Foto</span>
+            </div>
             <div class="card-body">
                 <?php if(!empty($fotos)): ?>
                     <div class="d-flex flex-column gap-3">
